@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Registration - Loyalty Program</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Register Your Cafe</h1>
+            <p>Set up your loyalty program in minutes</p>
+        </div>
+
+        <form id="cafeRegistrationForm" class="card">
+            <div class="form-group">
+                <h2>Business Information</h2>
+                <div class="form-group">
+                    <label for="cafeName">Cafe Name</label>
+                    <input type="text" id="cafeName" name="cafeName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Contact Email</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactPhone">Contact Phone</label>
+                    <input type="tel" id="contactPhone" name="contactPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessAddress">Business Address</label>
+                    <textarea id="businessAddress" name="businessAddress" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cafeLogo">Cafe Logo</label>
+                    <input type="file" id="cafeLogo" name="cafeLogo" accept="image/png,image/jpeg" required>
+                    <small>Max size: 2MB. Formats: PNG, JPG</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h2>Loyalty Program Setup</h2>
+                <div class="form-group">
+                    <label for="promotionDesc">Promotion Description</label>
+                    <textarea id="promotionDesc" name="promotionDesc" maxlength="200" rows="3" required></textarea>
+                    <small>Max 200 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="stampsNeeded">Number of Stamps Needed</label>
+                    <input type="number" id="stampsNeeded" name="stampsNeeded" min="1" value="10" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rewardDesc">Reward Description</label>
+                    <textarea id="rewardDesc" name="rewardDesc" maxlength="100" rows="2" required></textarea>
+                    <small>Max 100 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="promotionExpiry">Promotion Expiry (Optional)</label>
+                    <input type="date" id="promotionExpiry" name="promotionExpiry">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn">Register Cafe</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('cafeRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Form validation and submission logic will be added later
+            alert('Registration form submitted! (Demo only)');
+        });
+
+        // File size validation
+        document.getElementById('cafeLogo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) { // 2MB
+                    alert('File size must be less than 2MB');
+                    this.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Confirmation - Loyalty Program</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .customer-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .stamp-preview {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .stamp {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stamp.filled {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .coffee-selector {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .coffee-selector select {
+            width: 100px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Transaction Confirmation</h1>
+            <p>Confirm customer purchase and issue stamps</p>
+        </div>
+
+        <div class="customer-info card">
+            <h2>Customer Information</h2>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Current Stamps:</strong> 7/10</p>
+        </div>
+
+        <div class="card">
+            <div class="coffee-selector">
+                <label for="coffeeCount">Number of Coffees:</label>
+                <select id="coffeeCount" name="coffeeCount">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+
+            <div class="stamp-preview">
+                <div class="stamp filled">1</div>
+                <div class="stamp filled">2</div>
+                <div class="stamp filled">3</div>
+                <div class="stamp filled">4</div>
+                <div class="stamp filled">5</div>
+                <div class="stamp filled">6</div>
+                <div class="stamp filled">7</div>
+                <div class="stamp">8</div>
+                <div class="stamp">9</div>
+                <div class="stamp">10</div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" onclick="confirmTransaction()">Confirm Purchase</button>
+                <button class="btn btn-cancel" onclick="cancelTransaction()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmTransaction() {
+            // Transaction confirmation logic will be added later
+            alert('Transaction confirmed! (Demo only)');
+        }
+
+        function cancelTransaction() {
+            // Cancel transaction logic will be added later
+            alert('Transaction cancelled! (Demo only)');
+        }
+
+        // Update stamp preview when coffee count changes
+        document.getElementById('coffeeCount').addEventListener('change', function(e) {
+            const count = parseInt(e.target.value);
+            const stamps = document.querySelectorAll('.stamp');
+            
+            stamps.forEach((stamp, index) => {
+                if (index < count) {
+                    stamp.classList.add('filled');
+                } else {
+                    stamp.classList.remove('filled');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Loyalty Program</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .cafe-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .cafe-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .cafe-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .visit-history {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .visit-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .visit-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .notification-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>My Loyalty Cards</h1>
+            <p>Track your rewards across all cafes</p>
+        </div>
+
+        <div class="profile-section">
+            <h2>Profile Settings</h2>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" value="john.doe@example.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" value="+1 234 567 8900">
+            </div>
+            <div class="notification-toggle">
+                <label>Email Notifications</label>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="notification-toggle">
+                <label>SMS Notifications</label>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="cafe-card">
+            <div class="cafe-header">
+                <div class="cafe-logo">☕</div>
+                <div>
+                    <h2>Coffee Haven</h2>
+                    <p>7/10 stamps</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 70%"></div>
+            </div>
+            <p><strong>Next Reward:</strong> Free large coffee</p>
+            <div class="visit-history">
+                <h3>Recent Visits</h3>
+                <div class="visit-item">
+                    <strong>March 15, 2024</strong> - 2 stamps earned
+                </div>
+                <div class="visit-item">
+                    <strong>March 10, 2024</strong> - 1 stamp earned
+                </div>
+                <div class="visit-item">
+                    <strong>March 5, 2024</strong> - 1 stamp earned
+                </div>
+            </div>
+        </div>
+
+        <div class="cafe-card">
+            <div class="cafe-header">
+                <div class="cafe-logo">🍵</div>
+                <div>
+                    <h2>Tea Time</h2>
+                    <p>3/8 stamps</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 37.5%"></div>
+            </div>
+            <p><strong>Next Reward:</strong> Free tea of choice</p>
+            <div class="visit-history">
+                <h3>Recent Visits</h3>
+                <div class="visit-item">
+                    <strong>March 14, 2024</strong> - 1 stamp earned
+                </div>
+                <div class="visit-item">
+                    <strong>March 7, 2024</strong> - 1 stamp earned
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile update logic will be added later
+        document.querySelectorAll('input[type="email"], input[type="tel"]').forEach(input => {
+            input.addEventListener('change', function() {
+                alert('Profile updated! (Demo only)');
+            });
+        });
+
+        // Notification toggle logic will be added later
+        document.querySelectorAll('.switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                alert('Notification settings updated! (Demo only)');
+            });
+        });
+    </script>
+</body>
+</html> 
