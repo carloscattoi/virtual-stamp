@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Registration - Loyalty Program</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .business-hours {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .terms-checkbox input {
+            width: auto;
+            margin-top: 5px;
+        }
+
+        .terms-checkbox label {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Register Your Business</h1>
+            <p>Create your business account to start managing your loyalty program</p>
+        </div>
+
+        <form id="businessRegistrationForm" class="card">
+            <div class="form-group">
+                <h2>Business Information</h2>
+                <div class="form-group">
+                    <label for="businessName">Business Name</label>
+                    <input type="text" id="businessName" name="businessName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessCategory">Business Category</label>
+                    <select id="businessCategory" name="businessCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="restaurant">Restaurant</option>
+                        <option value="cafe">Café</option>
+                        <option value="retail">Retail</option>
+                        <option value="service">Service</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessAddress">Business Address</label>
+                    <textarea id="businessAddress" name="businessAddress" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessLogo">Business Logo</label>
+                    <input type="file" id="businessLogo" name="businessLogo" accept="image/png,image/jpeg">
+                    <small>Max size: 2MB. Formats: PNG, JPG</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h2>Contact Information</h2>
+                <div class="form-group">
+                    <label for="contactEmail">Contact Email</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactPhone">Contact Phone</label>
+                    <input type="tel" id="contactPhone" name="contactPhone" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h2>Business Hours</h2>
+                <div class="business-hours">
+                    <div class="form-group">
+                        <label for="openTime">Opening Time</label>
+                        <input type="time" id="openTime" name="openTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="closeTime">Closing Time</label>
+                        <input type="time" id="closeTime" name="closeTime" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h2>Account Security</h2>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+            </div>
+
+            <div class="terms-checkbox">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I confirm that I am authorized to create an account for this business.</label>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn">Create Business Account</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('businessRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Form validation and submission logic will be added later
+            window.location.href = 'business-home.html';
+        });
+
+        // File size validation
+        document.getElementById('businessLogo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) { // 2MB
+                    alert('File size must be less than 2MB');
+                    this.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

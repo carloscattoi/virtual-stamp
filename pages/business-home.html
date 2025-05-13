@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Home - Loyalty Program</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .quick-link-card {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .quick-link-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .promotion-list {
+            margin-top: 30px;
+        }
+
+        .promotion-item {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promotion-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-draft {
+            background: #FFC107;
+            color: black;
+        }
+
+        .status-ended {
+            background: #9E9E9E;
+            color: white;
+        }
+
+        .performance-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .performance-card {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .performance-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Business Dashboard</h1>
+            <p>Welcome back, Coffee Haven!</p>
+        </div>
+
+        <div class="performance-summary">
+            <div class="performance-card">
+                <h3>Active Customers</h3>
+                <div class="performance-number">2,847</div>
+                <p>+12% this month</p>
+            </div>
+            <div class="performance-card">
+                <h3>Rewards Redeemed</h3>
+                <div class="performance-number">189</div>
+                <p>+8% this month</p>
+            </div>
+            <div class="performance-card">
+                <h3>Customer Engagement</h3>
+                <div class="performance-number">78%</div>
+                <p>+5% this month</p>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <div class="quick-link-card" onclick="window.location.href='cafe-dashboard.html'">
+                <div class="quick-link-icon">📊</div>
+                <h3>Analytics Dashboard</h3>
+                <p>View detailed performance metrics</p>
+            </div>
+            <div class="quick-link-card" onclick="window.location.href='promotion-list.html'">
+                <div class="quick-link-icon">🎯</div>
+                <h3>Manage Promotions</h3>
+                <p>View and edit existing promotions</p>
+            </div>
+            <div class="quick-link-card" onclick="window.location.href='create-promotion.html'">
+                <div class="quick-link-icon">✨</div>
+                <h3>Create Promotion</h3>
+                <p>Set up a new loyalty program</p>
+            </div>
+            <div class="quick-link-card" onclick="window.location.href='business-settings.html'">
+                <div class="quick-link-icon">⚙️</div>
+                <h3>Settings</h3>
+                <p>Manage your business profile</p>
+            </div>
+        </div>
+
+        <div class="promotion-list">
+            <h2>Active Promotions</h2>
+            <div class="promotion-item">
+                <div>
+                    <h3>Coffee Rewards Program</h3>
+                    <p>Buy 10 coffees, get 1 free</p>
+                </div>
+                <span class="promotion-status status-active">Active</span>
+            </div>
+            <div class="promotion-item">
+                <div>
+                    <h3>Weekend Special</h3>
+                    <p>Double points on weekends</p>
+                </div>
+                <span class="promotion-status status-active">Active</span>
+            </div>
+            <div class="promotion-item">
+                <div>
+                    <h3>Holiday Bonus</h3>
+                    <p>Triple points during holidays</p>
+                </div>
+                <span class="promotion-status status-draft">Draft</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .welcome-container {
-            max-width: 400px;
+            max-width: 800px;
             margin: 60px auto;
             text-align: center;
         }
@@ -18,15 +18,36 @@
             color: var(--primary-color);
         }
 
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
         .action-buttons {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .action-buttons .btn {
             width: 100%;
+            text-align: left;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            font-size: 24px;
         }
     </style>
 </head>
@@ -38,11 +59,47 @@
             <p>Your digital loyalty program solution</p>
         </div>
 
-        <div class="card">
+        <div class="section">
+            <h2>Business Pages</h2>
             <div class="action-buttons">
-                <a href="pages/cafe-registration.html" class="btn">Register Your Cafe</a>
-                <a href="pages/cafe-login.html" class="btn btn-secondary">Cafe Check-in</a>
-                <a href="pages/user-check.html" class="btn btn-secondary">Customer Check-in</a>
+                <a href="pages/business-registration.html" class="btn">
+                    <span class="btn-icon">🏪</span>
+                    Register Your Business
+                </a>
+                <a href="pages/business-login.html" class="btn">
+                    <span class="btn-icon">🔑</span>
+                    Business Login
+                </a>
+                <a href="pages/business-home.html" class="btn">
+                    <span class="btn-icon">📊</span>
+                    Business Dashboard
+                </a>
+                <a href="pages/create-promotion.html" class="btn">
+                    <span class="btn-icon">✨</span>
+                    Create Promotion
+                </a>
+                <a href="pages/user-check.html" class="btn">
+                    <span class="btn-icon">👥</span>
+                    Check Customer
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>User Pages</h2>
+            <div class="action-buttons">
+                <a href="pages/user-login.html" class="btn">
+                    <span class="btn-icon">🔑</span>
+                    User Login
+                </a>
+                <a href="pages/user-dashboard.html" class="btn">
+                    <span class="btn-icon">📱</span>
+                    User Dashboard
+                </a>
+                <a href="pages/customer-confirmation.html" class="btn">
+                    <span class="btn-icon">✓</span>
+                    Transaction Confirmation
+                </a>
             </div>
         </div>
     </div>
