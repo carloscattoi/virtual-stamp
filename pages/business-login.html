@@ -9,71 +9,78 @@
         .login-container {
             max-width: 400px;
             margin: 60px auto;
-            text-align: center;
         }
 
         .logo {
+            text-align: center;
             font-size: 48px;
             margin-bottom: 20px;
             color: var(--primary-color);
         }
 
-        .form-group {
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            text-align: left;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-        }
-
-        .forgot-password {
-            display: block;
-            margin-top: 10px;
+        .forgot-password a {
             color: var(--primary-color);
             text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
         }
 
         .register-link {
+            text-align: center;
             margin-top: 20px;
-            display: block;
+            color: var(--text-color);
+        }
+
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-container">
-            <div class="logo">☕</div>
-            <div class="header">
-                <h1>Business Login</h1>
-                <p>Access your loyalty program dashboard</p>
+    <div class="container login-container">
+        <div class="logo">☕</div>
+        <div class="header">
+            <h1>Business Login</h1>
+            <p>Access your loyalty program dashboard</p>
+        </div>
+
+        <form id="loginForm" class="card">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
             </div>
 
-            <form id="loginForm" class="card">
-                <div class="form-group">
-                    <label for="email">Business Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
+            <div class="forgot-password">
+                <a href="#">Forgot your password?</a>
+            </div>
 
-                <a href="#" class="forgot-password">Forgot your password?</a>
+            <div class="form-group">
+                <button type="submit" class="btn">Sign In</button>
+            </div>
+        </form>
 
-                <button type="submit" class="btn">Login</button>
-
-                <a href="business-registration.html" class="register-link">Don't have a business account? Register here</a>
-            </form>
+        <div class="register-link">
+            Don't have an account? <a href="business-registration.html"">Register your business</a>
         </div>
     </div>
 
