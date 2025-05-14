@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Promotion - Loyalty Program</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .promotion-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .promotion-type-card {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .promotion-type-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(224, 122, 95, 0.1);
+        }
+
+        .promotion-type-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .rules-config {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .date-range {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .exclusions-list {
+            margin-top: 20px;
+        }
+
+        .exclusion-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .exclusion-item input[type="text"] {
+            flex: 1;
+        }
+
+        .remove-exclusion {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Create New Promotion</h1>
+            <p>Set up your loyalty program rules and rewards</p>
+        </div>
+
+        <form id="promotionForm" class="card">
+            <div class="form-group">
+                <label for="promotionName">Promotion Name</label>
+                <input type="text" id="promotionName" name="promotionName" required>
+            </div>
+
+            <div class="form-group">
+                <h2>Promotion Type</h2>
+                <div class="promotion-type-selector">
+                    <div class="promotion-type-card" data-type="points">
+                        <div class="promotion-type-icon">💰</div>
+                        <h3>Points-based</h3>
+                        <p>Earn points for spending</p>
+                    </div>
+                    <div class="promotion-type-card" data-type="visits">
+                        <div class="promotion-type-icon">👣</div>
+                        <h3>Visit-based</h3>
+                        <p>Reward customer visits</p>
+                    </div>
+                    <div class="promotion-type-card" data-type="amount">
+                        <div class="promotion-type-icon">🎁</div>
+                        <h3>Amount-based</h3>
+                        <p>Discount based on spending</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-config">
+                <h2>Rules Configuration</h2>
+                <div class="form-group">
+                    <label for="pointsPerDollar">Points per $ spent</label>
+                    <input type="number" id="pointsPerDollar" name="pointsPerDollar" min="1" value="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="pointsRequired">Points required for reward</label>
+                    <input type="number" id="pointsRequired" name="pointsRequired" min="1" value="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="rewardValue">Reward Value</label>
+                    <input type="number" id="rewardValue" name="rewardValue" min="1" value="5">
+                    <select id="rewardType" name="rewardType">
+                        <option value="dollar">Dollars off</option>
+                        <option value="percent">Percentage off</option>
+                        <option value="free">Free item</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h2>Promotion Details</h2>
+                <div class="form-group">
+                    <label for="promotionDesc">Promotion Description</label>
+                    <textarea id="promotionDesc" name="promotionDesc" rows="3" required></textarea>
+                    <small>This will be shown to customers</small>
+                </div>
+
+                <div class="date-range">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" name="endDate">
+                        <small>Optional</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h2>Exclusions & Terms</h2>
+                <div class="exclusions-list">
+                    <div class="exclusion-item">
+                        <input type="text" placeholder="Add exclusion (e.g., 'Not valid on holidays')">
+                        <span class="remove-exclusion">×</span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="addExclusion()">Add Exclusion</button>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn">Create Promotion</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='business-home.html'">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Set default dates
+        const today = new Date();
+        document.getElementById('startDate').value = today.toISOString().split('T')[0];
+
+        // Promotion type selection
+        document.querySelectorAll('.promotion-type-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.promotion-type-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Add exclusion field
+        function addExclusion() {
+            const exclusionList = document.querySelector('.exclusions-list');
+            const newExclusion = document.createElement('div');
+            newExclusion.className = 'exclusion-item';
+            newExclusion.innerHTML = `
+                <input type="text" placeholder="Add exclusion (e.g., 'Not valid on holidays')">
+                <span class="remove-exclusion" onclick="this.parentElement.remove()">×</span>
+            `;
+            exclusionList.appendChild(newExclusion);
+        }
+
+        // Form submission
+        document.getElementById('promotionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Form validation and submission logic will be added later
+            window.location.href = 'business-home.html';
+        });
+    </script>
+</body>
+</html> 

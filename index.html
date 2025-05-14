@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Stamp - Loyalty Program</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .welcome-container {
+            max-width: 800px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-buttons .btn {
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons .btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container welcome-container">
+        <div class="logo">🏢</div>
+        <div class="header">
+            <h1>Welcome to Virtual Stamp</h1>
+            <p>Your digital loyalty program solution</p>
+        </div>
+
+        <div class="section">
+            <h2>Business Screens</h2>
+            <div class="action-buttons">
+                <a href="pages/business-login.html">
+                    <div class="btn">
+                        <span class="btn-icon">🔑</span>
+                        Business Login
+                    </div>
+                </a>
+                <a href="pages/business-registration.html">
+                    <div class="btn">
+                        <span class="btn-icon">📝</span>
+                        Business Registration
+                    </div>
+                </a>
+                <a href="pages/business-home.html">
+                    <div class="btn">
+                        <span class="btn-icon">🏠</span>
+                        Business Home
+                    </div>
+                </a>
+                <a href="pages/business-dashboard.html">
+                    <div class="btn">
+                        <span class="btn-icon">📊</span>
+                        Business Dashboard
+                    </div>
+                </a>
+                <a href="pages/create-promotion.html">
+                    <div class="btn">
+                        <span class="btn-icon">✨</span>
+                        Create Promotion
+                    </div>
+                </a>
+                <a href="pages/transaction-confirmation.html">
+                    <div class="btn">
+                        <span class="btn-icon">✓</span>
+                        Transaction Confirmation
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>User Screens</h2>
+            <div class="action-buttons">
+                <a href="pages/user-login.html">
+                    <div class="btn">
+                        <span class="btn-icon">🔑</span>
+                        User Login
+                    </div>
+                </a>
+                <a href="pages/customer-confirmation.html">
+                    <div class="btn">
+                        <span class="btn-icon">✓</span>
+                        Customer Confirmation
+                    </div>
+                </a>
+                <a href="pages/customer-dashboard.html">
+                    <div class="btn">
+                        <span class="btn-icon">📱</span>
+                        Customer Dashboard
+                    </div>
+                </a>
+                <a href="pages/qr-display.html">
+                    <div class="btn">
+                        <span class="btn-icon">📱</span>
+                        QR Code Display
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

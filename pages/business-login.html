@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafe Login - Loyalty Program</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Business Login - Loyalty Program</title>
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
         .login-container {
             max-width: 400px;
@@ -55,8 +55,8 @@
     <div class="container login-container">
         <div class="logo">☕</div>
         <div class="header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to manage your loyalty program</p>
+            <h1>Business Login</h1>
+            <p>Access your loyalty program dashboard</p>
         </div>
 
         <form id="loginForm" class="card">
@@ -80,7 +80,7 @@
         </form>
 
         <div class="register-link">
-            Don't have an account? <a href="cafe-registration.html">Register your cafe</a>
+            Don't have an account? <a href="business-registration.html"">Register your business</a>
         </div>
     </div>
 
@@ -88,7 +88,7 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             // Login logic will be added later
-            window.location.href = 'cafe-dashboard.html';
+            window.location.href = 'business-home.html';
         });
     </script>
 </body>

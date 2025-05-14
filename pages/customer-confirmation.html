@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Confirmed - Loyalty Program</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .confirmation-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .stamps-display {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .stamp {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stamp.filled {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .review-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation-container">
+            <div class="success-icon">✓</div>
+            <div class="header">
+                <h1>Your loyalty card has been stamped!</h1>
+                <p>Thank you for your purchase</p>
+            </div>
+
+            <div class="progress-container">
+                <h2>Progress to Reward</h2>
+                <div class="stamps-display">
+                    <div class="stamp filled">1</div>
+                    <div class="stamp filled">2</div>
+                    <div class="stamp filled">3</div>
+                    <div class="stamp filled">4</div>
+                    <div class="stamp filled">5</div>
+                    <div class="stamp filled">6</div>
+                    <div class="stamp filled">7</div>
+                    <div class="stamp filled">8</div>
+                    <div class="stamp">9</div>
+                    <div class="stamp">10</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%"></div>
+                </div>
+                <p>8/10 stamps collected</p>
+                <p><strong>Next Reward:</strong> Free large coffee</p>
+            </div>
+
+            <div class="card">
+                <h2>Transaction Details</h2>
+                <p><strong>Date:</strong> <span id="transactionDate"></span></p>
+                <p><strong>Points Earned:</strong> 1</p>
+                <p><strong>Current Total:</strong> 8 points</p>
+                <p><strong>Email:</strong> A confirmation has been sent to your email</p>
+            </div>
+
+            <div class="review-section">
+                <h2>Enjoying our rewards program?</h2>
+                <p>Share your experience with others!</p>
+                <a href="https://g.page/r/CoffeeHaven/review" target="_blank" class="btn">Leave a Google Review</a>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" onclick="window.location.href='customer-dashboard.html'">View My Rewards</button>
+                <button class="btn btn-secondary" onclick="window.close()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('transactionDate').textContent = new Date().toLocaleDateString();
+    </script>
+</body>
+</html> 
