@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Reviews - Virtual Stamp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/reviews.css">
+    <style>
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .page-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .nav-button {
+            background: var(--accent-color);
+            color: var(--text-primary);
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .page-navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .filter-panel {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .review-stats-card {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="home-button">
+        <span class="nav-icon">🏠</span>
+        Home
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>All Reviews</h1>
+            <p>Manage and respond to customer feedback</p>
+        </div>
+
+        <main class="main-content">
+            <div class="filter-panel">
+                <div class="filter-group">
+                    <label class="filter-label">Location</label>
+                    <select id="locationFilter" class="filter-select">
+                        <option value="">All Locations</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Rating</label>
+                    <select id="ratingFilter" class="filter-select">
+                        <option value="">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4+ Stars</option>
+                        <option value="3">3+ Stars</option>
+                        <option value="2">2+ Stars</option>
+                        <option value="1">1+ Stars</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Platform</label>
+                    <select id="platformFilter" class="filter-select">
+                        <option value="">All Platforms</option>
+                        <option value="Google">Google</option>
+                        <option value="Yelp">Yelp</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Response Status</label>
+                    <select id="responseFilter" class="filter-select">
+                        <option value="">All Reviews</option>
+                        <option value="responded">Responded</option>
+                        <option value="unresponded">Unresponded</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Date Range</label>
+                    <div class="date-range-picker">
+                        <input type="date" id="startDate" class="filter-select">
+                        <input type="date" id="endDate" class="filter-select">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Topics</label>
+                    <div id="topicFilter" class="topic-tags">
+                        <!-- Topics will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-stats-card">
+                <div class="filter-summary">
+                    <h3>Current Filter Summary</h3>
+                    <div id="filterSummary" class="filter-tags">
+                        <!-- Active filters will be shown here -->
+                    </div>
+                </div>
+                <div class="review-count">
+                    <span id="reviewCount">0</span> reviews found
+                </div>
+            </div>
+
+            <div class="review-list" id="reviewsList">
+                <!-- Reviews will be populated here -->
+            </div>
+
+            <div class="pagination">
+                <button id="prevPage" class="action-button secondary-action">
+                    <span class="nav-icon">←</span>
+                    Previous
+                </button>
+                <span id="pageInfo">Page 1 of 1</span>
+                <button id="nextPage" class="action-button secondary-action">
+                    Next
+                    <span class="nav-icon">→</span>
+                </button>
+            </div>
+
+            <div class="page-navigation">
+                <a href="reviews-dashboard.html" class="nav-button">
+                    <span class="nav-icon">📊</span>
+                    Back to Dashboard
+                </a>
+                <a href="reviews-insights.html" class="nav-button">
+                    <span class="nav-icon">📈</span>
+                    View Insights
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { fetchReviews, filterReviews, createReviewCard } from '../js/reviews-utils.js';
+
+        // Pagination state
+        let currentPage = 1;
+        const reviewsPerPage = 10;
+        let totalPages = 1;
+        let currentReviews = [];
+
+        // Initialize the reviews list
+        async function initializeReviewsList() {
+            const data = await fetchReviews();
+            if (!data) return;
+
+            const { reviews, locations } = data;
+            currentReviews = reviews;
+
+            // Populate location filter
+            const locationFilter = document.getElementById('locationFilter');
+            locations.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location.id;
+                option.textContent = location.name;
+                locationFilter.appendChild(option);
+            });
+
+            // Set default date range (last 30 days)
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - 30);
+            
+            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+            document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
+
+            // Populate topic filter
+            const topics = [...new Set(reviews.flatMap(review => review.topics))];
+            const topicFilter = document.getElementById('topicFilter');
+            topics.forEach(topic => {
+                const tag = document.createElement('span');
+                tag.className = 'topic-tag';
+                tag.textContent = topic;
+                tag.addEventListener('click', () => toggleTopicFilter(topic));
+                topicFilter.appendChild(tag);
+            });
+
+            // Initial render
+            applyFilters();
+        }
+
+        // Apply all filters
+        function applyFilters() {
+            const filters = {
+                locationId: document.getElementById('locationFilter').value,
+                rating: document.getElementById('ratingFilter').value,
+                platform: document.getElementById('platformFilter').value,
+                hasResponse: document.getElementById('responseFilter').value === 'responded' ? true :
+                           document.getElementById('responseFilter').value === 'unresponded' ? false : null,
+                dateRange: {
+                    start: document.getElementById('startDate').value,
+                    end: document.getElementById('endDate').value
+                },
+                topics: Array.from(document.querySelectorAll('#topicFilter .topic-tag.selected'))
+                    .map(tag => tag.textContent)
+            };
+
+            const filteredReviews = filterReviews(currentReviews, filters);
+            totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+            currentPage = 1;
+
+            updateFilterSummary(filters);
+            renderReviews(filteredReviews);
+            updatePagination();
+        }
+
+        // Render reviews for current page
+        function renderReviews(reviews) {
+            const startIndex = (currentPage - 1) * reviewsPerPage;
+            const endIndex = startIndex + reviewsPerPage;
+            const pageReviews = reviews.slice(startIndex, endIndex);
+
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = pageReviews.map(review => createReviewCard(review)).join('');
+
+            document.getElementById('reviewCount').textContent = reviews.length;
+        }
+
+        // Update pagination controls
+        function updatePagination() {
+            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+        }
+
+        // Update filter summary
+        function updateFilterSummary(filters) {
+            const summaryContainer = document.getElementById('filterSummary');
+            const activeFilters = [];
+
+            if (filters.locationId) {
+                const location = document.querySelector(`#locationFilter option[value="${filters.locationId}"]`);
+                activeFilters.push(`Location: ${location.textContent}`);
+            }
+            if (filters.rating) {
+                activeFilters.push(`Rating: ${filters.rating}+ Stars`);
+            }
+            if (filters.platform) {
+                activeFilters.push(`Platform: ${filters.platform}`);
+            }
+            if (filters.hasResponse !== null) {
+                activeFilters.push(`Status: ${filters.hasResponse ? 'Responded' : 'Unresponded'}`);
+            }
+            if (filters.topics.length > 0) {
+                activeFilters.push(`Topics: ${filters.topics.join(', ')}`);
+            }
+
+            summaryContainer.innerHTML = activeFilters.map(filter => `
+                <span class="filter-tag">${filter}</span>
+            `).join('');
+        }
+
+        // Toggle topic filter
+        function toggleTopicFilter(topic) {
+            const tag = document.querySelector(`#topicFilter .topic-tag:contains('${topic}')`);
+            tag.classList.toggle('selected');
+            applyFilters();
+        }
+
+        // Save filter preset
+        document.getElementById('saveFilterPreset').addEventListener('click', () => {
+            const presetName = prompt('Enter a name for this filter preset:');
+            if (!presetName) return;
+
+            const preset = {
+                name: presetName,
+                filters: {
+                    locationId: document.getElementById('locationFilter').value,
+                    rating: document.getElementById('ratingFilter').value,
+                    platform: document.getElementById('platformFilter').value,
+                    responseStatus: document.getElementById('responseFilter').value,
+                    dateRange: {
+                        start: document.getElementById('startDate').value,
+                        end: document.getElementById('endDate').value
+                    },
+                    topics: Array.from(document.querySelectorAll('#topicFilter .topic-tag.selected'))
+                        .map(tag => tag.textContent)
+                }
+            };
+
+            // Save to localStorage
+            const presets = JSON.parse(localStorage.getItem('reviewFilterPresets') || '[]');
+            presets.push(preset);
+            localStorage.setItem('reviewFilterPresets', JSON.stringify(presets));
+
+            alert('Filter preset saved!');
+        });
+
+        // Bulk actions
+        document.getElementById('bulkActions').addEventListener('click', () => {
+            const selectedReviews = document.querySelectorAll('.review-card.selected');
+            if (selectedReviews.length === 0) {
+                alert('Please select reviews to perform bulk actions');
+                return;
+            }
+
+            const action = prompt('Choose an action:\n1. Mark as addressed\n2. Add to category\n3. Export selected');
+            if (!action) return;
+
+            // Handle bulk action
+            switch (action) {
+                case '1':
+                    // Mark as addressed logic
+                    break;
+                case '2':
+                    // Add to category logic
+                    break;
+                case '3':
+                    // Export logic
+                    break;
+                default:
+                    alert('Invalid action selected');
+            }
+        });
+
+        // Pagination handlers
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                applyFilters();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                applyFilters();
+            }
+        });
+
+        // Filter change handlers
+        ['locationFilter', 'ratingFilter', 'platformFilter', 'responseFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('change', applyFilters);
+        });
+
+        ['startDate', 'endDate'].forEach(id => {
+            document.getElementById(id).addEventListener('change', applyFilters);
+        });
+
+        // Initialize the reviews list when loaded
+        document.addEventListener('DOMContentLoaded', initializeReviewsList);
+    </script>
+</body>
+</html> 

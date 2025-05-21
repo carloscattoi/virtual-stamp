@@ -1,0 +1,226 @@
+{
+  "reviews": [
+    {
+      "id": "r1",
+      "customer": {
+        "name": "Alice Smith",
+        "photo": "customer1.jpg"
+      },
+      "rating": 5,
+      "platform": "Google",
+      "date": "2024-05-01",
+      "content": "Amazing coffee and friendly staff! The atmosphere is perfect for working remotely.",
+      "response": "Thank you, Alice! We're glad you enjoyed your experience with us.",
+      "locationId": "loc1",
+      "topics": ["coffee", "staff", "atmosphere", "remote work"]
+    },
+    {
+      "id": "r2",
+      "customer": {
+        "name": "John Doe",
+        "photo": "customer2.jpg"
+      },
+      "rating": 4,
+      "platform": "Yelp",
+      "date": "2024-04-28",
+      "content": "Great pastries and coffee. A bit pricey but worth it for the quality.",
+      "response": null,
+      "locationId": "loc1",
+      "topics": ["pastries", "coffee", "pricing"]
+    },
+    {
+      "id": "r3",
+      "customer": {
+        "name": "Maria Garcia",
+        "photo": "customer3.jpg"
+      },
+      "rating": 3,
+      "platform": "Google",
+      "date": "2024-04-25",
+      "content": "Good coffee but the service was slow during peak hours.",
+      "response": "We apologize for the slow service. We're working on improving our efficiency during busy periods.",
+      "locationId": "loc2",
+      "topics": ["coffee", "service", "wait time"]
+    },
+    {
+      "id": "r4",
+      "customer": {
+        "name": "David Chen",
+        "photo": "customer4.jpg"
+      },
+      "rating": 5,
+      "platform": "Yelp",
+      "date": "2024-04-20",
+      "content": "Best oat milk latte in town! The baristas are so knowledgeable about coffee.",
+      "response": "Thank you for the kind words, David! We take pride in our coffee expertise.",
+      "locationId": "loc1",
+      "topics": ["oat milk", "latte", "baristas", "coffee knowledge"]
+    },
+    {
+      "id": "r5",
+      "customer": {
+        "name": "Sarah Johnson",
+        "photo": "customer5.jpg"
+      },
+      "rating": 2,
+      "platform": "Google",
+      "date": "2024-04-18",
+      "content": "Disappointed with the food quality. Coffee was good though.",
+      "response": null,
+      "locationId": "loc2",
+      "topics": ["food", "coffee", "quality"]
+    },
+    {
+      "id": "r6",
+      "customer": {
+        "name": "Michael Brown",
+        "photo": "customer6.jpg"
+      },
+      "rating": 5,
+      "platform": "Yelp",
+      "date": "2024-04-15",
+      "content": "Excellent WiFi and plenty of power outlets. Perfect for remote work!",
+      "response": "Thanks, Michael! We're glad our space works well for your remote work needs.",
+      "locationId": "loc1",
+      "topics": ["wifi", "power outlets", "remote work"]
+    },
+    {
+      "id": "r7",
+      "customer": {
+        "name": "Emma Wilson",
+        "photo": "customer7.jpg"
+      },
+      "rating": 4,
+      "platform": "Google",
+      "date": "2024-04-12",
+      "content": "Love the seasonal drinks! The pumpkin spice latte is amazing.",
+      "response": "Thank you, Emma! We're glad you enjoy our seasonal offerings.",
+      "locationId": "loc2",
+      "topics": ["seasonal drinks", "pumpkin spice", "latte"]
+    },
+    {
+      "id": "r8",
+      "customer": {
+        "name": "James Taylor",
+        "photo": "customer8.jpg"
+      },
+      "rating": 3,
+      "platform": "Yelp",
+      "date": "2024-04-10",
+      "content": "Good coffee but the seating is limited during busy hours.",
+      "response": "We're working on expanding our seating area. Thank you for your feedback!",
+      "locationId": "loc1",
+      "topics": ["coffee", "seating", "space"]
+    },
+    {
+      "id": "r9",
+      "customer": {
+        "name": "Lisa Anderson",
+        "photo": "customer9.jpg"
+      },
+      "rating": 5,
+      "platform": "Google",
+      "date": "2024-04-08",
+      "content": "The loyalty program is fantastic! Great rewards and easy to use.",
+      "response": "Thank you, Lisa! We're glad you're enjoying our loyalty program.",
+      "locationId": "loc2",
+      "topics": ["loyalty program", "rewards"]
+    },
+    {
+      "id": "r10",
+      "customer": {
+        "name": "Robert Kim",
+        "photo": "customer10.jpg"
+      },
+      "rating": 4,
+      "platform": "Yelp",
+      "date": "2024-04-05",
+      "content": "Clean and modern space. The cold brew is excellent.",
+      "response": null,
+      "locationId": "loc1",
+      "topics": ["cleanliness", "modern", "cold brew"]
+    },
+    {
+      "id": "r11",
+      "customer": {
+        "name": "Patricia Lee",
+        "photo": "customer11.jpg"
+      },
+      "rating": 2,
+      "platform": "Google",
+      "date": "2024-04-03",
+      "content": "Order was wrong and staff wasn't very helpful in fixing it.",
+      "response": "We apologize for the mistake and poor service. Please contact us directly so we can make it right.",
+      "locationId": "loc2",
+      "topics": ["order accuracy", "staff", "service"]
+    },
+    {
+      "id": "r12",
+      "customer": {
+        "name": "Thomas White",
+        "photo": "customer12.jpg"
+      },
+      "rating": 5,
+      "platform": "Yelp",
+      "date": "2024-04-01",
+      "content": "Best coffee shop in the area! The staff remembers my order.",
+      "response": "Thank you, Thomas! We love having you as a regular customer.",
+      "locationId": "loc1",
+      "topics": ["coffee", "staff", "personal service"]
+    },
+    {
+      "id": "r13",
+      "customer": {
+        "name": "Jennifer Martinez",
+        "photo": "customer13.jpg"
+      },
+      "rating": 4,
+      "platform": "Google",
+      "date": "2024-03-29",
+      "content": "Great selection of pastries and the coffee is always consistent.",
+      "response": "Thank you for your kind words, Jennifer! We take pride in our consistency.",
+      "locationId": "loc2",
+      "topics": ["pastries", "coffee", "consistency"]
+    },
+    {
+      "id": "r14",
+      "customer": {
+        "name": "Daniel Clark",
+        "photo": "customer14.jpg"
+      },
+      "rating": 3,
+      "platform": "Yelp",
+      "date": "2024-03-27",
+      "content": "Good coffee but the music is too loud for meetings.",
+      "response": "Thank you for the feedback. We'll adjust the music volume during business hours.",
+      "locationId": "loc1",
+      "topics": ["coffee", "music", "meetings"]
+    },
+    {
+      "id": "r15",
+      "customer": {
+        "name": "Rachel Green",
+        "photo": "customer15.jpg"
+      },
+      "rating": 5,
+      "platform": "Google",
+      "date": "2024-03-25",
+      "content": "The outdoor seating area is perfect for sunny days. Great coffee too!",
+      "response": "Thank you, Rachel! We're glad you enjoy our outdoor space.",
+      "locationId": "loc2",
+      "topics": ["outdoor seating", "coffee", "atmosphere"]
+    }
+  ],
+  "locations": [
+    {
+      "id": "loc1",
+      "name": "Downtown Cafe",
+      "address": "123 Main St"
+    },
+    {
+      "id": "loc2",
+      "name": "Uptown Cafe",
+      "address": "456 Oak Ave"
+    }
+  ]
+} 

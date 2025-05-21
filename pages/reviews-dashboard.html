@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews Dashboard - Virtual Stamp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/reviews.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .page-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .nav-button {
+            background: var(--accent-color);
+            color: var(--text-primary);
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .page-navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="home-button">
+        <span class="nav-icon">🏠</span>
+        Home
+    </a>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Reviews Dashboard</h1>
+                <div class="header-actions">
+                    <select id="locationFilter" class="filter-select">
+                        <option value="">All Locations</option>
+                    </select>
+                    <div class="date-range-picker">
+                        <input type="date" id="startDate" class="filter-select">
+                        <input type="date" id="endDate" class="filter-select">
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="review-stats-card">
+                    <h3>Overall Rating</h3>
+                    <div class="stat-item">
+                        <div class="stat-value" id="averageRating">0.0</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <div class="review-stats-card">
+                    <h3>Review Volume</h3>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalReviews">0</div>
+                        <div class="stat-label">Total Reviews</div>
+                    </div>
+                </div>
+
+                <div class="review-stats-card">
+                    <h3>Response Rate</h3>
+                    <div class="stat-item">
+                        <div class="stat-value" id="responseRate">0%</div>
+                        <div class="stat-label">Reviews Responded</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Rating Distribution</h3>
+                <canvas id="ratingDistributionChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>Platform Distribution</h3>
+                <canvas id="platformDistributionChart"></canvas>
+            </div>
+
+            <div class="review-stats-card">
+                <h3>Needs Attention</h3>
+                <div id="unrespondedReviews" class="review-list">
+                    <!-- Unresponded reviews will be populated here -->
+                </div>
+            </div>
+
+            <div class="review-stats-card">
+                <h3>Top Topics</h3>
+                <div class="topic-tags" id="topTopics">
+                    <!-- Top topics will be populated here -->
+                </div>
+            </div>
+
+            <div class="page-navigation">
+                <a href="reviews-insights.html" class="nav-button">
+                    <span class="nav-icon">📈</span>
+                    View Insights
+                </a>
+                <a href="reviews-list.html" class="nav-button">
+                    <span class="nav-icon">📝</span>
+                    View All Reviews
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { fetchReviews, calculateReviewStats, filterReviews, createReviewCard, initializeCharts } from '../js/reviews-utils.js';
+
+        // Initialize the dashboard
+        async function initializeDashboard() {
+            const data = await fetchReviews();
+            if (!data) return;
+
+            const { reviews, locations } = data;
+
+            // Populate location filter
+            const locationFilter = document.getElementById('locationFilter');
+            locations.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location.id;
+                option.textContent = location.name;
+                locationFilter.appendChild(option);
+            });
+
+            // Set default date range (last 30 days)
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - 30);
+            
+            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+            document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
+
+            // Initialize charts
+            initializeCharts(reviews);
+
+            // Update stats
+            const stats = calculateReviewStats(reviews);
+            document.getElementById('averageRating').textContent = stats.averageRating;
+            document.getElementById('totalReviews').textContent = stats.totalReviews;
+            document.getElementById('responseRate').textContent = `${stats.responseRate}%`;
+
+            // Populate unresponded reviews
+            const unrespondedReviews = reviews.filter(review => !review.response);
+            const unrespondedContainer = document.getElementById('unrespondedReviews');
+            unrespondedReviews.slice(0, 5).forEach(review => {
+                unrespondedContainer.innerHTML += createReviewCard(review);
+            });
+
+            // Populate top topics
+            const topTopics = Object.entries(stats.topicFrequency)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 10)
+                .map(([topic]) => topic);
+
+            const topicsContainer = document.getElementById('topTopics');
+            topTopics.forEach(topic => {
+                const tag = document.createElement('span');
+                tag.className = 'topic-tag';
+                tag.textContent = topic;
+                topicsContainer.appendChild(tag);
+            });
+        }
+
+        // Initialize the dashboard when the page loads
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+
+        // Handle filter changes
+        document.getElementById('locationFilter').addEventListener('change', async () => {
+            const data = await fetchReviews();
+            if (!data) return;
+
+            const filters = {
+                locationId: document.getElementById('locationFilter').value,
+                dateRange: {
+                    start: document.getElementById('startDate').value,
+                    end: document.getElementById('endDate').value
+                }
+            };
+
+            const filteredReviews = filterReviews(data.reviews, filters);
+            initializeCharts(filteredReviews);
+        });
+
+        // Handle date range changes
+        ['startDate', 'endDate'].forEach(id => {
+            document.getElementById(id).addEventListener('change', async () => {
+                const data = await fetchReviews();
+                if (!data) return;
+
+                const filters = {
+                    locationId: document.getElementById('locationFilter').value,
+                    dateRange: {
+                        start: document.getElementById('startDate').value,
+                        end: document.getElementById('endDate').value
+                    }
+                };
+
+                const filteredReviews = filterReviews(data.reviews, filters);
+                initializeCharts(filteredReviews);
+            });
+        });
+    </script>
+</body>
+</html> 
