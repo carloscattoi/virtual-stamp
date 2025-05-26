@@ -1,11 +1,15 @@
 :root {
-    --primary-color: #E07A5F;
-    --secondary-color: #8FBC8F;
-    --accent-color: #F8F8FF;
-    --background-color: #F8F8FF;
-    --text-color: #556B2F;
-    --border-radius: 8px;
-    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --primary-color: #5E60CE;     /* Slate Blue */
+    --secondary-color: #4AACAC;   /* Turquoise */
+    --accent-color: #F08C00;      /* Orange */
+    --success-color: #2E8B57;     /* Sea Green */
+    --alert-color: #E63E6D;       /* Pink */
+    --background-color: #F9F9FB;  /* Cultured */
+    --card-color: #FFFFFF;        /* White */
+    --text-color-dark: #2B2D42;   /* Space Cadet */
+    --text-color-light: #6C757D;  /* Gray */
+    --border-radius: 10px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -17,8 +21,9 @@
 
 body {
     background-color: var(--background-color);
-    color: var(--text-color);
+    color: var(--text-color-dark);
     line-height: 1.6;
+    font-size: 16px;
 }
 
 .container {
@@ -28,7 +33,7 @@ body {
 }
 
 .card {
-    background: var(--accent-color);
+    background: var(--card-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 20px;
@@ -43,7 +48,8 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--text-color);
+    color: var(--text-color-dark);
+    font-size: 16px;
 }
 
 input, textarea, select {
@@ -53,12 +59,13 @@ input, textarea, select {
     border-radius: var(--border-radius);
     font-size: 16px;
     transition: border-color 0.3s ease;
-    background-color: var(--accent-color);
-    color: var(--text-color);
+    background-color: var(--card-color);
+    color: var(--text-color-dark);
 }
 
 input:focus, textarea:focus, select:focus {
-    outline: none;
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
     border-color: var(--primary-color);
 }
 
@@ -66,26 +73,38 @@ input:focus, textarea:focus, select:focus {
     display: inline-block;
     padding: 12px 24px;
     background-color: var(--primary-color);
-    color: var(--accent-color);
+    color: white;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #d06a4f;
+    background-color: #4A4DB3;
+    transform: translateY(-2px);
+}
+
+.btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .btn-secondary {
     background-color: var(--secondary-color);
-    color: var(--accent-color);
+    color: var(--text-color-dark);
 }
 
 .btn-secondary:hover {
-    background-color: #7eab7e;
+    background-color: #3BCFB0;
+    transform: translateY(-2px);
+}
+
+.btn-secondary:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
 }
 
 .header {
@@ -96,12 +115,46 @@ input:focus, textarea:focus, select:focus {
 .header h1 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: var(--text-color);
+    color: var(--text-color-dark);
 }
 
 .header p {
-    color: var(--text-color);
-    opacity: 0.8;
+    color: var(--text-color-light);
+    font-size: 16px;
+}
+
+/* Focus styles for interactive elements */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Alert styles */
+.alert {
+    background-color: var(--card-color);
+    border-left: 4px solid var(--alert-color);
+    padding: 12px;
+    margin-bottom: 20px;
+    color: var(--text-color-dark);
+}
+
+.alert-icon {
+    color: var(--alert-color);
+    margin-right: 8px;
+}
+
+/* Success styles */
+.success {
+    background-color: var(--card-color);
+    border-left: 4px solid var(--success-color);
+    padding: 12px;
+    margin-bottom: 20px;
+    color: var(--text-color-dark);
+}
+
+.success-icon {
+    color: var(--success-color);
+    margin-right: 8px;
 }
 
 /* Mobile-first responsive design */
