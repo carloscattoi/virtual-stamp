@@ -14,18 +14,19 @@
         }
 
         .promotion-type-card {
-            background: var(--accent-color);
+            background: var(--card-color);
             padding: 20px;
             border-radius: var(--border-radius);
             text-align: center;
             cursor: pointer;
             border: 2px solid transparent;
             transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
         }
 
         .promotion-type-card.selected {
             border-color: var(--primary-color);
-            background: rgba(224, 122, 95, 0.1);
+            background: var(--background-color);
         }
 
         .promotion-type-icon {
@@ -35,10 +36,11 @@
         }
 
         .rules-config {
-            background: var(--accent-color);
+            background: var(--card-color);
             padding: 20px;
             border-radius: var(--border-radius);
             margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
         }
 
         .date-range {
@@ -60,12 +62,42 @@
 
         .exclusion-item input[type="text"] {
             flex: 1;
+            background: var(--card-color);
+            color: var(--text-color-dark);
+            border: 1px solid var(--secondary-color);
         }
 
         .remove-exclusion {
-            color: #dc3545;
+            color: var(--alert-color);
             cursor: pointer;
             font-size: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--text-color-dark);
+        }
+
+        p {
+            color: var(--text-color-light);
+        }
+
+        label {
+            color: var(--text-color-dark);
+        }
+
+        small {
+            color: var(--text-color-light);
+        }
+
+        input, textarea, select {
+            background: var(--card-color);
+            color: var(--text-color-dark);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .card {
+            background: var(--card-color);
+            box-shadow: var(--box-shadow);
         }
     </style>
 </head>

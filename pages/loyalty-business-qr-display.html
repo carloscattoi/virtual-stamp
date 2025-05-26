@@ -15,7 +15,7 @@
             width: 250px;
             height: 250px;
             margin: 0 auto 20px;
-            background: var(--accent-color);
+            background: var(--card-color);
             display: grid;
             grid-template-columns: repeat(25, 1fr);
             grid-template-rows: repeat(25, 1fr);
@@ -26,25 +26,24 @@
         }
 
         .qr-cell {
-            background: var(--text-color);
+            background: var(--text-color-dark);
             border-radius: 2px;
         }
 
         .qr-cell.white {
-            background: var(--accent-color);
+            background: var(--card-color);
         }
 
         .cafe-name {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: var(--text-color);
+            color: var(--text-color-dark);
         }
 
         .scan-text {
-            color: var(--text-color);
+            color: var(--text-color-light);
             margin-bottom: 30px;
-            opacity: 0.8;
         }
 
         .action-buttons {
@@ -56,10 +55,11 @@
         }
 
         .embed-code {
-            background: var(--accent-color);
+            background: var(--card-color);
             padding: 20px;
             border-radius: var(--border-radius);
             margin-top: 30px;
+            box-shadow: var(--box-shadow);
         }
 
         .embed-code pre {
@@ -69,22 +69,32 @@
             overflow-x: auto;
             font-size: 14px;
             margin-top: 10px;
-            color: var(--text-color);
+            color: var(--text-color-dark);
         }
 
         .copy-button {
             background: var(--secondary-color);
-            color: var(--accent-color);
+            color: var(--card-color);
             border: none;
             padding: 8px 16px;
             border-radius: var(--border-radius);
             cursor: pointer;
             font-size: 14px;
             margin-top: 10px;
+            transition: all 0.3s ease;
         }
 
         .copy-button:hover {
-            background: #7eab7e;
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-color-dark);
+        }
+
+        p {
+            color: var(--text-color-light);
         }
     </style>
 </head>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/loyalty.css">
     <style>
         .cafe-card {
-            background: white;
+            background: var(--card-color);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 20px;
@@ -25,16 +25,17 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: #f0f0f0;
+            background: var(--accent-color);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
+            color: var(--text-color-dark);
         }
 
         .progress-bar {
             height: 8px;
-            background: #f0f0f0;
+            background: var(--background-color);
             border-radius: 4px;
             margin: 10px 0;
             overflow: hidden;
@@ -54,7 +55,8 @@
 
         .visit-item {
             padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid var(--background-color);
+            color: var(--text-color-light);
         }
 
         .visit-item:last-child {
@@ -62,7 +64,7 @@
         }
 
         .profile-section {
-            background: white;
+            background: var(--card-color);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 20px;
@@ -74,6 +76,7 @@
             align-items: center;
             gap: 10px;
             margin-top: 10px;
+            color: var(--text-color-dark);
         }
 
         .switch {
@@ -96,7 +99,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: var(--text-color-light);
             transition: .4s;
             border-radius: 24px;
         }
@@ -108,17 +111,29 @@
             width: 16px;
             left: 4px;
             bottom: 4px;
-            background-color: white;
+            background-color: var(--card-color);
             transition: .4s;
             border-radius: 50%;
         }
 
         input:checked + .slider {
-            background-color: var(--primary-color);
+            background-color: var(--success-color);
         }
 
         input:checked + .slider:before {
             transform: translateX(26px);
+        }
+
+        h2, h3 {
+            color: var(--text-color-dark);
+        }
+
+        p {
+            color: var(--text-color-light);
+        }
+
+        strong {
+            color: var(--text-color-dark);
         }
     </style>
 </head>

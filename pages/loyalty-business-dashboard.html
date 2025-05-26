@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafe Dashboard - Loyalty Program</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/loyalty.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .dashboard-grid {
@@ -15,7 +15,7 @@
         }
 
         .stat-card {
-            background: #f5f5f5;
+            background: var(--card-color);
             padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -24,9 +24,8 @@
 
         .stat-card h3 {
             font-size: 14px;
-            color: var(--text-color);
+            color: var(--text-color-light);
             margin-bottom: 10px;
-            opacity: 0.8;
         }
 
         .stat-card .number {
@@ -36,7 +35,7 @@
         }
 
         .chart-container {
-            background: #f5f5f5;
+            background: var(--card-color);
             padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -46,7 +45,7 @@
 
         .chart-title {
             margin-bottom: 20px;
-            color: var(--text-color);
+            color: var(--text-color-dark);
             font-size: 18px;
             font-weight: 500;
         }
@@ -55,6 +54,12 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+        }
+
+        .date-range input {
+            background: var(--card-color);
+            color: var(--text-color-dark);
+            border: 1px solid var(--secondary-color);
         }
 
         .actions {
@@ -71,8 +76,7 @@
             align-items: center;
             justify-content: center;
             border-radius: var(--border-radius);
-            color: var(--text-color);
-            opacity: 0.7;
+            color: var(--text-color-light);
         }
 
         .chart-placeholder::before {
@@ -94,7 +98,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid var(--secondary-color);
+            border-bottom: 1px solid var(--background-color);
         }
 
         .customer-item:last-child {
@@ -103,6 +107,7 @@
 
         .customer-name {
             font-weight: 500;
+            color: var(--text-color-dark);
         }
 
         .customer-stamps {
@@ -111,7 +116,20 @@
         }
 
         body {
-            background: white;
+            background: var(--background-color);
+        }
+
+        h1, h2 {
+            color: var(--text-color-dark);
+        }
+
+        p {
+            color: var(--text-color-light);
+        }
+
+        .card {
+            background: var(--card-color);
+            box-shadow: var(--box-shadow);
         }
     </style>
 </head>
