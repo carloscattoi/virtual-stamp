@@ -26,20 +26,12 @@
     padding: 8px;
     border: 1px solid var(--secondary-color);
     border-radius: var(--border-radius);
-    background: var(--card-color);
-    color: var(--text-color-dark);
-    font-size: 16px;
-}
-
-.filter-controls select:focus,
-.filter-controls input:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+    background: white;
 }
 
 /* Chart Containers */
 .chart-container {
-    background: var(--card-color);
+    background: var(--accent-color);
     padding: 20px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
@@ -57,8 +49,7 @@
 
 .chart-title {
     font-size: 18px;
-    color: var(--text-color-dark);
-    font-weight: 500;
+    color: var(--text-color);
 }
 
 /* Loading States */
@@ -74,7 +65,7 @@
     transform: translate(-50%, -50%);
     width: 40px;
     height: 40px;
-    border: 4px solid var(--background-color);
+    border: 4px solid var(--accent-color);
     border-top: 4px solid var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -92,18 +83,17 @@
     gap: 5px;
     padding: 4px 8px;
     border-radius: 12px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 12px;
 }
 
 .trend-up {
-    background: rgba(46, 139, 87, 0.1);
-    color: var(--success-color);
+    background: #e6f4ea;
+    color: #137333;
 }
 
 .trend-down {
-    background: rgba(230, 62, 109, 0.1);
-    color: var(--alert-color);
+    background: #fce8e6;
+    color: #c5221f;
 }
 
 /* Stats Cards */
@@ -115,7 +105,7 @@
 }
 
 .stat-card {
-    background: var(--card-color);
+    background: var(--accent-color);
     padding: 20px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
@@ -127,10 +117,9 @@
 }
 
 .stat-card h3 {
-    color: var(--text-color-dark);
-    font-size: 16px;
+    color: var(--text-color);
+    font-size: 14px;
     margin-bottom: 10px;
-    font-weight: 500;
 }
 
 .stat-card .value {
@@ -143,7 +132,7 @@
 .responsive-table {
     width: 100%;
     overflow-x: auto;
-    background: var(--card-color);
+    background: var(--accent-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 }
@@ -157,19 +146,16 @@
 .responsive-table td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid var(--background-color);
-    color: var(--text-color-dark);
-    font-size: 16px;
+    border-bottom: 1px solid var(--secondary-color);
 }
 
 .responsive-table th {
     background: var(--primary-color);
     color: white;
-    font-weight: 500;
 }
 
 .responsive-table tr:hover {
-    background: var(--background-color);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 /* Breadcrumb Navigation */
@@ -178,8 +164,7 @@
     align-items: center;
     gap: 8px;
     margin-bottom: 20px;
-    color: var(--text-color-light);
-    font-size: 16px;
+    color: var(--text-color);
 }
 
 .breadcrumb a {
@@ -189,12 +174,6 @@
 
 .breadcrumb a:hover {
     text-decoration: underline;
-}
-
-.breadcrumb a:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-    border-radius: 4px;
 }
 
 /* Export Buttons */
@@ -209,24 +188,16 @@
     align-items: center;
     gap: 5px;
     padding: 8px 16px;
-    background: var(--card-color);
+    background: var(--accent-color);
     border: 1px solid var(--secondary-color);
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: all 0.3s ease;
-    color: var(--text-color-dark);
-    font-size: 16px;
 }
 
 .export-btn:hover {
     background: var(--primary-color);
     color: white;
-    border-color: var(--primary-color);
-}
-
-.export-btn:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
 }
 
 /* Mobile Responsiveness */
@@ -278,20 +249,18 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 8px 12px;
-    background: var(--text-color-dark);
+    padding: 8px;
+    background: var(--text-color);
     color: white;
-    font-size: 14px;
     border-radius: var(--border-radius);
+    font-size: 12px;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 1000;
 }
 
 [data-tooltip]:hover:before {
     opacity: 1;
     visibility: visible;
-    bottom: calc(100% + 5px);
 } 
