@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="../css/loyalty.css">
     <style>
         .customer-info {
-            background: #f8f9fa;
+            background: var(--card-color);
             padding: 20px;
             border-radius: var(--border-radius);
             margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
         }
 
         .stamp-preview {
@@ -30,11 +31,12 @@
             justify-content: center;
             font-weight: bold;
             color: var(--primary-color);
+            background: var(--card-color);
         }
 
         .stamp.filled {
             background-color: var(--primary-color);
-            color: white;
+            color: var(--card-color);
         }
 
         .coffee-selector {
@@ -47,6 +49,9 @@
             padding: 10px;
             font-size: 18px;
             text-align: center;
+            background: var(--card-color);
+            color: var(--text-color-dark);
+            border: 1px solid var(--secondary-color);
         }
 
         .action-buttons {
@@ -57,11 +62,29 @@
         }
 
         .btn-cancel {
-            background-color: #dc3545;
+            background-color: var(--alert-color);
         }
 
         .btn-cancel:hover {
-            background-color: #c82333;
+            background-color: #d12d5c;
+            transform: translateY(-2px);
+        }
+
+        h1, h2 {
+            color: var(--text-color-dark);
+        }
+
+        p {
+            color: var(--text-color-light);
+        }
+
+        strong {
+            color: var(--text-color-dark);
+        }
+
+        .card {
+            background: var(--card-color);
+            box-shadow: var(--box-shadow);
         }
     </style>
 </head>
