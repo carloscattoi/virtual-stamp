@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Performance - Virtual Stamp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/sales.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/sales-data.js"></script>
+    <style>
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls select, .filter-controls input {
+            min-width: 150px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .product-card h3 {
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .product-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .label {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .stat-item .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .trend-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .trend-up {
+            background: #e6f4ea;
+            color: #137333;
+        }
+
+        .trend-down {
+            background: #fce8e6;
+            color: #c5221f;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .product-table th, .product-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .product-table th {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .product-table tr:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .stock-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .stock-good {
+            background: #e6f4ea;
+            color: #137333;
+        }
+
+        .stock-warning {
+            background: #fef7e0;
+            color: #b06000;
+        }
+
+        .stock-low {
+            background: #fce8e6;
+            color: #c5221f;
+        }
+
+        .chart-container {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .products-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <a href="sales-dashboard.html">Sales</a>
+            <span>›</span>
+            <span>Products</span>
+        </div>
+
+        <div class="sales-container">
+            <div class="sales-header">
+                <h1>Product Performance</h1>
+                <div class="filter-controls">
+                    <input type="date" class="date-range-start" data-tooltip="Start date for analysis">
+                    <input type="date" class="date-range-end" data-tooltip="End date for analysis">
+                    <select class="location-selector" data-tooltip="Select location to analyze">
+                        <option value="all">All Locations</option>
+                        <option value="location1">Downtown Cafe</option>
+                        <option value="location2">Westside Branch</option>
+                    </select>
+                    <select class="category-filter" data-tooltip="Filter by product category">
+                        <option value="all">All Categories</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="pastries">Pastries</option>
+                        <option value="sandwiches">Sandwiches</option>
+                    </select>
+                    <button class="export-btn" onclick="salesUtils.exportToCSV(salesUtils.mockSalesData.productData.topPerformers, 'product-performance')">
+                        📊 Export Report
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3>Top Performer</h3>
+                    <div class="product-stats">
+                        <div class="stat-item">
+                            <div class="label">Revenue</div>
+                            <div class="value">$2,345</div>
+                            <div class="trend-indicator trend-up">↑ 15%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Units Sold</div>
+                            <div class="value">234</div>
+                            <div class="trend-indicator trend-up">↑ 8%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <h3>Most Improved</h3>
+                    <div class="product-stats">
+                        <div class="stat-item">
+                            <div class="label">Revenue</div>
+                            <div class="value">$1,234</div>
+                            <div class="trend-indicator trend-up">↑ 25%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Units Sold</div>
+                            <div class="value">123</div>
+                            <div class="trend-indicator trend-up">↑ 20%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <h3>Needs Attention</h3>
+                    <div class="product-stats">
+                        <div class="stat-item">
+                            <div class="label">Revenue</div>
+                            <div class="value">$567</div>
+                            <div class="trend-indicator trend-down">↓ 5%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Units Sold</div>
+                            <div class="value">45</div>
+                            <div class="trend-indicator trend-down">↓ 8%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2 class="chart-title">Product Performance Trends</h2>
+                    <div class="chart-actions">
+                        <button class="export-btn" onclick="exportChart('productTrendsChart')">📥 Export</button>
+                    </div>
+                </div>
+                <canvas id="productTrendsChart"></canvas>
+            </div>
+
+            <div class="responsive-table">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Revenue</th>
+                            <th>Units Sold</th>
+                            <th>Trend</th>
+                            <th>Stock Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Espresso</td>
+                            <td>Coffee</td>
+                            <td>$2,345</td>
+                            <td>234</td>
+                            <td><span class="trend-indicator trend-up">↑ 15%</span></td>
+                            <td><span class="stock-status stock-good">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>Croissant</td>
+                            <td>Pastries</td>
+                            <td>$1,234</td>
+                            <td>123</td>
+                            <td><span class="trend-indicator trend-up">↑ 25%</span></td>
+                            <td><span class="stock-status stock-warning">Low Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>Chicken Sandwich</td>
+                            <td>Sandwiches</td>
+                            <td>$567</td>
+                            <td>45</td>
+                            <td><span class="trend-indicator trend-down">↓ 5%</span></td>
+                            <td><span class="stock-status stock-low">Out of Stock</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { mockSalesData, chartConfig, createLineChart } = window.salesUtils;
+
+        // Product Trends Chart
+        const productTrendsCtx = document.getElementById('productTrendsChart').getContext('2d');
+        const productTrendsChart = createLineChart(productTrendsCtx, {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Espresso',
+                data: [1800, 1900, 2100, 2200, 2300, 2345],
+                borderColor: chartConfig.colors.primary,
+                tension: 0.4
+            }, {
+                label: 'Croissant',
+                data: [900, 950, 1000, 1100, 1200, 1234],
+                borderColor: chartConfig.colors.secondary,
+                tension: 0.4
+            }, {
+                label: 'Chicken Sandwich',
+                data: [600, 580, 570, 565, 568, 567],
+                borderColor: chartConfig.colors.danger,
+                tension: 0.4
+            }]
+        });
+
+        // Export chart function
+        function exportChart(chartId) {
+            const canvas = document.getElementById(chartId);
+            const link = document.createElement('a');
+            link.download = `${chartId}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Initialize date inputs with current month
+        const today = new Date();
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        
+        document.querySelector('.date-range-start').value = firstDay.toISOString().split('T')[0];
+        document.querySelector('.date-range-end').value = lastDay.toISOString().split('T')[0];
+
+        // Simulate real-time updates
+        const updateProductData = () => {
+            // Update product trends
+            productTrendsChart.data.datasets.forEach(dataset => {
+                dataset.data = dataset.data.map(value => value * (0.95 + Math.random() * 0.1));
+            });
+            productTrendsChart.update();
+
+            // Update stock levels
+            const stockStatuses = document.querySelectorAll('.stock-status');
+            stockStatuses.forEach(status => {
+                const currentClass = status.className.split(' ').find(c => c.startsWith('stock-'));
+                const newStatus = Math.random() > 0.7 ? 'good' : Math.random() > 0.5 ? 'warning' : 'low';
+                status.className = `stock-status stock-${newStatus}`;
+                status.textContent = newStatus === 'good' ? 'In Stock' : 
+                                  newStatus === 'warning' ? 'Low Stock' : 'Out of Stock';
+            });
+        };
+
+        // Start real-time updates
+        const updateInterval = salesUtils.simulateRealTimeUpdates(updateProductData, 5000);
+
+        // Cleanup on page unload
+        window.addEventListener('unload', () => {
+            clearInterval(updateInterval);
+        });
+    </script>
+</body>
+</html> 
