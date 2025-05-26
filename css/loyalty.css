@@ -1,15 +1,11 @@
 :root {
-    --primary-color: #5E60CE;     /* Slate Blue */
-    --secondary-color: #4AACAC;   /* Darker Turquoise */
-    --accent-color: #F08C00;      /* Darker Orange */
-    --success-color: #2E8B57;     /* Sea Green */
-    --alert-color: #E63E6D;       /* Darker Pink */
-    --background-color: #F9F9FB;  /* Cultured */
-    --card-color: #FFFFFF;        /* White */
-    --text-color-dark: #2B2D42;   /* Space Cadet */
-    --text-color-light: #6C757D;  /* Darker Gray */
-    --border-radius: 10px;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --primary-color: #4A90E2;
+    --secondary-color: #50E3C2;
+    --accent-color: #F5F7FA;
+    --background-color: #FFFFFF;
+    --text-color: #2C3E50;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 * {
