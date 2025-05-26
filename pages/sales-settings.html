@@ -140,7 +140,7 @@
     </style>
 </head>
 <body>
-    <div class="sales-container">
+    <div class="container">
         <div class="breadcrumb">
             <a href="../index.html">Home</a>
             <span>›</span>
@@ -149,124 +149,126 @@
             <span>Settings</span>
         </div>
 
-        <div class="sales-header">
-            <h1>Sales Settings</h1>
-        </div>
+        <div class="sales-container">
+            <div class="sales-header">
+                <h1>Sales Settings</h1>
+            </div>
 
-        <div class="settings-grid">
-            <div class="settings-card">
-                <h2>Daily Sales Targets</h2>
-                <div class="target-grid">
-                    <div class="target-item">
-                        <label>Monday</label>
-                        <input type="number" value="800" min="0" step="100" data-tooltip="Set daily target for Monday">
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h2>Daily Sales Targets</h2>
+                    <div class="target-grid">
+                        <div class="target-item">
+                            <label>Monday</label>
+                            <input type="number" value="800" min="0" step="100" data-tooltip="Set daily target for Monday">
+                        </div>
+                        <div class="target-item">
+                            <label>Tuesday</label>
+                            <input type="number" value="850" min="0" step="100" data-tooltip="Set daily target for Tuesday">
+                        </div>
+                        <div class="target-item">
+                            <label>Wednesday</label>
+                            <input type="number" value="900" min="0" step="100" data-tooltip="Set daily target for Wednesday">
+                        </div>
+                        <div class="target-item">
+                            <label>Thursday</label>
+                            <input type="number" value="950" min="0" step="100" data-tooltip="Set daily target for Thursday">
+                        </div>
+                        <div class="target-item">
+                            <label>Friday</label>
+                            <input type="number" value="1100" min="0" step="100" data-tooltip="Set daily target for Friday">
+                        </div>
+                        <div class="target-item">
+                            <label>Saturday</label>
+                            <input type="number" value="1200" min="0" step="100" data-tooltip="Set daily target for Saturday">
+                        </div>
+                        <div class="target-item">
+                            <label>Sunday</label>
+                            <input type="number" value="1000" min="0" step="100" data-tooltip="Set daily target for Sunday">
+                        </div>
                     </div>
-                    <div class="target-item">
-                        <label>Tuesday</label>
-                        <input type="number" value="850" min="0" step="100" data-tooltip="Set daily target for Tuesday">
-                    </div>
-                    <div class="target-item">
-                        <label>Wednesday</label>
-                        <input type="number" value="900" min="0" step="100" data-tooltip="Set daily target for Wednesday">
-                    </div>
-                    <div class="target-item">
-                        <label>Thursday</label>
-                        <input type="number" value="950" min="0" step="100" data-tooltip="Set daily target for Thursday">
-                    </div>
-                    <div class="target-item">
-                        <label>Friday</label>
-                        <input type="number" value="1100" min="0" step="100" data-tooltip="Set daily target for Friday">
-                    </div>
-                    <div class="target-item">
-                        <label>Saturday</label>
-                        <input type="number" value="1200" min="0" step="100" data-tooltip="Set daily target for Saturday">
-                    </div>
-                    <div class="target-item">
-                        <label>Sunday</label>
-                        <input type="number" value="1000" min="0" step="100" data-tooltip="Set daily target for Sunday">
+                    <div class="form-group">
+                        <label>Seasonal Adjustment (%)</label>
+                        <input type="number" value="10" min="-50" max="50" step="5" data-tooltip="Adjust targets based on seasonal factors">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Seasonal Adjustment (%)</label>
-                    <input type="number" value="10" min="-50" max="50" step="5" data-tooltip="Adjust targets based on seasonal factors">
+
+                <div class="settings-card">
+                    <h2>Notification Settings</h2>
+                    <div class="notification-settings">
+                        <div class="notification-item">
+                            <input type="checkbox" id="performance-alerts" checked data-tooltip="Get alerts when performance is below target">
+                            <label for="performance-alerts">Performance Alerts</label>
+                        </div>
+                        <div class="notification-item">
+                            <input type="checkbox" id="daily-summary" checked data-tooltip="Receive daily summary reports">
+                            <label for="daily-summary">Daily Summary Reports</label>
+                        </div>
+                        <div class="notification-item">
+                            <input type="checkbox" id="low-stock" checked data-tooltip="Get notified when stock is running low">
+                            <label for="low-stock">Low Stock Notifications</label>
+                        </div>
+                        <div class="notification-item">
+                            <input type="checkbox" id="goal-celebrations" checked data-tooltip="Show celebrations when targets are met">
+                            <label for="goal-celebrations">Goal Achievement Celebrations</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h2>POS Integration</h2>
+                    <div class="pos-status">
+                        <div class="status-indicator"></div>
+                        <span>Connected to POS System</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Data Sync Frequency</label>
+                        <select data-tooltip="How often to sync data with POS system">
+                            <option value="5">Every 5 minutes</option>
+                            <option value="15">Every 15 minutes</option>
+                            <option value="30">Every 30 minutes</option>
+                            <option value="60">Every hour</option>
+                        </select>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn" onclick="testConnection()">Test Connection</button>
+                        <button class="btn btn-secondary" onclick="importBackupData()">Import Backup Data</button>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h2>Display Preferences</h2>
+                    <div class="form-group">
+                        <label>Currency Format</label>
+                        <select data-tooltip="Select currency display format">
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Chart Type</label>
+                        <select data-tooltip="Select default chart visualization">
+                            <option value="line">Line Charts</option>
+                            <option value="bar">Bar Charts</option>
+                            <option value="mixed">Mixed Charts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Dashboard Layout</label>
+                        <select data-tooltip="Choose dashboard layout style">
+                            <option value="compact">Compact</option>
+                            <option value="standard">Standard</option>
+                            <option value="detailed">Detailed</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="settings-card">
-                <h2>Notification Settings</h2>
-                <div class="notification-settings">
-                    <div class="notification-item">
-                        <input type="checkbox" id="performance-alerts" checked data-tooltip="Get alerts when performance is below target">
-                        <label for="performance-alerts">Performance Alerts</label>
-                    </div>
-                    <div class="notification-item">
-                        <input type="checkbox" id="daily-summary" checked data-tooltip="Receive daily summary reports">
-                        <label for="daily-summary">Daily Summary Reports</label>
-                    </div>
-                    <div class="notification-item">
-                        <input type="checkbox" id="low-stock" checked data-tooltip="Get notified when stock is running low">
-                        <label for="low-stock">Low Stock Notifications</label>
-                    </div>
-                    <div class="notification-item">
-                        <input type="checkbox" id="goal-celebrations" checked data-tooltip="Show celebrations when targets are met">
-                        <label for="goal-celebrations">Goal Achievement Celebrations</label>
-                    </div>
-                </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="saveSettings()">Save Changes</button>
+                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
             </div>
-
-            <div class="settings-card">
-                <h2>POS Integration</h2>
-                <div class="pos-status">
-                    <div class="status-indicator"></div>
-                    <span>Connected to POS System</span>
-                </div>
-                <div class="form-group">
-                    <label>Data Sync Frequency</label>
-                    <select data-tooltip="How often to sync data with POS system">
-                        <option value="5">Every 5 minutes</option>
-                        <option value="15">Every 15 minutes</option>
-                        <option value="30">Every 30 minutes</option>
-                        <option value="60">Every hour</option>
-                    </select>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn" onclick="testConnection()">Test Connection</button>
-                    <button class="btn btn-secondary" onclick="importBackupData()">Import Backup Data</button>
-                </div>
-            </div>
-
-            <div class="settings-card">
-                <h2>Display Preferences</h2>
-                <div class="form-group">
-                    <label>Currency Format</label>
-                    <select data-tooltip="Select currency display format">
-                        <option value="USD">USD ($)</option>
-                        <option value="EUR">EUR (€)</option>
-                        <option value="GBP">GBP (£)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Chart Type</label>
-                    <select data-tooltip="Select default chart visualization">
-                        <option value="line">Line Charts</option>
-                        <option value="bar">Bar Charts</option>
-                        <option value="mixed">Mixed Charts</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Dashboard Layout</label>
-                    <select data-tooltip="Choose dashboard layout style">
-                        <option value="compact">Compact</option>
-                        <option value="standard">Standard</option>
-                        <option value="detailed">Detailed</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="action-buttons">
-            <button class="btn" onclick="saveSettings()">Save Changes</button>
-            <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
         </div>
     </div>
 

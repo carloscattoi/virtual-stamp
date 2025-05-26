@@ -160,7 +160,7 @@
     </style>
 </head>
 <body>
-    <div class="sales-container">
+    <div class="container">
         <div class="breadcrumb">
             <a href="../index.html">Home</a>
             <span>›</span>
@@ -169,125 +169,127 @@
             <span>Products</span>
         </div>
 
-        <div class="sales-header">
-            <h1>Product Performance</h1>
-            <div class="filter-controls">
-                <input type="date" class="date-range-start" data-tooltip="Start date for analysis">
-                <input type="date" class="date-range-end" data-tooltip="End date for analysis">
-                <select class="location-selector" data-tooltip="Select location to analyze">
-                    <option value="all">All Locations</option>
-                    <option value="location1">Downtown Cafe</option>
-                    <option value="location2">Westside Branch</option>
-                </select>
-                <select class="category-filter" data-tooltip="Filter by product category">
-                    <option value="all">All Categories</option>
-                    <option value="coffee">Coffee</option>
-                    <option value="pastries">Pastries</option>
-                    <option value="sandwiches">Sandwiches</option>
-                </select>
-                <button class="export-btn" onclick="salesUtils.exportToCSV(salesUtils.mockSalesData.productData.topPerformers, 'product-performance')">
-                    📊 Export Report
-                </button>
+        <div class="sales-container">
+            <div class="sales-header">
+                <h1>Product Performance</h1>
+                <div class="filter-controls">
+                    <input type="date" class="date-range-start" data-tooltip="Start date for analysis">
+                    <input type="date" class="date-range-end" data-tooltip="End date for analysis">
+                    <select class="location-selector" data-tooltip="Select location to analyze">
+                        <option value="all">All Locations</option>
+                        <option value="location1">Downtown Cafe</option>
+                        <option value="location2">Westside Branch</option>
+                    </select>
+                    <select class="category-filter" data-tooltip="Filter by product category">
+                        <option value="all">All Categories</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="pastries">Pastries</option>
+                        <option value="sandwiches">Sandwiches</option>
+                    </select>
+                    <button class="export-btn" onclick="salesUtils.exportToCSV(salesUtils.mockSalesData.productData.topPerformers, 'product-performance')">
+                        📊 Export Report
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="product-grid">
-            <div class="product-card">
-                <h3>Top Performer</h3>
-                <div class="product-stats">
-                    <div class="stat-item">
-                        <div class="label">Revenue</div>
-                        <div class="value">$2,345</div>
-                        <div class="trend-indicator trend-up">↑ 15%</div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3>Top Performer</h3>
+                    <div class="product-stats">
+                        <div class="stat-item">
+                            <div class="label">Revenue</div>
+                            <div class="value">$2,345</div>
+                            <div class="trend-indicator trend-up">↑ 15%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Units Sold</div>
+                            <div class="value">234</div>
+                            <div class="trend-indicator trend-up">↑ 8%</div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="label">Units Sold</div>
-                        <div class="value">234</div>
-                        <div class="trend-indicator trend-up">↑ 8%</div>
+                </div>
+                <div class="product-card">
+                    <h3>Most Improved</h3>
+                    <div class="product-stats">
+                        <div class="stat-item">
+                            <div class="label">Revenue</div>
+                            <div class="value">$1,234</div>
+                            <div class="trend-indicator trend-up">↑ 25%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Units Sold</div>
+                            <div class="value">123</div>
+                            <div class="trend-indicator trend-up">↑ 20%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <h3>Needs Attention</h3>
+                    <div class="product-stats">
+                        <div class="stat-item">
+                            <div class="label">Revenue</div>
+                            <div class="value">$567</div>
+                            <div class="trend-indicator trend-down">↓ 5%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Units Sold</div>
+                            <div class="value">45</div>
+                            <div class="trend-indicator trend-down">↓ 8%</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="product-card">
-                <h3>Most Improved</h3>
-                <div class="product-stats">
-                    <div class="stat-item">
-                        <div class="label">Revenue</div>
-                        <div class="value">$1,234</div>
-                        <div class="trend-indicator trend-up">↑ 25%</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="label">Units Sold</div>
-                        <div class="value">123</div>
-                        <div class="trend-indicator trend-up">↑ 20%</div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <h3>Needs Attention</h3>
-                <div class="product-stats">
-                    <div class="stat-item">
-                        <div class="label">Revenue</div>
-                        <div class="value">$567</div>
-                        <div class="trend-indicator trend-down">↓ 5%</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="label">Units Sold</div>
-                        <div class="value">45</div>
-                        <div class="trend-indicator trend-down">↓ 8%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="chart-container">
-            <div class="chart-header">
-                <h2 class="chart-title">Product Performance Trends</h2>
-                <div class="chart-actions">
-                    <button class="export-btn" onclick="exportChart('productTrendsChart')">📥 Export</button>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2 class="chart-title">Product Performance Trends</h2>
+                    <div class="chart-actions">
+                        <button class="export-btn" onclick="exportChart('productTrendsChart')">📥 Export</button>
+                    </div>
                 </div>
+                <canvas id="productTrendsChart"></canvas>
             </div>
-            <canvas id="productTrendsChart"></canvas>
-        </div>
 
-        <div class="responsive-table">
-            <table class="product-table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Category</th>
-                        <th>Revenue</th>
-                        <th>Units Sold</th>
-                        <th>Trend</th>
-                        <th>Stock Level</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Espresso</td>
-                        <td>Coffee</td>
-                        <td>$2,345</td>
-                        <td>234</td>
-                        <td><span class="trend-indicator trend-up">↑ 15%</span></td>
-                        <td><span class="stock-status stock-good">In Stock</span></td>
-                    </tr>
-                    <tr>
-                        <td>Croissant</td>
-                        <td>Pastries</td>
-                        <td>$1,234</td>
-                        <td>123</td>
-                        <td><span class="trend-indicator trend-up">↑ 25%</span></td>
-                        <td><span class="stock-status stock-warning">Low Stock</span></td>
-                    </tr>
-                    <tr>
-                        <td>Chicken Sandwich</td>
-                        <td>Sandwiches</td>
-                        <td>$567</td>
-                        <td>45</td>
-                        <td><span class="trend-indicator trend-down">↓ 5%</span></td>
-                        <td><span class="stock-status stock-low">Out of Stock</span></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="responsive-table">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Revenue</th>
+                            <th>Units Sold</th>
+                            <th>Trend</th>
+                            <th>Stock Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Espresso</td>
+                            <td>Coffee</td>
+                            <td>$2,345</td>
+                            <td>234</td>
+                            <td><span class="trend-indicator trend-up">↑ 15%</span></td>
+                            <td><span class="stock-status stock-good">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>Croissant</td>
+                            <td>Pastries</td>
+                            <td>$1,234</td>
+                            <td>123</td>
+                            <td><span class="trend-indicator trend-up">↑ 25%</span></td>
+                            <td><span class="stock-status stock-warning">Low Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>Chicken Sandwich</td>
+                            <td>Sandwiches</td>
+                            <td>$567</td>
+                            <td>45</td>
+                            <td><span class="trend-indicator trend-down">↓ 5%</span></td>
+                            <td><span class="stock-status stock-low">Out of Stock</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
