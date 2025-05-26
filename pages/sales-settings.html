@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Settings - Virtual Stamp</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/sales.css">
+    <script src="../js/sales-data.js"></script>
+    <style>
+        .settings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .settings-header {
+            margin-bottom: 30px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .settings-card {
+            background: var(--accent-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .settings-card h2 {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--secondary-color);
+            border-radius: var(--border-radius);
+            background: white;
+        }
+
+        .target-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .target-item {
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .target-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .target-item input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--secondary-color);
+            border-radius: var(--border-radius);
+        }
+
+        .notification-settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .notification-item label {
+            flex: 1;
+        }
+
+        .pos-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4CAF50;
+        }
+
+        .status-indicator.disconnected {
+            background: #f44336;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sales-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <a href="sales-dashboard.html">Sales</a>
+            <span>›</span>
+            <span>Settings</span>
+        </div>
+
+        <div class="sales-header">
+            <h1>Sales Settings</h1>
+        </div>
+
+        <div class="settings-grid">
+            <div class="settings-card">
+                <h2>Daily Sales Targets</h2>
+                <div class="target-grid">
+                    <div class="target-item">
+                        <label>Monday</label>
+                        <input type="number" value="800" min="0" step="100" data-tooltip="Set daily target for Monday">
+                    </div>
+                    <div class="target-item">
+                        <label>Tuesday</label>
+                        <input type="number" value="850" min="0" step="100" data-tooltip="Set daily target for Tuesday">
+                    </div>
+                    <div class="target-item">
+                        <label>Wednesday</label>
+                        <input type="number" value="900" min="0" step="100" data-tooltip="Set daily target for Wednesday">
+                    </div>
+                    <div class="target-item">
+                        <label>Thursday</label>
+                        <input type="number" value="950" min="0" step="100" data-tooltip="Set daily target for Thursday">
+                    </div>
+                    <div class="target-item">
+                        <label>Friday</label>
+                        <input type="number" value="1100" min="0" step="100" data-tooltip="Set daily target for Friday">
+                    </div>
+                    <div class="target-item">
+                        <label>Saturday</label>
+                        <input type="number" value="1200" min="0" step="100" data-tooltip="Set daily target for Saturday">
+                    </div>
+                    <div class="target-item">
+                        <label>Sunday</label>
+                        <input type="number" value="1000" min="0" step="100" data-tooltip="Set daily target for Sunday">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Seasonal Adjustment (%)</label>
+                    <input type="number" value="10" min="-50" max="50" step="5" data-tooltip="Adjust targets based on seasonal factors">
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h2>Notification Settings</h2>
+                <div class="notification-settings">
+                    <div class="notification-item">
+                        <input type="checkbox" id="performance-alerts" checked data-tooltip="Get alerts when performance is below target">
+                        <label for="performance-alerts">Performance Alerts</label>
+                    </div>
+                    <div class="notification-item">
+                        <input type="checkbox" id="daily-summary" checked data-tooltip="Receive daily summary reports">
+                        <label for="daily-summary">Daily Summary Reports</label>
+                    </div>
+                    <div class="notification-item">
+                        <input type="checkbox" id="low-stock" checked data-tooltip="Get notified when stock is running low">
+                        <label for="low-stock">Low Stock Notifications</label>
+                    </div>
+                    <div class="notification-item">
+                        <input type="checkbox" id="goal-celebrations" checked data-tooltip="Show celebrations when targets are met">
+                        <label for="goal-celebrations">Goal Achievement Celebrations</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h2>POS Integration</h2>
+                <div class="pos-status">
+                    <div class="status-indicator"></div>
+                    <span>Connected to POS System</span>
+                </div>
+                <div class="form-group">
+                    <label>Data Sync Frequency</label>
+                    <select data-tooltip="How often to sync data with POS system">
+                        <option value="5">Every 5 minutes</option>
+                        <option value="15">Every 15 minutes</option>
+                        <option value="30">Every 30 minutes</option>
+                        <option value="60">Every hour</option>
+                    </select>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn" onclick="testConnection()">Test Connection</button>
+                    <button class="btn btn-secondary" onclick="importBackupData()">Import Backup Data</button>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h2>Display Preferences</h2>
+                <div class="form-group">
+                    <label>Currency Format</label>
+                    <select data-tooltip="Select currency display format">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Chart Type</label>
+                    <select data-tooltip="Select default chart visualization">
+                        <option value="line">Line Charts</option>
+                        <option value="bar">Bar Charts</option>
+                        <option value="mixed">Mixed Charts</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Dashboard Layout</label>
+                    <select data-tooltip="Choose dashboard layout style">
+                        <option value="compact">Compact</option>
+                        <option value="standard">Standard</option>
+                        <option value="detailed">Detailed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="saveSettings()">Save Changes</button>
+            <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
+        </div>
+    </div>
+
+    <script>
+        // Test POS connection
+        function testConnection() {
+            const statusIndicator = document.querySelector('.status-indicator');
+            statusIndicator.classList.add('disconnected');
+            
+            // Simulate connection test
+            setTimeout(() => {
+                statusIndicator.classList.remove('disconnected');
+                alert('Connection successful!');
+            }, 2000);
+        }
+
+        // Import backup data
+        function importBackupData() {
+            if (confirm('Are you sure you want to import backup data? This will overwrite current settings.')) {
+                // Simulate import
+                setTimeout(() => {
+                    alert('Backup data imported successfully!');
+                }, 1500);
+            }
+        }
+
+        // Save settings
+        function saveSettings() {
+            // Collect all settings
+            const settings = {
+                targets: Array.from(document.querySelectorAll('.target-item input')).map(input => ({
+                    day: input.previousElementSibling.textContent,
+                    value: input.value
+                })),
+                seasonalAdjustment: document.querySelector('input[type="number"]').value,
+                notifications: {
+                    performanceAlerts: document.getElementById('performance-alerts').checked,
+                    dailySummary: document.getElementById('daily-summary').checked,
+                    lowStock: document.getElementById('low-stock').checked,
+                    goalCelebrations: document.getElementById('goal-celebrations').checked
+                },
+                posSync: document.querySelector('select').value,
+                display: {
+                    currency: document.querySelectorAll('select')[1].value,
+                    chartType: document.querySelectorAll('select')[2].value,
+                    layout: document.querySelectorAll('select')[3].value
+                }
+            };
+
+            // Simulate save
+            console.log('Saving settings:', settings);
+            setTimeout(() => {
+                alert('Settings saved successfully!');
+            }, 1000);
+        }
+
+        // Reset settings
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to default values?')) {
+                // Reset all inputs to default values
+                document.querySelectorAll('input[type="number"]').forEach(input => {
+                    input.value = input.defaultValue;
+                });
+                document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    input.checked = input.defaultChecked;
+                });
+                document.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                alert('Settings have been reset to default values.');
+            }
+        }
+
+        // Initialize tooltips
+        document.querySelectorAll('[data-tooltip]').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                const tooltip = element.getAttribute('data-tooltip');
+                element.title = tooltip;
+            });
+        });
+    </script>
+</body>
+</html> 
