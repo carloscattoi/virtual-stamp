@@ -605,28 +605,106 @@
             }
 
             getMockReviews() {
-                // Simplified mock data for demonstration
                 return [
                     {
                         author_name: "Sarah Johnson",
                         rating: 5,
                         text: "Amazing coffee and the most delicious croissants! The barista was super friendly and made my latte perfectly. Will definitely be back!",
                         relative_time_description: "2 days ago",
-                        time: Date.now() / 1000 - 172800
+                        time: Date.now() / 1000 - 172800,
+                        platform: "Google",
+                        response: "Thank you so much for your kind words! We're thrilled you enjoyed your experience.",
+                        flagged: false
                     },
                     {
                         author_name: "Mike Chen",
                         rating: 1,
                         text: "Worst coffee I've ever had. Burnt taste and the staff was rude. Overpriced for what you get. Won't be coming back.",
                         relative_time_description: "1 week ago",
-                        time: Date.now() / 1000 - 604800
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: null,
+                        flagged: true
                     },
                     {
                         author_name: "Emma Rodriguez",
                         rating: 4,
                         text: "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
                         relative_time_description: "3 days ago",
-                        time: Date.now() / 1000 - 259200
+                        time: Date.now() / 1000 - 259200,
+                        platform: "Yelp",
+                        response: "Thanks for the feedback! We're working on expanding our seating area.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "David Thompson",
+                        rating: 5,
+                        text: "Best coffee shop in town! The espresso is perfectly pulled and the almond croissants are to die for. Staff is knowledgeable and passionate about coffee.",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: "Thank you David! We're passionate about serving the best coffee and pastries.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "Lisa Park",
+                        rating: 3,
+                        text: "Coffee is decent but nothing special. The muffins were a bit dry. Service was okay but could be faster during rush hour.",
+                        relative_time_description: "4 days ago",
+                        time: Date.now() / 1000 - 345600,
+                        platform: "Google",
+                        response: null,
+                        flagged: false
+                    },
+                    {
+                        author_name: "James Wilson",
+                        rating: 2,
+                        text: "Expected better based on reviews. Coffee was lukewarm and the danish was stale. Place was also quite noisy.",
+                        relative_time_description: "5 days ago",
+                        time: Date.now() / 1000 - 432000,
+                        platform: "Google",
+                        response: "We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly.",
+                        flagged: true
+                    },
+                    {
+                        author_name: "Anna Martinez",
+                        rating: 5,
+                        text: "Love this place! Great coffee, wonderful pastries, and the staff always remembers my order. The chocolate chip cookies are amazing!",
+                        relative_time_description: "6 days ago",
+                        time: Date.now() / 1000 - 518400,
+                        platform: "Google",
+                        response: "Thank you Anna! We're thrilled to hear you enjoy our cookies and appreciate our team.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "Robert Davis",
+                        rating: 4,
+                        text: "Solid coffee shop with good variety. The cappuccino was excellent and the scones were fresh. Prices are reasonable for the quality.",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: null,
+                        flagged: false
+                    },
+                    {
+                        author_name: "Michelle Lee",
+                        rating: 5,
+                        text: "Perfect spot for remote work! Great WiFi, comfortable seating, and excellent coffee. The lemon bars are my favorite!",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Facebook",
+                        response: "So happy to hear we're a great workspace for you! We work hard to maintain fast WiFi.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "Kevin Brown",
+                        rating: 3,
+                        text: "Average coffee, nothing extraordinary. The bagels were good though. Service could be more attentive during busy periods.",
+                        relative_time_description: "2 weeks ago",
+                        time: Date.now() / 1000 - 1209600,
+                        platform: "Yelp",
+                        response: null,
+                        flagged: true
                     }
                 ];
             }
@@ -713,10 +791,10 @@
                         datasets: [{
                             data: [70, 20, 7, 3],
                             backgroundColor: [
-                                '#1976d2',
-                                '#d32f2f',
-                                '#1976d2',
-                                '#757575'
+                                '#4285f4',  // Google Blue
+                                '#d32f2f',  // Yelp Red
+                                '#1877f2',  // Facebook Blue
+                                '#757575'   // Other Gray
                             ],
                             borderWidth: 0
                         }]
@@ -752,7 +830,7 @@
                         <div class="review-header">
                             <div class="review-meta">
                                 <span class="rating-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
-                                <span class="platform-badge">Google</span>
+                                <span class="platform-badge">${review.platform || 'Google'}</span>
                                 <span>${review.relative_time_description}</span>
                             </div>
                         </div>
