@@ -1,226 +1,496 @@
 {
   "reviews": [
     {
-      "id": "r1",
-      "customer": {
-        "name": "Alice Smith",
-        "photo": "customer1.jpg"
-      },
+      "author_name": "Sarah Johnson",
+      "author_url": "https://www.google.com/maps/contrib/117829842374892847291",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhU1O8RdNfPnWxBhsGQYpVKjmrQfxhWMUoRdnpxZw=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 5,
-      "platform": "Google",
-      "date": "2024-05-01",
-      "content": "Amazing coffee and friendly staff! The atmosphere is perfect for working remotely.",
-      "response": "Thank you, Alice! We're glad you enjoyed your experience with us.",
-      "locationId": "loc1",
-      "topics": ["coffee", "staff", "atmosphere", "remote work"]
+      "relative_time_description": "2 days ago",
+      "text": "Amazing coffee and the most delicious croissants! The barista was super friendly and made my latte perfectly. Will definitely be back!",
+      "time": 1720310400,
+      "translated": false
     },
     {
-      "id": "r2",
-      "customer": {
-        "name": "John Doe",
-        "photo": "customer2.jpg"
-      },
+      "author_name": "Mike Chen",
+      "author_url": "https://www.google.com/maps/contrib/108472639584739201847",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhT2R8fJxKlMnRvQwE5LpHzBmQtFgKdPnXoRlMn=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 1,
+      "relative_time_description": "1 week ago",
+      "text": "Worst coffee I've ever had. Burnt taste and the staff was rude. Overpriced for what you get. Won't be coming back.",
+      "time": 1719705600,
+      "translated": false
+    },
+    {
+      "author_name": "Emma Rodriguez",
+      "author_url": "https://www.google.com/maps/contrib/112847396584729301948",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhV3S9gKyLnOpSvRxF6MqI0CnRuGhLeQoYpSmNo=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 4,
-      "platform": "Yelp",
-      "date": "2024-04-28",
-      "content": "Great pastries and coffee. A bit pricey but worth it for the quality.",
-      "response": null,
-      "locationId": "loc1",
-      "topics": ["pastries", "coffee", "pricing"]
+      "relative_time_description": "3 days ago",
+      "text": "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
+      "time": 1720224000,
+      "translated": false
     },
     {
-      "id": "r3",
-      "customer": {
-        "name": "Maria Garcia",
-        "photo": "customer3.jpg"
-      },
-      "rating": 3,
-      "platform": "Google",
-      "date": "2024-04-25",
-      "content": "Good coffee but the service was slow during peak hours.",
-      "response": "We apologize for the slow service. We're working on improving our efficiency during busy periods.",
-      "locationId": "loc2",
-      "topics": ["coffee", "service", "wait time"]
-    },
-    {
-      "id": "r4",
-      "customer": {
-        "name": "David Chen",
-        "photo": "customer4.jpg"
-      },
+      "author_name": "David Thompson",
+      "author_url": "https://www.google.com/maps/contrib/103847592847391048572",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhW4T0hLzMoQtTwSyG7NrJ1DoSvIkMfRpZqTnOp=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 5,
-      "platform": "Yelp",
-      "date": "2024-04-20",
-      "content": "Best oat milk latte in town! The baristas are so knowledgeable about coffee.",
-      "response": "Thank you for the kind words, David! We take pride in our coffee expertise.",
-      "locationId": "loc1",
-      "topics": ["oat milk", "latte", "baristas", "coffee knowledge"]
+      "relative_time_description": "1 week ago",
+      "text": "Best coffee shop in town! The espresso is perfectly pulled and the almond croissants are to die for. Staff is knowledgeable and passionate about coffee.",
+      "time": 1719705600,
+      "translated": false
     },
     {
-      "id": "r5",
-      "customer": {
-        "name": "Sarah Johnson",
-        "photo": "customer5.jpg"
-      },
+      "author_name": "Lisa Park",
+      "author_url": "https://www.google.com/maps/contrib/109384759284739201856",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhX5U1iM0NpRuUzTzH8OsK2EpTwJlNgSqarUoPq=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 3,
+      "relative_time_description": "4 days ago",
+      "text": "Coffee is decent but nothing special. The muffins were a bit dry. Service was okay but could be faster during rush hour.",
+      "time": 1720137600,
+      "translated": false
+    },
+    {
+      "author_name": "James Wilson",
+      "author_url": "https://www.google.com/maps/contrib/114857392847391048573",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhY6V2jN1OqSvVaU0I9PtL3FqUyKmOhTrbwVpRr=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 2,
-      "platform": "Google",
-      "date": "2024-04-18",
-      "content": "Disappointed with the food quality. Coffee was good though.",
-      "response": null,
-      "locationId": "loc2",
-      "topics": ["food", "coffee", "quality"]
+      "relative_time_description": "5 days ago",
+      "text": "Expected better based on reviews. Coffee was lukewarm and the danish was stale. Place was also quite noisy.",
+      "time": 1720051200,
+      "translated": false
     },
     {
-      "id": "r6",
-      "customer": {
-        "name": "Michael Brown",
-        "photo": "customer6.jpg"
-      },
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "5 days ago",
+      "text": "Thank you for your feedback James. We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly so we can address your concerns. We've made improvements to our service standards recently.",
+      "time": 1720051200,
+      "translated": false
+    },
+    {
+      "author_name": "Anna Martinez",
+      "author_url": "https://www.google.com/maps/contrib/105847392847391048574",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhZ7W3kO2PrTwWbV1J0QuM4GrVzLnPiUscxWqSs=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 5,
-      "platform": "Yelp",
-      "date": "2024-04-15",
-      "content": "Excellent WiFi and plenty of power outlets. Perfect for remote work!",
-      "response": "Thanks, Michael! We're glad our space works well for your remote work needs.",
-      "locationId": "loc1",
-      "topics": ["wifi", "power outlets", "remote work"]
+      "relative_time_description": "6 days ago",
+      "text": "Love this place! Great coffee, wonderful pastries, and the staff always remembers my order. The chocolate chip cookies are amazing!",
+      "time": 1719964800,
+      "translated": false
     },
     {
-      "id": "r7",
-      "customer": {
-        "name": "Emma Wilson",
-        "photo": "customer7.jpg"
-      },
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "6 days ago",
+      "text": "Thank you so much Anna! We're thrilled to hear you enjoy our cookies and appreciate our team remembering your order. Customers like you make our day!",
+      "time": 1719964800,
+      "translated": false
+    },
+    {
+      "author_name": "Robert Davis",
+      "author_url": "https://www.google.com/maps/contrib/106847392847391048575",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh08X4lP3QsUxXcW2K1RvN5HsWAMoQjVtdyXrTt=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 4,
-      "platform": "Google",
-      "date": "2024-04-12",
-      "content": "Love the seasonal drinks! The pumpkin spice latte is amazing.",
-      "response": "Thank you, Emma! We're glad you enjoy our seasonal offerings.",
-      "locationId": "loc2",
-      "topics": ["seasonal drinks", "pumpkin spice", "latte"]
+      "relative_time_description": "1 week ago",
+      "text": "Solid coffee shop with good variety. The cappuccino was excellent and the scones were fresh. Prices are reasonable for the quality.",
+      "time": 1719705600,
+      "translated": false
     },
     {
-      "id": "r8",
-      "customer": {
-        "name": "James Taylor",
-        "photo": "customer8.jpg"
-      },
+      "author_name": "Michelle Lee",
+      "author_url": "https://www.google.com/maps/contrib/107847392847391048576",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh19Y5mQ4RtVyYdX3L2SwO6ItXBNpRkWuezYsUu=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "1 week ago",
+      "text": "Perfect spot for remote work! Great WiFi, comfortable seating, and excellent coffee. The lemon bars are my favorite!",
+      "time": 1719705600,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "1 week ago",
+      "text": "So happy to hear we're a great workspace for you Michelle! We work hard to maintain fast WiFi and comfortable seating for our remote workers. Glad you love the lemon bars!",
+      "time": 1719705600,
+      "translated": false
+    },
+    {
+      "author_name": "Kevin Brown",
+      "author_url": "https://www.google.com/maps/contrib/108847392847391048577",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh2-Z6nR5SuWzZeY4M3TxP7JuYCOpSlXvf0ZtVv=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 3,
-      "platform": "Yelp",
-      "date": "2024-04-10",
-      "content": "Good coffee but the seating is limited during busy hours.",
-      "response": "We're working on expanding our seating area. Thank you for your feedback!",
-      "locationId": "loc1",
-      "topics": ["coffee", "seating", "space"]
+      "relative_time_description": "2 weeks ago",
+      "text": "Average coffee, nothing extraordinary. The bagels were good though. Service could be more attentive during busy periods.",
+      "time": 1719100800,
+      "translated": false
     },
     {
-      "id": "r9",
-      "customer": {
-        "name": "Lisa Anderson",
-        "photo": "customer9.jpg"
-      },
-      "rating": 5,
-      "platform": "Google",
-      "date": "2024-04-08",
-      "content": "The loyalty program is fantastic! Great rewards and easy to use.",
-      "response": "Thank you, Lisa! We're glad you're enjoying our loyalty program.",
-      "locationId": "loc2",
-      "topics": ["loyalty program", "rewards"]
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "2 weeks ago",
+      "text": "Thanks for the feedback Kevin! We're glad you enjoyed the bagels. We're working on improving our service during peak hours - your input helps us grow!",
+      "time": 1719100800,
+      "translated": false
     },
     {
-      "id": "r10",
-      "customer": {
-        "name": "Robert Kim",
-        "photo": "customer10.jpg"
-      },
+      "author_name": "Jennifer Taylor",
+      "author_url": "https://www.google.com/maps/contrib/109847392847391048578",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh3-a7oS6TvX0afZ5N4UyQ8KvZDPqTmYwgaauWw=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 4,
-      "platform": "Yelp",
-      "date": "2024-04-05",
-      "content": "Clean and modern space. The cold brew is excellent.",
-      "response": null,
-      "locationId": "loc1",
-      "topics": ["cleanliness", "modern", "cold brew"]
+      "relative_time_description": "2 weeks ago",
+      "text": "Nice cozy atmosphere and friendly staff. The iced coffee is refreshing and the blueberry muffins are delicious. Will visit again!",
+      "time": 1719100800,
+      "translated": false
     },
     {
-      "id": "r11",
-      "customer": {
-        "name": "Patricia Lee",
-        "photo": "customer11.jpg"
-      },
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "2 weeks ago",
+      "text": "Thank you Jennifer! We're delighted you enjoyed our cozy atmosphere and blueberry muffins. Looking forward to seeing you again soon!",
+      "time": 1719100800,
+      "translated": false
+    },
+    {
+      "author_name": "Mark Anderson",
+      "author_url": "https://www.google.com/maps/contrib/110847392847391048579",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh4_b8pT7UwY1bgA6O5VzR9LwaDQrUoZxhbvXXx=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 1,
+      "relative_time_description": "2 weeks ago",
+      "text": "Very disappointed. Long wait times, cold coffee, and unfriendly staff. The pastries looked old and the place was dirty. Not recommended.",
+      "time": 1719100800,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "2 weeks ago",
+      "text": "We sincerely apologize for this experience Mark. This doesn't reflect our standards. Please contact us directly - we'd like to make this right and ensure this doesn't happen again.",
+      "time": 1719100800,
+      "translated": false
+    },
+    {
+      "author_name": "Amanda White",
+      "author_url": "https://www.google.com/maps/contrib/111847392847391048580",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh5_c9qU8VxZ2chB7P6W0SA0MxbRsVpAyicWYYy=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "3 weeks ago",
+      "text": "Fantastic coffee and pastries! The baristas are skilled and friendly. Love the rustic decor and relaxed vibe. Highly recommend!",
+      "time": 1718496000,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "3 weeks ago",
+      "text": "Thank you so much Amanda! We're thrilled you love our rustic decor and appreciate our skilled baristas. Your recommendation means the world to us!",
+      "time": 1718496000,
+      "translated": false
+    },
+    {
+      "author_name": "Tom Garcia",
+      "author_url": "https://www.google.com/maps/contrib/112847392847391048581",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh6_d0rV9WyA3diC8Q7X1TB1NycStWqBzjdXZZz=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 4,
+      "relative_time_description": "3 weeks ago",
+      "text": "Good coffee and decent prices. The cinnamon rolls are amazing! Staff is helpful and the location is convenient.",
+      "time": 1718496000,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "3 weeks ago",
+      "text": "Thanks Tom! We're so glad you love our cinnamon rolls - they're made fresh daily. Appreciate you mentioning our helpful staff!",
+      "time": 1718496000,
+      "translated": false
+    },
+    {
+      "author_name": "Rachel Kim",
+      "author_url": "https://www.google.com/maps/contrib/113847392847391048582",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh7_e1sW-XzB4ekD9R8Y2UC2OzdTuXrCzkeeaA0=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 3,
+      "relative_time_description": "3 weeks ago",
+      "text": "Coffee is okay but a bit weak for my taste. The atmosphere is nice and quiet. Good for studying but wish they had stronger espresso.",
+      "time": 1718496000,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "3 weeks ago",
+      "text": "Thank you for the feedback Rachel! We'd be happy to make your espresso stronger - just let us know your preference when ordering. We want to get it just right for you!",
+      "time": 1718496000,
+      "translated": false
+    },
+    {
+      "author_name": "Steve Miller",
+      "author_url": "https://www.google.com/maps/contrib/114847392847391048583",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh8_f2tX0Y0C5flE-S9Z3VD3P0eUvYsDzlfbfB1=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "1 month ago",
+      "text": "Excellent coffee shop! The mocha is perfectly balanced and the croissants are buttery and flaky. Great place to meet friends.",
+      "time": 1717891200,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "1 month ago",
+      "text": "Thank you Steve! We're delighted you enjoy our mocha and croissants. It's wonderful to hear we're a great spot for meeting friends!",
+      "time": 1717891200,
+      "translated": false
+    },
+    {
+      "author_name": "Nicole Johnson",
+      "author_url": "https://www.google.com/maps/contrib/115847392847391048584",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh9_g3uY1Z1D6gmF0T-A4WE4Q1fVwZtE0mgcgC2=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 2,
-      "platform": "Google",
-      "date": "2024-04-03",
-      "content": "Order was wrong and staff wasn't very helpful in fixing it.",
-      "response": "We apologize for the mistake and poor service. Please contact us directly so we can make it right.",
-      "locationId": "loc2",
-      "topics": ["order accuracy", "staff", "service"]
+      "relative_time_description": "1 month ago",
+      "text": "Coffee was bitter and the service was slow. The danish was good but overpriced. Expected better quality for the price point.",
+      "time": 1717891200,
+      "translated": false
     },
     {
-      "id": "r12",
-      "customer": {
-        "name": "Thomas White",
-        "photo": "customer12.jpg"
-      },
-      "rating": 5,
-      "platform": "Yelp",
-      "date": "2024-04-01",
-      "content": "Best coffee shop in the area! The staff remembers my order.",
-      "response": "Thank you, Thomas! We love having you as a regular customer.",
-      "locationId": "loc1",
-      "topics": ["coffee", "staff", "personal service"]
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "1 month ago",
+      "text": "We're sorry to hear about your experience Nicole. We've been working on improving our coffee quality and service speed. We'd love another chance to serve you better!",
+      "time": 1717891200,
+      "translated": false
     },
     {
-      "id": "r13",
-      "customer": {
-        "name": "Jennifer Martinez",
-        "photo": "customer13.jpg"
-      },
+      "author_name": "Alex Turner",
+      "author_url": "https://www.google.com/maps/contrib/116847392847391048585",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh-_h4vZ2a2E7hnG1U0B5XF5R2gWxauF1nhdhD3=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 4,
-      "platform": "Google",
-      "date": "2024-03-29",
-      "content": "Great selection of pastries and the coffee is always consistent.",
-      "response": "Thank you for your kind words, Jennifer! We take pride in our consistency.",
-      "locationId": "loc2",
-      "topics": ["pastries", "coffee", "consistency"]
+      "relative_time_description": "1 month ago",
+      "text": "Really enjoy coming here! The flat white is excellent and the banana bread is moist and flavorful. Staff is always welcoming.",
+      "time": 1717891200,
+      "translated": false
     },
     {
-      "id": "r14",
-      "customer": {
-        "name": "Daniel Clark",
-        "photo": "customer14.jpg"
-      },
-      "rating": 3,
-      "platform": "Yelp",
-      "date": "2024-03-27",
-      "content": "Good coffee but the music is too loud for meetings.",
-      "response": "Thank you for the feedback. We'll adjust the music volume during business hours.",
-      "locationId": "loc1",
-      "topics": ["coffee", "music", "meetings"]
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "1 month ago",
+      "text": "Thank you Alex! We're so happy you enjoy our flat white and banana bread. Our welcoming staff loves seeing regular customers like you!",
+      "time": 1717891200,
+      "translated": false
     },
     {
-      "id": "r15",
-      "customer": {
-        "name": "Rachel Green",
-        "photo": "customer15.jpg"
-      },
+      "author_name": "Laura Martinez",
+      "author_url": "https://www.google.com/maps/contrib/117847392847391048586",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh0_i5wA3b3F8ioH2V1C6YG6S3hXybvG2oiedE4=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 5,
-      "platform": "Google",
-      "date": "2024-03-25",
-      "content": "The outdoor seating area is perfect for sunny days. Great coffee too!",
-      "response": "Thank you, Rachel! We're glad you enjoy our outdoor space.",
-      "locationId": "loc2",
-      "topics": ["outdoor seating", "coffee", "atmosphere"]
-    }
-  ],
-  "locations": [
-    {
-      "id": "loc1",
-      "name": "Downtown Cafe",
-      "address": "123 Main St"
+      "relative_time_description": "1 month ago",
+      "text": "Best coffee in the neighborhood! The latte art is beautiful and the pastries are always fresh. Clean and comfortable environment.",
+      "time": 1717891200,
+      "translated": false
     },
     {
-      "id": "loc2",
-      "name": "Uptown Cafe",
-      "address": "456 Oak Ave"
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "1 month ago",
+      "text": "Thank you Laura! Our baristas take pride in their latte art and we work hard to maintain fresh pastries and a clean environment. Appreciate your kind words!",
+      "time": 1717891200,
+      "translated": false
+    },
+    {
+      "author_name": "Chris Evans",
+      "author_url": "https://www.google.com/maps/contrib/118847392847391048587",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh1_j6xB4c4G9jpI3W2D7ZH7T4iYzcwH3pjfkF5=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 3,
+      "relative_time_description": "5 weeks ago",
+      "text": "Decent coffee but nothing special. The cookies were good. Place gets crowded during lunch hours which makes it hard to find seating.",
+      "time": 1717286400,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "5 weeks ago",
+      "text": "Thanks Chris! We're glad you enjoyed our cookies. We're aware of the lunch rush seating issue and are looking into solutions to improve the experience.",
+      "time": 1717286400,
+      "translated": false
+    },
+    {
+      "author_name": "Samantha Clark",
+      "author_url": "https://www.google.com/maps/contrib/119847392847391048588",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh2_k7yC5d5H-kqJ4X3E8aI8U5jZzdxI4qkglG6=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 4,
+      "relative_time_description": "5 weeks ago",
+      "text": "Great local coffee shop! The americano is strong and the bear claws are delicious. Love supporting local businesses like this one.",
+      "time": 1717286400,
+      "translated": false
+    },
+    {
+      "author_name": "Danny Lopez",
+      "author_url": "https://www.google.com/maps/contrib/120847392847391048589",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh3_l8zD6e6I0lrK5Y4F9bJ9V6kAzeyi5rlhmH7=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "6 weeks ago",
+      "text": "Outstanding coffee and service! The cortado is perfect and the staff remembers customers' names. Feels like a true community hub.",
+      "time": 1716681600,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "6 weeks ago",
+      "text": "Thank you Danny! We strive to be a community hub and our staff loves getting to know our customers personally. So glad you love the cortado!",
+      "time": 1716681600,
+      "translated": false
+    },
+    {
+      "author_name": "Maria Rodriguez",
+      "author_url": "https://www.google.com/maps/contrib/121847392847391048590",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh4_m9AD7f7J1msL6Z5G-cK-W7lB0afj6smioI8=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 3,
+      "relative_time_description": "6 weeks ago",
+      "text": "Coffee is fine but the prices are a bit high. The atmosphere is cozy though and the WiFi works well. Good for casual meetings.",
+      "time": 1716681600,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "6 weeks ago",
+      "text": "Thank you Maria! We're glad you find our atmosphere cozy and our WiFi reliable for meetings. We appreciate your feedback about pricing.",
+      "time": 1716681600,
+      "translated": false
+    },
+    {
+      "author_name": "Brian Wilson",
+      "author_url": "https://www.google.com/maps/contrib/122847392847391048591",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh5_n-BE8g8K2ntM7a6H0dL0X8mC1bgk7tnjoJ9=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 4,
+      "relative_time_description": "7 weeks ago",
+      "text": "Solid coffee shop with consistent quality. The espresso drinks are well-made and the pastries are fresh. Good customer service.",
+      "time": 1716076800,
+      "translated": false
+    },
+    {
+      "author_name": "Coffee Shop Owner",
+      "author_url": "",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "",
+      "rating": 0,
+      "relative_time_description": "7 weeks ago",
+      "text": "Thank you Brian! Consistency is something we work hard to maintain, and we're pleased you've noticed our commitment to quality and service.",
+      "time": 1716076800,
+      "translated": false
     }
   ]
-} 
+}
