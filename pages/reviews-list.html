@@ -400,6 +400,22 @@
             border-color: var(--md-secondary);
         }
 
+        .review-action.flagged {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .review-card.flagged {
+            border-left: 4px solid #f44336;
+        }
+
+        .action-button.active {
+            background: var(--md-primary);
+            color: white;
+            border-color: var(--md-primary);
+        }
+
         /* Response Section */
         .response-section {
             margin-top: 16px;
@@ -625,9 +641,13 @@
                         <span class="material-icons">file_download</span>
                         Export
                     </button>
-                    <button class="action-button">
-                        <span class="material-icons">settings</span>
-                        Bulk Actions
+                    <button class="action-button" id="flaggedFilter">
+                        <span class="material-icons">flag</span>
+                        Flagged Only
+                    </button>
+                    <button class="action-button" id="noResponseFilter">
+                        <span class="material-icons">reply_all</span>
+                        No Response
                     </button>
                 </div>
             </div>
@@ -656,7 +676,9 @@
                     rating: '',
                     platform: '',
                     response: '',
-                    date: 'all'
+                    date: 'all',
+                    flaggedOnly: false,
+                    noResponseOnly: false
                 };
                 this.init();
             }
@@ -695,7 +717,8 @@
                         relative_time_description: "2 days ago",
                         time: Date.now() / 1000 - 172800,
                         platform: "Google",
-                        response: "Thank you so much for your kind words! We're thrilled you enjoyed your experience."
+                        response: "Thank you so much for your kind words! We're thrilled you enjoyed your experience.",
+                        flagged: false
                     },
                     {
                         author_name: "Mike Chen",
@@ -704,7 +727,8 @@
                         relative_time_description: "1 week ago",
                         time: Date.now() / 1000 - 604800,
                         platform: "Google",
-                        response: null
+                        response: null,
+                        flagged: true
                     },
                     {
                         author_name: "Emma Rodriguez",
@@ -713,7 +737,78 @@
                         relative_time_description: "3 days ago",
                         time: Date.now() / 1000 - 259200,
                         platform: "Yelp",
-                        response: "Thanks for the feedback! We're working on expanding our seating area."
+                        response: "Thanks for the feedback! We're working on expanding our seating area.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "David Thompson",
+                        rating: 5,
+                        text: "Best coffee shop in town! The espresso is perfectly pulled and the almond croissants are to die for. Staff is knowledgeable and passionate about coffee.",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: "Thank you David! We're passionate about serving the best coffee and pastries.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "Lisa Park",
+                        rating: 3,
+                        text: "Coffee is decent but nothing special. The muffins were a bit dry. Service was okay but could be faster during rush hour.",
+                        relative_time_description: "4 days ago",
+                        time: Date.now() / 1000 - 345600,
+                        platform: "Google",
+                        response: null,
+                        flagged: false
+                    },
+                    {
+                        author_name: "James Wilson",
+                        rating: 2,
+                        text: "Expected better based on reviews. Coffee was lukewarm and the danish was stale. Place was also quite noisy.",
+                        relative_time_description: "5 days ago",
+                        time: Date.now() / 1000 - 432000,
+                        platform: "Google",
+                        response: "We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly.",
+                        flagged: true
+                    },
+                    {
+                        author_name: "Anna Martinez",
+                        rating: 5,
+                        text: "Love this place! Great coffee, wonderful pastries, and the staff always remembers my order. The chocolate chip cookies are amazing!",
+                        relative_time_description: "6 days ago",
+                        time: Date.now() / 1000 - 518400,
+                        platform: "Google",
+                        response: "Thank you Anna! We're thrilled to hear you enjoy our cookies and appreciate our team.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "Robert Davis",
+                        rating: 4,
+                        text: "Solid coffee shop with good variety. The cappuccino was excellent and the scones were fresh. Prices are reasonable for the quality.",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: null,
+                        flagged: false
+                    },
+                    {
+                        author_name: "Michelle Lee",
+                        rating: 5,
+                        text: "Perfect spot for remote work! Great WiFi, comfortable seating, and excellent coffee. The lemon bars are my favorite!",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: "So happy to hear we're a great workspace for you! We work hard to maintain fast WiFi.",
+                        flagged: false
+                    },
+                    {
+                        author_name: "Kevin Brown",
+                        rating: 3,
+                        text: "Average coffee, nothing extraordinary. The bagels were good though. Service could be more attentive during busy periods.",
+                        relative_time_description: "2 weeks ago",
+                        time: Date.now() / 1000 - 1209600,
+                        platform: "Google",
+                        response: null,
+                        flagged: true
                     }
                 ];
             }
@@ -738,11 +833,34 @@
                         this.applyFilters();
                     });
                 });
+
+                // Header filter buttons
+                document.getElementById('flaggedFilter').addEventListener('click', () => {
+                    this.toggleFlaggedFilter();
+                });
+
+                document.getElementById('noResponseFilter').addEventListener('click', () => {
+                    this.toggleNoResponseFilter();
+                });
             }
 
             toggleFilters() {
                 const panel = document.getElementById('filtersPanel');
                 panel.classList.toggle('collapsed');
+            }
+
+            toggleFlaggedFilter() {
+                this.filters.flaggedOnly = !this.filters.flaggedOnly;
+                const button = document.getElementById('flaggedFilter');
+                button.classList.toggle('active', this.filters.flaggedOnly);
+                this.applyFilters();
+            }
+
+            toggleNoResponseFilter() {
+                this.filters.noResponseOnly = !this.filters.noResponseOnly;
+                const button = document.getElementById('noResponseFilter');
+                button.classList.toggle('active', this.filters.noResponseOnly);
+                this.applyFilters();
             }
 
             applyFilters() {
@@ -780,6 +898,16 @@
                         if (review.time < cutoff) return false;
                     }
 
+                    // Flagged filter
+                    if (this.filters.flaggedOnly && !review.flagged) {
+                        return false;
+                    }
+
+                    // No response filter
+                    if (this.filters.noResponseOnly && review.response) {
+                        return false;
+                    }
+
                     return true;
                 });
 
@@ -812,9 +940,10 @@
             createReviewCard(review) {
                 const hasResponse = review.response;
                 const avatar = review.author_name.charAt(0).toUpperCase();
+                const isFlagged = review.flagged;
                 
                 return `
-                    <div class="review-card">
+                    <div class="review-card${isFlagged ? ' flagged' : ''}" data-review-author="${review.author_name}">
                         <div class="review-header">
                             <div class="reviewer-info">
                                 <div class="reviewer-avatar">${avatar}</div>
@@ -843,7 +972,7 @@
                                 ? '<button class="review-action responded"><span class="material-icons">check</span>Responded</button>'
                                 : '<button class="review-action"><span class="material-icons">reply</span>Respond</button>'
                             }
-                            <button class="review-action">
+                            <button class="review-action${isFlagged ? ' flagged' : ''}" onclick="reviewsList.toggleFlag('${review.author_name}')">
                                 <span class="material-icons">flag</span>Flag
                             </button>
                             <button class="review-action">
@@ -914,6 +1043,15 @@
                     this.updateResultsInfo();
                     this.renderPagination();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            toggleFlag(authorName) {
+                const review = this.reviews.find(r => r.author_name === authorName);
+                if (review) {
+                    review.flagged = !review.flagged;
+                    this.renderReviews();
+                    this.updateResultsInfo();
                 }
             }
 
