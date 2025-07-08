@@ -3,281 +3,936 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reviews List - Virtual Stamp</title>
-    <link rel="stylesheet" href="../css/loyalty.css">
+    <title>All Reviews - Virtual Stamp</title>
+    
+    <!-- Material Design Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    
+    <link rel="stylesheet" href="../css/reviews.css">
     <style>
-        .reviews-header {
+        :root {
+            --md-primary: #1976d2;
+            --md-primary-dark: #1565c0;
+            --md-primary-light: #42a5f5;
+            --md-secondary: #26a69a;
+            --md-surface: #ffffff;
+            --md-background: #fafafa;
+            --md-surface-variant: #f5f5f5;
+            --md-on-surface: #1c1b1f;
+            --md-on-surface-variant: #49454f;
+            --md-outline: #79747e;
+            --md-shadow: rgba(0, 0, 0, 0.12);
+            --md-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --md-elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            --md-elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--md-background);
+            color: var(--md-on-surface);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Bar */
+        .app-bar {
+            background: var(--md-primary);
+            color: white;
+            padding: 16px;
+            box-shadow: var(--md-elevation-2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .app-bar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-bar h1 {
+            font-size: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: var(--md-surface);
+            border-bottom: 1px solid var(--md-outline);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tabs-content {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-width: 100%;
+        }
+
+        .nav-tab {
+            padding: 16px 24px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            color: var(--md-on-surface-variant);
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab.active {
+            color: var(--md-primary);
+            border-bottom-color: var(--md-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 24px 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: var(--md-surface);
+            border-radius: 28px;
+            box-shadow: var(--md-elevation-1);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            transition: box-shadow 0.2s;
+        }
+
+        .search-container:focus-within {
+            box-shadow: var(--md-elevation-2);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 12px 16px;
+            font-size: 16px;
+            background: transparent;
+            color: var(--md-on-surface);
+        }
+
+        .search-input::placeholder {
+            color: var(--md-on-surface-variant);
+        }
+
+        .search-icon {
+            color: var(--md-on-surface-variant);
+            margin-right: 8px;
+        }
+
+        .filter-button {
+            background: none;
+            border: none;
+            color: var(--md-on-surface-variant);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            margin-left: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .filter-button:hover {
+            background-color: rgba(25, 118, 210, 0.04);
+        }
+
+        /* Filters Panel */
+        .filters-panel {
+            background: var(--md-surface);
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-1);
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .filters-panel.collapsed {
+            max-height: 0;
+            margin-bottom: 0;
+        }
+
+        .filters-content {
+            padding: 20px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .filters-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--md-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            border: 1px solid var(--md-outline);
+            border-radius: 8px;
+            background: var(--md-surface);
+            font-size: 14px;
+            color: var(--md-on-surface);
+            transition: border-color 0.2s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--md-primary);
+        }
+
+        /* Header Actions */
+        .list-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
-        .reviews-actions {
+        .results-info {
+            color: var(--md-on-surface-variant);
+            font-size: 14px;
+        }
+
+        .header-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: 8px 16px;
+            border: 1px solid var(--md-outline);
+            border-radius: 20px;
+            background: var(--md-surface);
+            color: var(--md-on-surface);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-button:hover {
+            background: var(--md-surface-variant);
+        }
+
+        .action-button.primary {
+            background: var(--md-primary);
+            color: white;
+            border-color: var(--md-primary);
+        }
+
+        .action-button.primary:hover {
+            background: var(--md-primary-dark);
+        }
+
+        /* Review Cards */
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .review-card {
-            background: var(--accent-color);
+            background: var(--md-surface);
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-1);
             padding: 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 15px;
+            transition: box-shadow 0.2s;
+        }
+
+        .review-card:hover {
+            box-shadow: var(--md-elevation-2);
         }
 
         .review-header {
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .reviewer-info {
+            display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--md-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .reviewer-details {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 500;
+            color: var(--md-on-surface);
+            margin-bottom: 4px;
         }
 
         .review-meta {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--md-on-surface-variant);
+            flex-wrap: wrap;
         }
 
-        .review-rating {
-            color: #FFC107;
-            font-size: 18px;
+        .rating-stars {
+            color: #ff9800;
+            font-size: 16px;
         }
 
-        .review-platform {
-            font-size: 14px;
-            color: var(--text-color);
-            opacity: 0.8;
-        }
-
-        .review-date {
-            font-size: 14px;
-            color: var(--text-color);
-            opacity: 0.8;
+        .platform-badge {
+            background: var(--md-primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
         }
 
         .review-content {
-            margin: 15px 0;
-            line-height: 1.5;
+            margin: 16px 0;
+            line-height: 1.6;
+            color: var(--md-on-surface);
         }
 
         .review-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .review-tags {
-            display: flex;
-            flex-wrap: wrap;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
         }
 
-        .review-tag {
-            background: var(--primary-color);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
+        .review-action {
+            padding: 6px 12px;
+            border: 1px solid var(--md-outline);
+            border-radius: 16px;
+            background: transparent;
+            color: var(--md-on-surface-variant);
+            cursor: pointer;
             font-size: 12px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .filter-panel {
-            background: var(--accent-color);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
+        .review-action:hover {
+            background: var(--md-surface-variant);
         }
 
-        .filter-group {
-            margin-bottom: 15px;
+        .review-action.responded {
+            background: var(--md-secondary);
+            color: white;
+            border-color: var(--md-secondary);
         }
 
-        .filter-label {
-            display: block;
-            margin-bottom: 5px;
+        /* Response Section */
+        .response-section {
+            margin-top: 16px;
+            padding: 16px;
+            background: var(--md-surface-variant);
+            border-radius: 8px;
+            border-left: 4px solid var(--md-primary);
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
             font-weight: 500;
+            color: var(--md-on-surface-variant);
         }
 
-        .filter-select {
-            width: 100%;
-            padding: 8px;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--secondary-color);
+        .response-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--md-on-surface);
         }
 
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            flex-wrap: wrap;
         }
 
         .page-button {
-            background: var(--accent-color);
-            color: var(--text-color);
-            padding: 8px 12px;
-            border-radius: var(--border-radius);
-            border: none;
+            min-width: 40px;
+            height: 40px;
+            border: 1px solid var(--md-outline);
+            border-radius: 50%;
+            background: var(--md-surface);
+            color: var(--md-on-surface);
             cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 14px;
         }
 
         .page-button:hover {
-            background: var(--primary-color);
-            color: white;
+            background: var(--md-surface-variant);
         }
 
         .page-button.active {
-            background: var(--primary-color);
+            background: var(--md-primary);
             color: white;
+            border-color: var(--md-primary);
         }
 
-        .search-bar {
+        .page-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--md-on-surface-variant);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            opacity: 0.5;
+            margin-bottom: 16px;
+        }
+
+        /* Loading State */
+        .loading-state {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            justify-content: center;
+            align-items: center;
+            padding: 48px;
         }
 
-        .search-input {
-            flex: 1;
-            padding: 10px;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--secondary-color);
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--md-surface-variant);
+            border-top: 4px solid var(--md-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 767px) {
+            .main-content {
+                padding: 16px;
+            }
+
+            .review-card {
+                padding: 16px;
+            }
+
+            .nav-tabs-content {
+                padding: 0 16px;
+            }
+
+            .list-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .header-actions {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="../index.html">Home</a>
-            <span>›</span>
-            <a href="reviews-dashboard.html">Reviews</a>
-            <span>›</span>
-            <span>All Reviews</span>
-        </div>
-        <div class="header">
-            <h1>Reviews List</h1>
-            <p>View and manage all customer reviews</p>
-        </div>
-
-        <div class="filter-panel">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search reviews...">
+    <div class="app-container">
+        <!-- App Bar -->
+        <header class="app-bar">
+            <div class="app-bar-content">
+                <h1>
+                    <span class="material-icons">list</span>
+                    All Reviews
+                </h1>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <span class="material-icons" style="cursor: pointer;">notifications</span>
+                    <span class="material-icons" style="cursor: pointer;">account_circle</span>
+                </div>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <div class="filter-group">
-                    <label class="filter-label">Location</label>
-                    <select id="locationFilter" class="filter-select">
-                        <option value="">All Locations</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Rating</label>
-                    <select id="ratingFilter" class="filter-select">
-                        <option value="">All Ratings</option>
-                        <option value="5">5 Stars</option>
-                        <option value="4">4+ Stars</option>
-                        <option value="3">3+ Stars</option>
-                        <option value="2">2+ Stars</option>
-                        <option value="1">1+ Stars</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Platform</label>
-                    <select id="platformFilter" class="filter-select">
-                        <option value="">All Platforms</option>
-                        <option value="Google">Google</option>
-                        <option value="Yelp">Yelp</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Date Range</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="date" id="startDate" class="filter-select">
-                        <input type="date" id="endDate" class="filter-select">
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <div class="nav-tabs-content">
+                <a href="reviews-dashboard.html" class="nav-tab">
+                    <span class="material-icons">dashboard</span>
+                    Dashboard
+                </a>
+                <a href="reviews-list.html" class="nav-tab active">
+                    <span class="material-icons">list</span>
+                    All Reviews
+                </a>
+                <a href="reviews-insights.html" class="nav-tab">
+                    <span class="material-icons">analytics</span>
+                    Insights
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <span class="material-icons search-icon">search</span>
+                <input type="text" class="search-input" placeholder="Search reviews..." id="searchInput">
+                <button class="filter-button" id="filterToggle">
+                    <span class="material-icons">tune</span>
+                </button>
+            </div>
+
+            <!-- Filters Panel -->
+            <div class="filters-panel collapsed" id="filtersPanel">
+                <div class="filters-content">
+                    <div class="filters-grid">
+                        <div class="filter-field">
+                            <label class="filter-label">Rating</label>
+                            <select id="ratingFilter" class="filter-select">
+                                <option value="">All Ratings</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4+ Stars</option>
+                                <option value="3">3+ Stars</option>
+                                <option value="2">2+ Stars</option>
+                                <option value="1">1+ Stars</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Platform</label>
+                            <select id="platformFilter" class="filter-select">
+                                <option value="">All Platforms</option>
+                                <option value="Google">Google</option>
+                                <option value="Yelp">Yelp</option>
+                                <option value="Facebook">Facebook</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Response Status</label>
+                            <select id="responseFilter" class="filter-select">
+                                <option value="">All Reviews</option>
+                                <option value="responded">Responded</option>
+                                <option value="pending">Pending Response</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Date Range</label>
+                            <select id="dateFilter" class="filter-select">
+                                <option value="all">All Time</option>
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 90 days</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="reviews-header">
-            <div class="reviews-count">
-                <h3>Showing 1-10 of 1,234 reviews</h3>
-            </div>
-            <div class="reviews-actions">
-                <button class="button">Export Reviews</button>
-                <button class="button">Bulk Actions</button>
-            </div>
-        </div>
-
-        <div id="reviewsList">
-            <!-- Sample review cards -->
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-meta">
-                        <div class="review-rating">★★★★★</div>
-                        <div class="review-platform">Google Reviews</div>
-                        <div class="review-date">March 15, 2024</div>
-                    </div>
-                    <div class="review-actions">
-                        <button class="button">Respond</button>
-                        <button class="button">Flag</button>
-                    </div>
+            <!-- List Header -->
+            <div class="list-header">
+                <div class="results-info" id="resultsInfo">
+                    Showing 1-10 of 47 reviews
                 </div>
-                <div class="review-content">
-                    <p>Excellent service and amazing food! The staff was very friendly and attentive. Will definitely come back again.</p>
-                </div>
-                <div class="review-tags">
-                    <span class="review-tag">Service</span>
-                    <span class="review-tag">Food Quality</span>
-                    <span class="review-tag">Staff</span>
+                <div class="header-actions">
+                    <button class="action-button">
+                        <span class="material-icons">file_download</span>
+                        Export
+                    </button>
+                    <button class="action-button">
+                        <span class="material-icons">settings</span>
+                        Bulk Actions
+                    </button>
                 </div>
             </div>
 
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-meta">
-                        <div class="review-rating">★★★★☆</div>
-                        <div class="review-platform">Yelp</div>
-                        <div class="review-date">March 14, 2024</div>
-                    </div>
-                    <div class="review-actions">
-                        <button class="button">Respond</button>
-                        <button class="button">Flag</button>
-                    </div>
-                </div>
-                <div class="review-content">
-                    <p>Good experience overall. The food was delicious, but the wait time was a bit long. The atmosphere was nice though.</p>
-                </div>
-                <div class="review-tags">
-                    <span class="review-tag">Food Quality</span>
-                    <span class="review-tag">Wait Time</span>
-                    <span class="review-tag">Atmosphere</span>
-                </div>
+            <!-- Reviews List -->
+            <div class="reviews-list" id="reviewsList">
+                <!-- Reviews will be populated here -->
             </div>
-        </div>
 
-        <div class="pagination">
-            <button class="page-button">Previous</button>
-            <button class="page-button active">1</button>
-            <button class="page-button">2</button>
-            <button class="page-button">3</button>
-            <button class="page-button">Next</button>
-        </div>
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be populated here -->
+            </div>
+        </main>
     </div>
 
     <script>
-        // Initialize the reviews list
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set default date range (last 30 days)
-            const endDate = new Date();
-            const startDate = new Date();
-            startDate.setDate(startDate.getDate() - 30);
-            
-            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
-            document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
+        class ReviewsList {
+            constructor() {
+                this.reviews = [];
+                this.filteredReviews = [];
+                this.currentPage = 1;
+                this.itemsPerPage = 10;
+                this.filters = {
+                    search: '',
+                    rating: '',
+                    platform: '',
+                    response: '',
+                    date: 'all'
+                };
+                this.init();
+            }
 
-            // Additional initialization code will be added here
+            async init() {
+                try {
+                    const data = await this.loadReviews();
+                    this.reviews = data.reviews;
+                    this.filteredReviews = [...this.reviews];
+                    this.renderReviews();
+                    this.updateResultsInfo();
+                    this.renderPagination();
+                    this.setupEventListeners();
+                } catch (error) {
+                    console.error('Failed to initialize reviews list:', error);
+                    this.showError('Failed to load reviews');
+                }
+            }
+
+            async loadReviews() {
+                try {
+                    const response = await fetch('../data/mock-reviews.json');
+                    return await response.json();
+                } catch (error) {
+                    // Return mock data as fallback
+                    return { reviews: this.getMockReviews() };
+                }
+            }
+
+            getMockReviews() {
+                return [
+                    {
+                        author_name: "Sarah Johnson",
+                        rating: 5,
+                        text: "Amazing coffee and the most delicious croissants! The barista was super friendly and made my latte perfectly. Will definitely be back!",
+                        relative_time_description: "2 days ago",
+                        time: Date.now() / 1000 - 172800,
+                        platform: "Google",
+                        response: "Thank you so much for your kind words! We're thrilled you enjoyed your experience."
+                    },
+                    {
+                        author_name: "Mike Chen",
+                        rating: 1,
+                        text: "Worst coffee I've ever had. Burnt taste and the staff was rude. Overpriced for what you get. Won't be coming back.",
+                        relative_time_description: "1 week ago",
+                        time: Date.now() / 1000 - 604800,
+                        platform: "Google",
+                        response: null
+                    },
+                    {
+                        author_name: "Emma Rodriguez",
+                        rating: 4,
+                        text: "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
+                        relative_time_description: "3 days ago",
+                        time: Date.now() / 1000 - 259200,
+                        platform: "Yelp",
+                        response: "Thanks for the feedback! We're working on expanding our seating area."
+                    }
+                ];
+            }
+
+            setupEventListeners() {
+                // Search input
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.filters.search = e.target.value.toLowerCase();
+                    this.applyFilters();
+                });
+
+                // Filter toggle
+                document.getElementById('filterToggle').addEventListener('click', () => {
+                    this.toggleFilters();
+                });
+
+                // Filter selects
+                ['ratingFilter', 'platformFilter', 'responseFilter', 'dateFilter'].forEach(id => {
+                    document.getElementById(id).addEventListener('change', (e) => {
+                        const filterType = id.replace('Filter', '');
+                        this.filters[filterType] = e.target.value;
+                        this.applyFilters();
+                    });
+                });
+            }
+
+            toggleFilters() {
+                const panel = document.getElementById('filtersPanel');
+                panel.classList.toggle('collapsed');
+            }
+
+            applyFilters() {
+                this.filteredReviews = this.reviews.filter(review => {
+                    // Search filter
+                    if (this.filters.search) {
+                        const searchLower = this.filters.search.toLowerCase();
+                        if (!review.text.toLowerCase().includes(searchLower) &&
+                            !review.author_name.toLowerCase().includes(searchLower)) {
+                            return false;
+                        }
+                    }
+
+                    // Rating filter
+                    if (this.filters.rating) {
+                        const minRating = parseInt(this.filters.rating);
+                        if (review.rating < minRating) return false;
+                    }
+
+                    // Platform filter
+                    if (this.filters.platform && review.platform !== this.filters.platform) {
+                        return false;
+                    }
+
+                    // Response filter
+                    if (this.filters.response) {
+                        if (this.filters.response === 'responded' && !review.response) return false;
+                        if (this.filters.response === 'pending' && review.response) return false;
+                    }
+
+                    // Date filter
+                    if (this.filters.date !== 'all') {
+                        const days = parseInt(this.filters.date);
+                        const cutoff = Date.now() / 1000 - (days * 24 * 60 * 60);
+                        if (review.time < cutoff) return false;
+                    }
+
+                    return true;
+                });
+
+                this.currentPage = 1;
+                this.renderReviews();
+                this.updateResultsInfo();
+                this.renderPagination();
+            }
+
+            renderReviews() {
+                const container = document.getElementById('reviewsList');
+                const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+                const endIdx = startIdx + this.itemsPerPage;
+                const pageReviews = this.filteredReviews.slice(startIdx, endIdx);
+
+                if (pageReviews.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="material-icons empty-icon">rate_review</div>
+                            <h3>No reviews found</h3>
+                            <p>Try adjusting your filters or search terms</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = pageReviews.map(review => this.createReviewCard(review)).join('');
+            }
+
+            createReviewCard(review) {
+                const hasResponse = review.response;
+                const avatar = review.author_name.charAt(0).toUpperCase();
+                
+                return `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">${avatar}</div>
+                                <div class="reviewer-details">
+                                    <div class="reviewer-name">${review.author_name}</div>
+                                    <div class="review-meta">
+                                        <span class="rating-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                                        <span class="platform-badge">${review.platform || 'Google'}</span>
+                                        <span>${review.relative_time_description}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-content">${review.text}</div>
+                        ${hasResponse ? `
+                            <div class="response-section">
+                                <div class="response-header">
+                                    <span class="material-icons" style="font-size: 16px;">reply</span>
+                                    Business Response
+                                </div>
+                                <div class="response-text">${review.response}</div>
+                            </div>
+                        ` : ''}
+                        <div class="review-actions">
+                            ${hasResponse 
+                                ? '<button class="review-action responded"><span class="material-icons">check</span>Responded</button>'
+                                : '<button class="review-action"><span class="material-icons">reply</span>Respond</button>'
+                            }
+                            <button class="review-action">
+                                <span class="material-icons">flag</span>Flag
+                            </button>
+                            <button class="review-action">
+                                <span class="material-icons">share</span>Share
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateResultsInfo() {
+                const total = this.filteredReviews.length;
+                const start = total === 0 ? 0 : (this.currentPage - 1) * this.itemsPerPage + 1;
+                const end = Math.min(this.currentPage * this.itemsPerPage, total);
+                
+                document.getElementById('resultsInfo').textContent = 
+                    `Showing ${start}-${end} of ${total} reviews`;
+            }
+
+            renderPagination() {
+                const container = document.getElementById('pagination');
+                const totalPages = Math.ceil(this.filteredReviews.length / this.itemsPerPage);
+                
+                if (totalPages <= 1) {
+                    container.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '';
+                
+                // Previous button
+                paginationHTML += `
+                    <button class="page-button" ${this.currentPage === 1 ? 'disabled' : ''} 
+                            onclick="reviewsList.goToPage(${this.currentPage - 1})">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                `;
+
+                // Page numbers
+                const startPage = Math.max(1, this.currentPage - 2);
+                const endPage = Math.min(totalPages, this.currentPage + 2);
+
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationHTML += `
+                        <button class="page-button ${i === this.currentPage ? 'active' : ''}"
+                                onclick="reviewsList.goToPage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                }
+
+                // Next button
+                paginationHTML += `
+                    <button class="page-button" ${this.currentPage === totalPages ? 'disabled' : ''} 
+                            onclick="reviewsList.goToPage(${this.currentPage + 1})">
+                        <span class="material-icons">chevron_right</span>
+                    </button>
+                `;
+
+                container.innerHTML = paginationHTML;
+            }
+
+            goToPage(page) {
+                const totalPages = Math.ceil(this.filteredReviews.length / this.itemsPerPage);
+                if (page >= 1 && page <= totalPages) {
+                    this.currentPage = page;
+                    this.renderReviews();
+                    this.updateResultsInfo();
+                    this.renderPagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            showError(message) {
+                const container = document.getElementById('reviewsList');
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="material-icons empty-icon">error</div>
+                        <h3>Error</h3>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize when DOM is loaded
+        let reviewsList;
+        document.addEventListener('DOMContentLoaded', () => {
+            reviewsList = new ReviewsList();
         });
     </script>
 </body>
