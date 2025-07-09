@@ -465,6 +465,55 @@
             }
         }
 
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-card {
+            padding: 24px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--md-primary);
+            margin: 8px 0 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--md-on-surface-variant);
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive {
+            color: #2e7d32;
+        }
+
+        .stat-change.negative {
+            color: #d32f2f;
+        }
+
         /* Loading States */
         .loading-skeleton {
             background: linear-gradient(90deg, var(--md-surface-variant) 25%, var(--md-surface) 50%, var(--md-surface-variant) 75%);
@@ -581,9 +630,37 @@
                         <label class="filter-label">Location</label>
                         <select id="locationFilter" class="filter-select">
                             <option value="">All Locations</option>
-                            <option value="downtown">Downtown Location</option>
-                            <option value="uptown">Uptown Location</option>
+                            <option value="shop-a">Shop A</option>
+                            <option value="shop-b">Shop B</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="stats-grid">
+                <div class="md-card stat-card">
+                    <div class="stat-label">Average Rating</div>
+                    <div class="stat-value" id="averageRating">4.2</div>
+                    <div class="stat-change positive">
+                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
+                        +0.3 from last period
+                    </div>
+                </div>
+                <div class="md-card stat-card">
+                    <div class="stat-label">Total Reviews</div>
+                    <div class="stat-value" id="totalReviews">47</div>
+                    <div class="stat-change positive">
+                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
+                        +12 this month
+                    </div>
+                </div>
+                <div class="md-card stat-card">
+                    <div class="stat-label">Response Rate</div>
+                    <div class="stat-value" id="responseRate">89%</div>
+                    <div class="stat-change positive">
+                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
+                        +15% improvement
                     </div>
                 </div>
             </div>
@@ -769,6 +846,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Rating Distribution Chart -->
+            <div class="md-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="material-icons">bar_chart</span>
+                        Rating Distribution
+                    </h3>
+                    <p class="card-subtitle">How customers rate your business</p>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="ratingDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -820,6 +913,34 @@
                 document.getElementById('positivePercent').textContent = `${sentiment.positive}%`;
                 document.getElementById('neutralPercent').textContent = `${sentiment.neutral}%`;
                 document.getElementById('negativePercent').textContent = `${sentiment.negative}%`;
+                
+                // Update stats
+                this.updateStats();
+            }
+
+            updateStats() {
+                const stats = this.calculateStats(this.reviews);
+                document.getElementById('averageRating').textContent = stats.averageRating.toFixed(1);
+                document.getElementById('totalReviews').textContent = stats.totalReviews;
+                document.getElementById('responseRate').textContent = `${stats.responseRate}%`;
+            }
+
+            calculateStats(reviews) {
+                if (reviews.length === 0) {
+                    return { averageRating: 0, totalReviews: 0, responseRate: 0 };
+                }
+
+                const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+                const averageRating = totalRating / reviews.length;
+                
+                // Mock response rate calculation
+                const responseRate = Math.round(89 + Math.random() * 10);
+
+                return {
+                    averageRating,
+                    totalReviews: reviews.length,
+                    responseRate
+                };
             }
 
             calculateSatisfaction() {
@@ -851,6 +972,7 @@
                 this.createTrendChart();
                 this.createComparisonChart();
                 this.createPlatformChart();
+                this.createRatingDistributionChart();
             }
 
             createTrendChart() {
@@ -950,6 +1072,56 @@
                         }
                     }
                 });
+            }
+
+            createRatingDistributionChart() {
+                const ctx = document.getElementById('ratingDistributionChart').getContext('2d');
+                const ratingCounts = this.getRatingDistribution();
+
+                this.charts.ratingDistribution = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['★★★★★', '★★★★☆', '★★★☆☆', '★★☆☆☆', '★☆☆☆☆'],
+                        datasets: [{
+                            label: 'Number of Reviews',
+                            data: [ratingCounts[5], ratingCounts[4], ratingCounts[3], ratingCounts[2], ratingCounts[1]],
+                            backgroundColor: [
+                                '#4caf50',
+                                '#8bc34a',
+                                '#ffeb3b',
+                                '#ff9800',
+                                '#f44336'
+                            ],
+                            borderRadius: 8,
+                            borderSkipped: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            getRatingDistribution() {
+                const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+                this.reviews.forEach(review => {
+                    distribution[review.rating]++;
+                });
+                return distribution;
             }
 
             populateTopics() {
