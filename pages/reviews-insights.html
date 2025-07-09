@@ -303,6 +303,20 @@
             max-height: 300px;
         }
 
+        /* Chart Grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .chart-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         /* Sentiment Analysis */
         .sentiment-grid {
             display: grid;
@@ -665,60 +679,93 @@
                 </div>
             </div>
 
-            <!-- Key Insights -->
-            <div class="insights-grid">
-                <div class="md-card insight-card">
-                    <div class="insight-icon">
-                        <span class="material-icons">sentiment_satisfied</span>
-                    </div>
-                    <div class="insight-value" id="satisfactionScore">4.2</div>
-                    <div class="insight-label">Customer Satisfaction</div>
-                    <div class="insight-trend trend-positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +0.3 improvement
-                    </div>
-                </div>
-
-                <div class="md-card insight-card">
-                    <div class="insight-icon">
-                        <span class="material-icons">schedule</span>
-                    </div>
-                    <div class="insight-value" id="responseTime">2.5h</div>
-                    <div class="insight-label">Avg Response Time</div>
-                    <div class="insight-trend trend-positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_down</span>
-                        -30min faster
-                    </div>
-                </div>
-
-                <div class="md-card insight-card">
-                    <div class="insight-icon">
-                        <span class="material-icons">trending_up</span>
-                    </div>
-                    <div class="insight-value" id="reviewVolume">47</div>
-                    <div class="insight-label">Review Volume</div>
-                    <div class="insight-trend trend-positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +25% increase
-                    </div>
-                </div>
-            </div>
-
-            <!-- Rating Trends Chart -->
+            <!-- Performance Metrics -->
             <div class="md-card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <span class="material-icons">show_chart</span>
-                        Rating Trends Over Time
+                        <span class="material-icons">speed</span>
+                        Performance Metrics
                     </h3>
-                    <p class="card-subtitle">Track how your ratings change over time</p>
+                    <p class="card-subtitle">Key performance indicators for your review management</p>
                 </div>
                 <div class="card-content">
-                    <div class="chart-container">
-                        <canvas id="trendChart"></canvas>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <span class="material-icons">reply</span>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="responseRateMetric">89%</div>
+                                <div class="metric-label">Response Rate</div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <span class="material-icons">thumb_up</span>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="positiveRatio">4.1:1</div>
+                                <div class="metric-label">Positive to Negative Ratio</div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <span class="material-icons">star</span>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="avgRatingMetric">4.2</div>
+                                <div class="metric-label">Average Rating</div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <span class="material-icons">visibility</span>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="reviewsThisMonth">12</div>
+                                <div class="metric-label">New Reviews This Month</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Charts Section -->
+            <div class="chart-grid">
+                <!-- Rating Trends Chart -->
+                <div class="md-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <span class="material-icons">show_chart</span>
+                            Rating Trends Over Time
+                        </h3>
+                        <p class="card-subtitle">Track how your ratings change over time</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sentiment Trends Chart -->
+                <div class="md-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <span class="material-icons">psychology</span>
+                            Sentiment Trends Over Time
+                        </h3>
+                        <p class="card-subtitle">Track sentiment changes over time</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="sentimentTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <!-- Sentiment Analysis -->
             <div class="md-card">
@@ -765,56 +812,7 @@
                 </div>
             </div>
 
-            <!-- Performance Metrics -->
-            <div class="md-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <span class="material-icons">speed</span>
-                        Performance Metrics
-                    </h3>
-                    <p class="card-subtitle">Key performance indicators for your review management</p>
-                </div>
-                <div class="card-content">
-                    <div class="metrics-grid">
-                        <div class="metric-item">
-                            <div class="metric-icon">
-                                <span class="material-icons">reply</span>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="responseRate">89%</div>
-                                <div class="metric-label">Response Rate</div>
-                            </div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-icon">
-                                <span class="material-icons">thumb_up</span>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="positiveRatio">4.1:1</div>
-                                <div class="metric-label">Positive to Negative Ratio</div>
-                            </div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-icon">
-                                <span class="material-icons">star</span>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="avgRating">4.2</div>
-                                <div class="metric-label">Average Rating</div>
-                            </div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-icon">
-                                <span class="material-icons">visibility</span>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="reviewsThisMonth">12</div>
-                                <div class="metric-label">New Reviews This Month</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Comparison with Previous Period -->
             <div class="md-card">
@@ -906,10 +904,8 @@
             }
 
             updateInsights() {
-                const satisfaction = this.calculateSatisfaction();
                 const sentiment = this.analyzeSentiment();
                 
-                document.getElementById('satisfactionScore').textContent = satisfaction.toFixed(1);
                 document.getElementById('positivePercent').textContent = `${sentiment.positive}%`;
                 document.getElementById('neutralPercent').textContent = `${sentiment.neutral}%`;
                 document.getElementById('negativePercent').textContent = `${sentiment.negative}%`;
@@ -943,11 +939,7 @@
                 };
             }
 
-            calculateSatisfaction() {
-                if (this.reviews.length === 0) return 0;
-                const total = this.reviews.reduce((sum, review) => sum + review.rating, 0);
-                return total / this.reviews.length;
-            }
+
 
             analyzeSentiment() {
                 const total = this.reviews.length;
@@ -970,6 +962,7 @@
 
             initializeCharts() {
                 this.createTrendChart();
+                this.createSentimentTrendChart();
                 this.createComparisonChart();
                 this.createPlatformChart();
                 this.createRatingDistributionChart();
@@ -1004,6 +997,64 @@
                                 max: 5,
                                 ticks: {
                                     stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            createSentimentTrendChart() {
+                const ctx = document.getElementById('sentimentTrendChart').getContext('2d');
+                this.charts.sentimentTrend = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [
+                            {
+                                label: 'Positive',
+                                data: [65, 70, 75, 80, 78, 75],
+                                borderColor: '#2e7d32',
+                                backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                                tension: 0.4,
+                                fill: false
+                            },
+                            {
+                                label: 'Neutral',
+                                data: [25, 20, 15, 12, 15, 15],
+                                borderColor: '#f57c00',
+                                backgroundColor: 'rgba(245, 124, 0, 0.1)',
+                                tension: 0.4,
+                                fill: false
+                            },
+                            {
+                                label: 'Negative',
+                                data: [10, 10, 10, 8, 7, 10],
+                                borderColor: '#c62828',
+                                backgroundColor: 'rgba(198, 40, 40, 0.1)',
+                                tension: 0.4,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                min: 0,
+                                max: 100,
+                                ticks: {
+                                    stepSize: 20,
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
                                 }
                             }
                         }
