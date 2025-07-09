@@ -45,14 +45,13 @@
             background-color: var(--md-background);
             color: var(--md-on-surface);
             line-height: 1.6;
-            display: flex;
         }
 
         .app-container {
             display: flex;
             width: 100%;
             min-height: 100vh;
-            transition: padding-left 0.3s ease;
+            position: relative;
         }
 
         .sidebar {
@@ -70,16 +69,15 @@
         }
 
         .sidebar-header {
-            padding: 16px;
-            font-size: 24px;
+            padding: 16px 24px;
+            font-size: 20px;
             font-weight: 500;
-            color: var(--md-primary);
-            border-bottom: 1px solid var(--md-outline);
             display: flex;
-            justify-content: space-between;
             align-items: center;
             height: 65px;
             box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .sidebar-nav {
@@ -120,43 +118,9 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-left: 256px;
             transition: margin-left 0.3s ease;
         }
 
-        .app-container.sidebar-collapsed .sidebar {
-            width: 72px;
-        }
-
-        .app-container.sidebar-collapsed .main-wrapper {
-            margin-left: 72px;
-        }
-
-        .app-container.sidebar-collapsed .nav-link {
-            justify-content: center;
-            padding: 12px;
-        }
-
-        .app-container.sidebar-collapsed .nav-text,
-        .app-container.sidebar-collapsed .sidebar-header .nav-text {
-            opacity: 0;
-            width: 0;
-            overflow: hidden;
-        }
-
-        .menu-icon {
-            display: block;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-            color: var(--md-on-surface-variant);
-        }
-
-        .menu-icon:hover {
-            background-color: rgba(0, 0, 0, 0.04);
-        }
-        
         .app-bar {
             background: var(--md-primary);
             color: white;
@@ -164,7 +128,11 @@
             box-shadow: var(--md-elevation-2);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 200;
+            height: 65px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
         }
 
         .app-bar-content {
@@ -180,7 +148,7 @@
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 16px;
         }
 
         /* Navigation */
@@ -633,19 +601,6 @@
             .main-wrapper {
                 margin-left: 0;
             }
-
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .app-container.sidebar-collapsed .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .app-container:not(.sidebar-collapsed) .sidebar {
-                transform: translateX(0);
-                box-shadow: var(--md-elevation-3);
-            }
         }
 
         /* Stats Grid */
@@ -750,14 +705,68 @@
             padding: 4px 8px;
             border-radius: 12px;
         }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            .main-wrapper {
+                margin-left: 256px;
+            }
+            .sidebar {
+                transform: translateX(0);
+            }
+            .app-container.sidebar-collapsed .main-wrapper {
+                margin-left: 72px;
+            }
+            .app-container.sidebar-collapsed .sidebar {
+                width: 72px;
+            }
+            .app-container.sidebar-collapsed .nav-link {
+                justify-content: center;
+                padding: 12px;
+            }
+            .app-container.sidebar-collapsed .nav-text,
+            .app-container.sidebar-collapsed .sidebar-header {
+                opacity: 0;
+                width: 0;
+                overflow: hidden;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 767px) {
+            .main-wrapper {
+                margin-left: 0;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+                width: 256px !important;
+            }
+            .app-container:not(.sidebar-collapsed) .sidebar {
+                transform: translateX(0);
+                box-shadow: var(--md-elevation-3);
+            }
+            .app-container:not(.sidebar-collapsed) .sidebar-overlay {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <span class="nav-text">My Reviews</span>
-                <span class="material-icons menu-icon" id="menu-toggle">menu</span>
+                My Reviews
             </div>
             <nav class="sidebar-nav">
                 <a href="reviews-dashboard.html" class="nav-link">
@@ -780,6 +789,7 @@
             <header class="app-bar">
                 <div class="app-bar-content">
                     <h1>
+                        <span class="material-icons menu-icon" id="menu-toggle">menu</span>
                         <span class="material-icons">analytics</span>
                         Reviews Insights
                     </h1>
@@ -987,6 +997,7 @@
                 </div>
             </main>
         </div>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
     </div>
 
     <script>
@@ -1259,12 +1270,19 @@
             new ReviewsInsights();
 
             const menuToggle = document.getElementById('menu-toggle');
+            const overlay = document.getElementById('sidebar-overlay');
             const appContainer = document.querySelector('.app-container');
 
+            const toggleMenu = () => {
+                appContainer.classList.toggle('sidebar-collapsed');
+            }
+
             if (menuToggle && appContainer) {
-                menuToggle.addEventListener('click', () => {
-                    appContainer.classList.toggle('sidebar-collapsed');
-                });
+                menuToggle.addEventListener('click', toggleMenu);
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', toggleMenu);
             }
 
             const setInitialSidebarState = () => {
