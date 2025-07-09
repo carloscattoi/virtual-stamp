@@ -100,7 +100,7 @@ class ReviewsManager {
     detectPlatform(authorUrl) {
         if (!authorUrl) return 'Google';
         if (authorUrl.includes('google.com')) return 'Google';
-        if (authorUrl.includes('yelp.com')) return 'Yelp';
+        if (authorUrl.includes('Google.com')) return 'Google';
         if (authorUrl.includes('facebook.com')) return 'Facebook';
         return 'Other';
     }
@@ -163,7 +163,7 @@ class ReviewsManager {
                     text: "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
                     time: Date.now() / 1000 - 259200,
                     relative_time_description: "3 days ago",
-                    platform: "Yelp",
+                    platform: "Google",
                     response: "Thanks for the feedback! We're working on expanding our seating area.",
                     sentiment: 'positive',
                     topics: ['atmosphere', 'coffee', 'seating']

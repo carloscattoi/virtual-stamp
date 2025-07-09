@@ -636,7 +636,7 @@
                         <select id="platformFilter" class="filter-select">
                             <option value="">All Platforms</option>
                             <option value="Google">Google</option>
-                            <option value="Yelp">Yelp</option>
+                            <option value="Google">Google</option>
                             <option value="Facebook">Facebook</option>
                         </select>
                     </div>
@@ -1103,12 +1103,12 @@
                 this.charts.platform = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Google', 'Yelp', 'Facebook'],
+                        labels: ['Google', 'Google', 'Facebook'],
                         datasets: [{
                             data: [70, 25, 5],
                             backgroundColor: [
                                 '#4285f4',  // Google Blue
-                                '#d32f2f',  // Yelp Red
+                                '#d32f2f',  // Google Red
                                 '#1877f2'   // Facebook Blue
                             ]
                         }]
