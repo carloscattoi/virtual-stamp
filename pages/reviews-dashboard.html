@@ -42,15 +42,105 @@
             background-color: var(--md-background);
             color: var(--md-on-surface);
             line-height: 1.6;
+            display: flex;
         }
 
         .app-container {
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            transition: padding-left 0.3s ease;
         }
 
-        /* App Bar */
+        .sidebar {
+            width: 256px;
+            background: var(--md-surface);
+            border-right: 1px solid var(--md-outline);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease, width 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--md-primary);
+            border-bottom: 1px solid var(--md-outline);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+            box-sizing: border-box;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+            padding: 8px 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            gap: 24px;
+            color: var(--md-on-surface-variant);
+            text-decoration: none;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(25, 118, 210, 0.04);
+        }
+
+        .nav-link.active {
+            color: var(--md-primary);
+            background-color: rgba(25, 118, 210, 0.08);
+            border-right: 3px solid var(--md-primary);
+        }
+
+        .nav-link .nav-text {
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .main-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-left: 256px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .app-container.sidebar-collapsed .sidebar {
+            width: 72px;
+        }
+
+        .app-container.sidebar-collapsed .main-wrapper {
+            margin-left: 72px;
+        }
+
+        .app-container.sidebar-collapsed .nav-link {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .app-container.sidebar-collapsed .nav-text,
+        .app-container.sidebar-collapsed .sidebar-header .nav-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+        
         .app-bar {
             background: var(--md-primary);
             color: white;
@@ -78,61 +168,20 @@
         }
 
         .menu-icon {
-            display: none;
+            display: block;
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
             transition: background-color 0.2s;
+            color: var(--md-on-surface-variant);
         }
 
         .menu-icon:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.04);
         }
 
-        /* Navigation Tabs */
-        .nav-tabs {
-            background: var(--md-surface);
-            border-bottom: 1px solid var(--md-outline);
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .nav-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-tabs-content {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            min-width: 100%;
-        }
-
-        .nav-tab {
-            padding: 16px 24px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-            white-space: nowrap;
-            color: var(--md-on-surface-variant);
-            font-weight: 500;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-tab.active {
-            color: var(--md-primary);
-            border-bottom-color: var(--md-primary);
-        }
-
-        .nav-tab:hover {
-            background-color: rgba(25, 118, 210, 0.04);
-        }
-
-        /* Main Content */
+        /* Navigation Tabs (REMOVED) */
+        
         .main-content {
             flex: 1;
             padding: 24px 16px;
@@ -365,6 +414,23 @@
                 bottom: 16px;
                 right: 16px;
             }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .app-container.sidebar-collapsed .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .app-container:not(.sidebar-collapsed) .sidebar {
+                transform: translateX(0);
+                box-shadow: var(--md-elevation-3);
+            }
         }
 
         /* Filter Panel */
@@ -418,8 +484,14 @@
         }
 
         .filter-content.expanded {
-            max-height: 300px;
+            max-height: 500px;
             opacity: 1;
+        }
+
+        @media (max-width: 767px) {
+            .filter-content.expanded {
+                max-height: 800px;
+            }
         }
 
         .filter-row {
@@ -552,166 +624,170 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- App Bar -->
-        <header class="app-bar">
-            <div class="app-bar-content">
-                <h1>
-                    <span class="material-icons menu-icon">menu</span>
-                    <span class="material-icons">rate_review</span>
-                    Reviews Dashboard
-                </h1>
-                <div style="display: flex; align-items: center; gap: 16px;">
-                    <span class="material-icons" style="cursor: pointer;">notifications</span>
-                    <span class="material-icons" style="cursor: pointer;">account_circle</span>
-                </div>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="nav-text">My Reviews</span>
+                <span class="material-icons menu-icon" id="menu-toggle">menu</span>
             </div>
-        </header>
-
-        <!-- Navigation Tabs -->
-        <nav class="nav-tabs">
-            <div class="nav-tabs-content">
-                <a href="reviews-dashboard.html" class="nav-tab active">
+            <nav class="sidebar-nav">
+                <a href="reviews-dashboard.html" class="nav-link active">
                     <span class="material-icons">dashboard</span>
-                    Dashboard
+                    <span class="nav-text">Dashboard</span>
                 </a>
-                <a href="reviews-list.html" class="nav-tab">
+                <a href="reviews-list.html" class="nav-link">
                     <span class="material-icons">list</span>
-                    All Reviews
+                    <span class="nav-text">All Reviews</span>
                 </a>
-                <a href="reviews-insights.html" class="nav-tab">
+                <a href="reviews-insights.html" class="nav-link">
                     <span class="material-icons">analytics</span>
-                    Insights
+                    <span class="nav-text">Insights</span>
                 </a>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Filter Panel -->
-            <div class="filter-panel">
-                <div class="filter-header" id="filterToggle">
-                    <div class="filter-title">
-                        <span class="material-icons">filter_list</span>
-                        Filters
+            </nav>
+        </aside>
+        
+        <div class="main-wrapper">
+            <!-- App Bar -->
+            <header class="app-bar">
+                <div class="app-bar-content">
+                    <h1>
+                        <span class="material-icons">rate_review</span>
+                        Reviews Dashboard
+                    </h1>
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <span class="material-icons" style="cursor: pointer;">notifications</span>
+                        <span class="material-icons" style="cursor: pointer;">account_circle</span>
                     </div>
-                    <span class="material-icons filter-toggle" id="filterIcon">expand_more</span>
                 </div>
-                <div class="filter-content" id="filterContent">
-                    <div class="filter-row">
-                        <div class="filter-field">
-                            <label class="filter-label">Platform</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
-                                    <label for="platform-google" class="checkbox-label">Google</label>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Filter Panel -->
+                <div class="filter-panel">
+                    <div class="filter-header" id="filterToggle">
+                        <div class="filter-title">
+                            <span class="material-icons">filter_list</span>
+                            Filters
+                        </div>
+                        <span class="material-icons filter-toggle" id="filterIcon">expand_more</span>
+                    </div>
+                    <div class="filter-content" id="filterContent">
+                        <div class="filter-row">
+                            <div class="filter-field">
+                                <label class="filter-label">Location</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
+                                        <label for="location-shop-a" class="checkbox-label">Shop A</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
+                                        <label for="location-shop-b" class="checkbox-label">Shop B</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
+                                        <label for="location-shop-c" class="checkbox-label">Shop C</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
-                                    <label for="platform-facebook" class="checkbox-label">Facebook</label>
+                            </div>
+                            <div class="filter-field">
+                                <label class="filter-label">Rating</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-5" class="filter-checkbox" value="5">
+                                        <label for="rating-5" class="checkbox-label">
+                                            <span class="star-rating">★★★★★</span>5 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-4" class="filter-checkbox" value="4">
+                                        <label for="rating-4" class="checkbox-label">
+                                            <span class="star-rating">★★★★☆</span>4 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-3" class="filter-checkbox" value="3">
+                                        <label for="rating-3" class="checkbox-label">
+                                            <span class="star-rating">★★★☆☆</span>3 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-2" class="filter-checkbox" value="2">
+                                        <label for="rating-2" class="checkbox-label">
+                                            <span class="star-rating">★★☆☆☆</span>2 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-1" class="filter-checkbox" value="1">
+                                        <label for="rating-1" class="checkbox-label">
+                                            <span class="star-rating">★☆☆☆☆</span>1 Star
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-field">
+                                <label class="filter-label">Platform</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
+                                        <label for="platform-google" class="checkbox-label">Google</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
+                                        <label for="platform-facebook" class="checkbox-label">Facebook</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="filter-field">
-                            <label class="filter-label">Rating</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="rating-5" class="filter-checkbox" value="5">
-                                    <label for="rating-5" class="checkbox-label">
-                                        <span class="star-rating">★★★★★</span>5 Stars
-                                    </label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="rating-4" class="filter-checkbox" value="4">
-                                    <label for="rating-4" class="checkbox-label">
-                                        <span class="star-rating">★★★★☆</span>4 Stars
-                                    </label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="rating-3" class="filter-checkbox" value="3">
-                                    <label for="rating-3" class="checkbox-label">
-                                        <span class="star-rating">★★★☆☆</span>3 Stars
-                                    </label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="rating-2" class="filter-checkbox" value="2">
-                                    <label for="rating-2" class="checkbox-label">
-                                        <span class="star-rating">★★☆☆☆</span>2 Stars
-                                    </label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="rating-1" class="filter-checkbox" value="1">
-                                    <label for="rating-1" class="checkbox-label">
-                                        <span class="star-rating">★☆☆☆☆</span>1 Star
-                                    </label>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+
+
+
+                <!-- New KPI Cards -->
+                <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 24px;">
+                    <div class="md-card stat-card kpi-card" id="newReviewsCard" style="cursor: pointer;">
+                        <div class="stat-label">Recent Reviews</div>
+                        <div class="stat-value" id="newReviewsCount">3</div>
+                        <div class="stat-change positive">
+                            <span class="material-icons" style="font-size: 16px;">star</span>
+                            Since last login
                         </div>
-                        <div class="filter-field">
-                            <label class="filter-label">Location</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
-                                    <label for="location-shop-a" class="checkbox-label">Shop A</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
-                                    <label for="location-shop-b" class="checkbox-label">Shop B</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
-                                    <label for="location-shop-c" class="checkbox-label">Shop C</label>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="md-card stat-card kpi-card" id="noResponseCard" style="cursor: pointer;">
+                        <div class="stat-label">No Response</div>
+                        <div class="stat-value" id="noResponseCount">6</div>
+                        <div class="stat-change negative">
+                            <span class="material-icons" style="font-size: 16px;">schedule</span>
+                            Pending responses
                         </div>
                     </div>
                 </div>
-            </div>
 
 
 
-            <!-- New KPI Cards -->
-            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 24px;">
-                <div class="md-card stat-card kpi-card" id="newReviewsCard" style="cursor: pointer;">
-                    <div class="stat-label">Recent Reviews</div>
-                    <div class="stat-value" id="newReviewsCount">3</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">star</span>
-                        Since last login
+                <!-- New Reviews and Not Responded Reviews -->
+                <div class="md-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <span class="material-icons">notifications</span>
+                            New Reviews & Pending Responses
+                        </h3>
+                        <p class="card-subtitle">Reviews requiring your attention</p>
+                    </div>
+                    <div class="card-content">
+                        <div id="priorityReviews">
+                            <!-- Reviews will be populated here -->
+                        </div>
                     </div>
                 </div>
-                <div class="md-card stat-card kpi-card" id="noResponseCard" style="cursor: pointer;">
-                    <div class="stat-label">No Response</div>
-                    <div class="stat-value" id="noResponseCount">6</div>
-                    <div class="stat-change negative">
-                        <span class="material-icons" style="font-size: 16px;">schedule</span>
-                        Pending responses
-                    </div>
-                </div>
-            </div>
+            </main>
 
-
-
-            <!-- New Reviews and Not Responded Reviews -->
-            <div class="md-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <span class="material-icons">notifications</span>
-                        New Reviews & Pending Responses
-                    </h3>
-                    <p class="card-subtitle">Reviews requiring your attention</p>
-                </div>
-                <div class="card-content">
-                    <div id="priorityReviews">
-                        <!-- Reviews will be populated here -->
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Floating Action Button -->
-        <button class="fab" title="Quick Actions">
-            <span class="material-icons">add</span>
-        </button>
+            <!-- Floating Action Button -->
+            <button class="fab" title="Quick Actions">
+                <span class="material-icons">add</span>
+            </button>
+        </div>
     </div>
 
     <script src="../js/reviews-utils.js"></script>
@@ -1061,6 +1137,26 @@
         // Initialize dashboard when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new ReviewsDashboard();
+
+            const menuToggle = document.getElementById('menu-toggle');
+            const appContainer = document.querySelector('.app-container');
+
+            if (menuToggle && appContainer) {
+                menuToggle.addEventListener('click', () => {
+                    appContainer.classList.toggle('sidebar-collapsed');
+                });
+            }
+
+            const setInitialSidebarState = () => {
+                if (window.innerWidth <= 767) {
+                    appContainer.classList.add('sidebar-collapsed');
+                } else {
+                    appContainer.classList.remove('sidebar-collapsed');
+                }
+            };
+            
+            setInitialSidebarState();
+            window.addEventListener('resize', setInitialSidebarState);
         });
     </script>
 </body>

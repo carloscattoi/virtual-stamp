@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Reviews - Virtual Stamp</title>
+    <title>All Reviews - BIS</title>
     
     <!-- Material Design Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -40,12 +40,116 @@
             background-color: var(--md-background);
             color: var(--md-on-surface);
             line-height: 1.6;
+            display: flex;
         }
 
         .app-container {
+            display: flex;
+            width: 100%;
             min-height: 100vh;
+            transition: padding-left 0.3s ease;
+        }
+
+        .sidebar {
+            width: 256px;
+            background: var(--md-surface);
+            border-right: 1px solid var(--md-outline);
             display: flex;
             flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease, width 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--md-primary);
+            border-bottom: 1px solid var(--md-outline);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+            box-sizing: border-box;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+            padding: 8px 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            gap: 24px;
+            color: var(--md-on-surface-variant);
+            text-decoration: none;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(25, 118, 210, 0.04);
+        }
+
+        .nav-link.active {
+            color: var(--md-primary);
+            background-color: rgba(25, 118, 210, 0.08);
+            border-right: 3px solid var(--md-primary);
+        }
+
+        .nav-link .nav-text {
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .main-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-left: 256px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .app-container.sidebar-collapsed .sidebar {
+            width: 72px;
+        }
+
+        .app-container.sidebar-collapsed .main-wrapper {
+            margin-left: 72px;
+        }
+
+        .app-container.sidebar-collapsed .nav-link {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .app-container.sidebar-collapsed .nav-text,
+        .app-container.sidebar-collapsed .sidebar-header .nav-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .menu-icon {
+            display: block;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+            color: var(--md-on-surface-variant);
+        }
+
+        .menu-icon:hover {
+            background-color: rgba(0, 0, 0, 0.04);
         }
 
         /* App Bar */
@@ -76,44 +180,7 @@
         }
 
         /* Navigation */
-        .nav-tabs {
-            background: var(--md-surface);
-            border-bottom: 1px solid var(--md-outline);
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .nav-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-tabs-content {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            min-width: 100%;
-        }
-
-        .nav-tab {
-            padding: 16px 24px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-            white-space: nowrap;
-            color: var(--md-on-surface-variant);
-            font-weight: 500;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-tab.active {
-            color: var(--md-primary);
-            border-bottom-color: var(--md-primary);
-        }
-
+        
         /* Main Content */
         .main-content {
             flex: 1;
@@ -173,33 +240,35 @@
             background-color: rgba(25, 118, 210, 0.04);
         }
 
-        /* Filters Panel */
-        .filters-panel {
+        /* Filter Panel */
+        .filter-panel {
             background: var(--md-surface);
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: var(--md-elevation-1);
-            margin-bottom: 24px;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
         }
 
-        .filters-panel.collapsed {
+        .filter-panel.collapsed {
             max-height: 0;
             margin-bottom: 0;
+            opacity: 0;
+            transform: translateY(-10px);
         }
 
-        .filters-content {
+        .filter-content {
             padding: 20px;
         }
 
-        .filters-grid {
+        .filter-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
         }
 
         @media (min-width: 768px) {
-            .filters-grid {
+            .filter-row {
                 grid-template-columns: repeat(4, 1fr);
             }
         }
@@ -207,7 +276,7 @@
         .filter-field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         .filter-label {
@@ -216,21 +285,67 @@
             color: var(--md-on-surface-variant);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .filter-select {
-            padding: 12px 16px;
-            border: 1px solid var(--md-outline);
-            border-radius: 8px;
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .filter-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--md-outline);
+            border-radius: 4px;
             background: var(--md-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .filter-checkbox:checked {
+            background: var(--md-primary);
+            border-color: var(--md-primary);
+        }
+
+        .filter-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
             font-size: 14px;
             color: var(--md-on-surface);
-            transition: border-color 0.2s;
+            cursor: pointer;
+            user-select: none;
         }
 
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--md-primary);
+        .star-rating {
+            color: #ff9800;
+            font-size: 16px;
+            margin-right: 4px;
         }
 
         /* Header Actions */
@@ -526,8 +641,21 @@
                 padding: 16px;
             }
 
-            .nav-tabs-content {
-                padding: 0 16px;
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .app-container.sidebar-collapsed .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .app-container:not(.sidebar-collapsed) .sidebar {
+                transform: translateX(0);
+                box-shadow: var(--md-elevation-3);
             }
 
             .list-header {
@@ -543,125 +671,171 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- App Bar -->
-        <header class="app-bar">
-            <div class="app-bar-content">
-                <h1>
-                    <span class="material-icons">list</span>
-                    All Reviews
-                </h1>
-                <div style="display: flex; align-items: center; gap: 16px;">
-                    <span class="material-icons" style="cursor: pointer;">notifications</span>
-                    <span class="material-icons" style="cursor: pointer;">account_circle</span>
-                </div>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="nav-text">My Reviews</span>
+                <span class="material-icons menu-icon" id="menu-toggle">menu</span>
             </div>
-        </header>
-
-        <!-- Navigation Tabs -->
-        <nav class="nav-tabs">
-            <div class="nav-tabs-content">
-                <a href="reviews-dashboard.html" class="nav-tab">
+            <nav class="sidebar-nav">
+                <a href="reviews-dashboard.html" class="nav-link">
                     <span class="material-icons">dashboard</span>
-                    Dashboard
+                    <span class="nav-text">Dashboard</span>
                 </a>
-                <a href="reviews-list.html" class="nav-tab active">
+                <a href="reviews-list.html" class="nav-link active">
                     <span class="material-icons">list</span>
-                    All Reviews
+                    <span class="nav-text">All Reviews</span>
                 </a>
-                <a href="reviews-insights.html" class="nav-tab">
+                <a href="reviews-insights.html" class="nav-link">
                     <span class="material-icons">analytics</span>
-                    Insights
+                    <span class="nav-text">Insights</span>
                 </a>
-            </div>
-        </nav>
+            </nav>
+        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Search Bar -->
-            <div class="search-container">
-                <span class="material-icons search-icon">search</span>
-                <input type="text" class="search-input" placeholder="Search reviews..." id="searchInput">
-                <button class="filter-button" id="filterToggle">
-                    <span class="material-icons">tune</span>
-                </button>
-            </div>
+        <div class="main-wrapper">
+            <!-- App Bar -->
+            <header class="app-bar">
+                <div class="app-bar-content">
+                    <h1>
+                        <span class="material-icons">list</span>
+                        All Reviews
+                    </h1>
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <span class="material-icons" style="cursor: pointer;">notifications</span>
+                        <span class="material-icons" style="cursor: pointer;">account_circle</span>
+                    </div>
+                </div>
+            </header>
 
-            <!-- Filters Panel -->
-            <div class="filters-panel collapsed" id="filtersPanel">
-                <div class="filters-content">
-                    <div class="filters-grid">
-                        <div class="filter-field">
-                            <label class="filter-label">Rating</label>
-                            <select id="ratingFilter" class="filter-select">
-                                <option value="">All Ratings</option>
-                                <option value="5">5 Stars</option>
-                                <option value="4">4+ Stars</option>
-                                <option value="3">3+ Stars</option>
-                                <option value="2">2+ Stars</option>
-                                <option value="1">1+ Stars</option>
-                            </select>
-                        </div>
-                        <div class="filter-field">
-                            <label class="filter-label">Platform</label>
-                            <select id="platformFilter" class="filter-select">
-                                <option value="">All Platforms</option>
-                                <option value="Google">Google</option>
-                                <option value="Google">Google</option>
-                                <option value="Facebook">Facebook</option>
-                            </select>
-                        </div>
-                        <div class="filter-field">
-                            <label class="filter-label">Response Status</label>
-                            <select id="responseFilter" class="filter-select">
-                                <option value="">All Reviews</option>
-                                <option value="responded">Responded</option>
-                                <option value="pending">Pending Response</option>
-                            </select>
-                        </div>
-                        <div class="filter-field">
-                            <label class="filter-label">Date Range</label>
-                            <select id="dateFilter" class="filter-select">
-                                <option value="all">All Time</option>
-                                <option value="7">Last 7 days</option>
-                                <option value="30">Last 30 days</option>
-                                <option value="90">Last 90 days</option>
-                            </select>
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" class="search-input" placeholder="Search reviews..." id="searchInput">
+                    <button class="filter-button" id="filterToggle">
+                        <span class="material-icons">tune</span>
+                    </button>
+                </div>
+
+                <!-- Filter Panel -->
+                <div class="filter-panel collapsed" id="filterPanel">
+                    <div class="filter-content" id="filterContent">
+                        <div class="filter-row">
+                            <div class="filter-field">
+                                <label class="filter-label">Location</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
+                                        <label for="location-shop-a" class="checkbox-label">Shop A</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
+                                        <label for="location-shop-b" class="checkbox-label">Shop B</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
+                                        <label for="location-shop-c" class="checkbox-label">Shop C</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-field">
+                                <label class="filter-label">Rating</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-5" class="filter-checkbox" value="5">
+                                        <label for="rating-5" class="checkbox-label">
+                                            <span class="star-rating">★★★★★</span>5 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-4" class="filter-checkbox" value="4">
+                                        <label for="rating-4" class="checkbox-label">
+                                            <span class="star-rating">★★★★☆</span>4 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-3" class="filter-checkbox" value="3">
+                                        <label for="rating-3" class="checkbox-label">
+                                            <span class="star-rating">★★★☆☆</span>3 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-2" class="filter-checkbox" value="2">
+                                        <label for="rating-2" class="checkbox-label">
+                                            <span class="star-rating">★★☆☆☆</span>2 Stars
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="rating-1" class="filter-checkbox" value="1">
+                                        <label for="rating-1" class="checkbox-label">
+                                            <span class="star-rating">★☆☆☆☆</span>1 Star
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-field">
+                                <label class="filter-label">Platform</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
+                                        <label for="platform-google" class="checkbox-label">Google</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
+                                        <label for="platform-facebook" class="checkbox-label">Facebook</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-field">
+                                <label class="filter-label">Response Status</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="response-pending" class="filter-checkbox" value="pending">
+                                        <label for="response-pending" class="checkbox-label">Pending Response</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="response-responded" class="filter-checkbox" value="responded">
+                                        <label for="response-responded" class="checkbox-label">Responded</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- List Header -->
-            <div class="list-header">
-                <div class="results-info" id="resultsInfo">
-                    Showing 1-10 of 47 reviews
+                <!-- List Header -->
+                <div class="list-header">
+                    <div class="results-info" id="resultsInfo">
+                        Showing 1-10 of 47 reviews
+                    </div>
+                    <div class="header-actions">
+                        <button class="action-button">
+                            <span class="material-icons">file_download</span>
+                            Export
+                        </button>
+                        <button class="action-button" id="flaggedFilter">
+                            <span class="material-icons">flag</span>
+                            Flagged Only
+                        </button>
+                        <button class="action-button" id="noResponseFilter">
+                            <span class="material-icons">reply_all</span>
+                            No Response
+                        </button>
+                    </div>
                 </div>
-                <div class="header-actions">
-                    <button class="action-button">
-                        <span class="material-icons">file_download</span>
-                        Export
-                    </button>
-                    <button class="action-button" id="flaggedFilter">
-                        <span class="material-icons">flag</span>
-                        Flagged Only
-                    </button>
-                    <button class="action-button" id="noResponseFilter">
-                        <span class="material-icons">reply_all</span>
-                        No Response
-                    </button>
+
+                <!-- Reviews List -->
+                <div class="reviews-list" id="reviewsList">
+                    <!-- Reviews will be populated here -->
                 </div>
-            </div>
 
-            <!-- Reviews List -->
-            <div class="reviews-list" id="reviewsList">
-                <!-- Reviews will be populated here -->
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination" id="pagination">
-                <!-- Pagination will be populated here -->
-            </div>
-        </main>
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be populated here -->
+                </div>
+            </main>
+        </div>
     </div>
 
     <script>
@@ -673,10 +847,6 @@
                 this.itemsPerPage = 10;
                 this.filters = {
                     search: '',
-                    rating: '',
-                    platform: '',
-                    response: '',
-                    date: 'all',
                     flaggedOnly: false,
                     noResponseOnly: false
                 };
@@ -699,118 +869,336 @@
             }
 
             async loadReviews() {
-                try {
-                    const response = await fetch('../data/mock-reviews.json');
-                    return await response.json();
-                } catch (error) {
-                    // Return mock data as fallback
-                    return { reviews: this.getMockReviews() };
-                }
-            }
-
-            getMockReviews() {
-                return [
-                    {
-                        author_name: "Sarah Johnson",
-                        rating: 5,
-                        text: "Amazing coffee and the most delicious croissants! The barista was super friendly and made my latte perfectly. Will definitely be back!",
-                        relative_time_description: "2 days ago",
-                        time: Date.now() / 1000 - 172800,
-                        platform: "Google",
-                        response: "Thank you so much for your kind words! We're thrilled you enjoyed your experience.",
-                        flagged: false
-                    },
-                    {
-                        author_name: "Mike Chen",
-                        rating: 1,
-                        text: "Worst coffee I've ever had. Burnt taste and the staff was rude. Overpriced for what you get. Won't be coming back.",
-                        relative_time_description: "1 week ago",
-                        time: Date.now() / 1000 - 604800,
-                        platform: "Google",
-                        response: null,
-                        flagged: true
-                    },
-                    {
-                        author_name: "Emma Rodriguez",
-                        rating: 4,
-                        text: "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
-                        relative_time_description: "3 days ago",
-                        time: Date.now() / 1000 - 259200,
-                        platform: "Google",
-                        response: "Thanks for the feedback! We're working on expanding our seating area.",
-                        flagged: false
-                    },
-                    {
-                        author_name: "David Thompson",
-                        rating: 5,
-                        text: "Best coffee shop in town! The espresso is perfectly pulled and the almond croissants are to die for. Staff is knowledgeable and passionate about coffee.",
-                        relative_time_description: "1 week ago",
-                        time: Date.now() / 1000 - 604800,
-                        platform: "Google",
-                        response: "Thank you David! We're passionate about serving the best coffee and pastries.",
-                        flagged: false
-                    },
-                    {
-                        author_name: "Lisa Park",
-                        rating: 3,
-                        text: "Coffee is decent but nothing special. The muffins were a bit dry. Service was okay but could be faster during rush hour.",
-                        relative_time_description: "4 days ago",
-                        time: Date.now() / 1000 - 345600,
-                        platform: "Google",
-                        response: null,
-                        flagged: false
-                    },
-                    {
-                        author_name: "James Wilson",
-                        rating: 2,
-                        text: "Expected better based on reviews. Coffee was lukewarm and the danish was stale. Place was also quite noisy.",
-                        relative_time_description: "5 days ago",
-                        time: Date.now() / 1000 - 432000,
-                        platform: "Google",
-                        response: "We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly.",
-                        flagged: true
-                    },
-                    {
-                        author_name: "Anna Martinez",
-                        rating: 5,
-                        text: "Love this place! Great coffee, wonderful pastries, and the staff always remembers my order. The chocolate chip cookies are amazing!",
-                        relative_time_description: "6 days ago",
-                        time: Date.now() / 1000 - 518400,
-                        platform: "Google",
-                        response: "Thank you Anna! We're thrilled to hear you enjoy our cookies and appreciate our team.",
-                        flagged: false
-                    },
-                    {
-                        author_name: "Robert Davis",
-                        rating: 4,
-                        text: "Solid coffee shop with good variety. The cappuccino was excellent and the scones were fresh. Prices are reasonable for the quality.",
-                        relative_time_description: "1 week ago",
-                        time: Date.now() / 1000 - 604800,
-                        platform: "Google",
-                        response: null,
-                        flagged: false
-                    },
-                    {
-                        author_name: "Michelle Lee",
-                        rating: 5,
-                        text: "Perfect spot for remote work! Great WiFi, comfortable seating, and excellent coffee. The lemon bars are my favorite!",
-                        relative_time_description: "1 week ago",
-                        time: Date.now() / 1000 - 604800,
-                        platform: "Google",
-                        response: "So happy to hear we're a great workspace for you! We work hard to maintain fast WiFi.",
-                        flagged: false
-                    },
-                    {
-                        author_name: "Kevin Brown",
-                        rating: 3,
-                        text: "Average coffee, nothing extraordinary. The bagels were good though. Service could be more attentive during busy periods.",
-                        relative_time_description: "2 weeks ago",
-                        time: Date.now() / 1000 - 1209600,
-                        platform: "Google",
-                        response: null,
-                        flagged: true
-                    }
-                ];
+                // Embedded JSON data - no need for fetch request
+                const data = {
+                    "reviews": [
+                        {
+                            "author_name": "Sarah Johnson",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "2 days ago",
+                            "text": "Amazing coffee and the most delicious croissants! The barista was super friendly and made my latte perfectly. Will definitely be back!",
+                            "time": 1720310400,
+                            "translated": false,
+                            "isNew": true,
+                            "location": "Shop A",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Mike Chen",
+                            "language": "en",
+                            "rating": 1,
+                            "relative_time_description": "1 week ago",
+                            "text": "Worst coffee I've ever had. Burnt taste and the staff was rude. Overpriced for what you get. Won't be coming back.",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Emma Rodriguez",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "3 days ago",
+                            "text": "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
+                            "time": 1720224000,
+                            "translated": false,
+                            "isNew": true,
+                            "location": "Shop C",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "David Thompson",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 week ago",
+                            "text": "Best coffee shop in town! The espresso is perfectly pulled and the almond croissants are to die for. Staff is knowledgeable and passionate about coffee.",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Lisa Park",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "4 days ago",
+                            "text": "Coffee is decent but nothing special. The muffins were a bit dry. Service was okay but could be faster during rush hour.",
+                            "time": 1720137600,
+                            "translated": false,
+                            "isNew": true,
+                            "location": "Shop B",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "James Wilson",
+                            "language": "en",
+                            "rating": 2,
+                            "relative_time_description": "5 days ago",
+                            "text": "Expected better based on reviews. Coffee was lukewarm and the danish was stale. Place was also quite noisy.",
+                            "time": 1720051200,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you for your feedback James. We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly so we can address your concerns. We've made improvements to our service standards recently.",
+                            "response_time": 1720051200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Anna Martinez",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "6 days ago",
+                            "text": "Love this place! Great coffee, wonderful pastries, and the staff always remembers my order. The chocolate chip cookies are amazing!",
+                            "time": 1719964800,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you so much Anna! We're thrilled to hear you enjoy our cookies and appreciate our team remembering your order. Customers like you make our day!",
+                            "response_time": 1719964800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Robert Davis",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "1 week ago",
+                            "text": "Solid coffee shop with good variety. The cappuccino was excellent and the scones were fresh. Prices are reasonable for the quality.",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Michelle Lee",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 week ago",
+                            "text": "Perfect spot for remote work! Great WiFi, comfortable seating, and excellent coffee. The lemon bars are my favorite!",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "So happy to hear we're a great workspace for you Michelle! We work hard to maintain fast WiFi and comfortable seating for our remote workers. Glad you love the lemon bars!",
+                            "response_time": 1719705600,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Kevin Brown",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "2 weeks ago",
+                            "text": "Average coffee, nothing extraordinary. The bagels were good though. Service could be more attentive during busy periods.",
+                            "time": 1719100800,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thanks for the feedback Kevin! We're glad you enjoyed the bagels. We're working on improving our service during peak hours - your input helps us grow!",
+                            "response_time": 1719100800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Jennifer Taylor",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "2 weeks ago",
+                            "text": "Nice cozy atmosphere and friendly staff. The iced coffee is refreshing and the blueberry muffins are delicious. Will visit again!",
+                            "time": 1719100800,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thank you Jennifer! We're delighted you enjoyed our cozy atmosphere and blueberry muffins. Looking forward to seeing you again soon!",
+                            "response_time": 1719100800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Mark Anderson",
+                            "language": "en",
+                            "rating": 1,
+                            "relative_time_description": "2 weeks ago",
+                            "text": "Very disappointed. Long wait times, cold coffee, and unfriendly staff. The pastries looked old and the place was dirty. Not recommended.",
+                            "time": 1719100800,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "We sincerely apologize for this experience Mark. This doesn't reflect our standards. Please contact us directly - we'd like to make this right and ensure this doesn't happen again.",
+                            "response_time": 1719100800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Amanda White",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "3 weeks ago",
+                            "text": "Fantastic coffee and pastries! The baristas are skilled and friendly. Love the rustic decor and relaxed vibe. Highly recommend!",
+                            "time": 1718496000,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you so much Amanda! We're thrilled you love our rustic decor and appreciate our skilled baristas. Your recommendation means the world to us!",
+                            "response_time": 1718496000,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Tom Garcia",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "3 weeks ago",
+                            "text": "Good coffee and decent prices. The cinnamon rolls are amazing! Staff is helpful and the location is convenient.",
+                            "time": 1718496000,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thanks Tom! We're so glad you love our cinnamon rolls - they're made fresh daily. Appreciate you mentioning our helpful staff!",
+                            "response_time": 1718496000,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Rachel Kim",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "3 weeks ago",
+                            "text": "Coffee is okay but a bit weak for my taste. The atmosphere is nice and quiet. Good for studying but wish they had stronger espresso.",
+                            "time": 1718496000,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you for the feedback Rachel! We'd be happy to make your espresso stronger - just let us know your preference when ordering. We want to get it just right for you!",
+                            "response_time": 1718496000,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Steve Miller",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 month ago",
+                            "text": "Excellent coffee shop! The mocha is perfectly balanced and the croissants are buttery and flaky. Great place to meet friends.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you Steve! We're delighted you enjoy our mocha and croissants. It's wonderful to hear we're a great spot for meeting friends!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Nicole Johnson",
+                            "language": "en",
+                            "rating": 2,
+                            "relative_time_description": "1 month ago",
+                            "text": "Coffee was bitter and the service was slow. The danish was good but overpriced. Expected better quality for the price point.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "We're sorry to hear about your experience Nicole. We've been working on improving our coffee quality and service speed. We'd love another chance to serve you better!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Alex Turner",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "1 month ago",
+                            "text": "Really enjoy coming here! The flat white is excellent and the banana bread is moist and flavorful. Staff is always welcoming.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you Alex! We're so happy you enjoy our flat white and banana bread. Our welcoming staff loves seeing regular customers like you!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Laura Martinez",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 month ago",
+                            "text": "Best coffee in the neighborhood! The latte art is beautiful and the pastries are always fresh. Clean and comfortable environment.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you Laura! Our baristas take pride in their latte art and we work hard to maintain fresh pastries and a clean environment. Appreciate your kind words!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Chris Evans",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "5 weeks ago",
+                            "text": "Decent coffee but nothing special. The cookies were good. Place gets crowded during lunch hours which makes it hard to find seating.",
+                            "time": 1717286400,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thanks Chris! We're glad you enjoyed our cookies. We're aware of the lunch rush seating issue and are looking into solutions to improve the experience.",
+                            "response_time": 1717286400,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Samantha Clark",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "5 weeks ago",
+                            "text": "Great local coffee shop! The americano is strong and the bear claws are delicious. Love supporting local businesses like this one.",
+                            "time": 1717286400,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Danny Lopez",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "6 weeks ago",
+                            "text": "Outstanding coffee and service! The cortado is perfect and the staff remembers customers' names. Feels like a true community hub.",
+                            "time": 1716681600,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thank you Danny! We strive to be a community hub and our staff loves getting to know our customers personally. So glad you love the cortado!",
+                            "response_time": 1716681600,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Maria Rodriguez",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "6 weeks ago",
+                            "text": "Coffee is fine but the prices are a bit high. The atmosphere is cozy though and the WiFi works well. Good for casual meetings.",
+                            "time": 1716681600,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you Maria! We're glad you find our atmosphere cozy and our WiFi reliable for meetings. We appreciate your feedback about pricing.",
+                            "response_time": 1716681600,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Brian Wilson",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "7 weeks ago",
+                            "text": "Solid coffee shop with consistent quality. The espresso drinks are well-made and the pastries are fresh. Good customer service.",
+                            "time": 1716076800,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you Brian! Consistency is something we work hard to maintain, and we're pleased you've noticed our commitment to quality and service.",
+                            "response_time": 1716076800,
+                            "has_response": true
+                        }
+                    ]
+                };
+                
+                // Process reviews to ensure compatibility with existing code
+                const processedReviews = data.reviews.map((review, index) => ({
+                    ...review,
+                    platform: 'Google', // Default platform since JSON doesn't have this field
+                    flagged: false, // Initialize flagged status for all reviews
+                    // Add location if not present
+                    location: review.location || ['Shop A', 'Shop B', 'Shop C'][index % 3]
+                }));
+                return { reviews: processedReviews };
             }
 
             setupEventListeners() {
@@ -820,16 +1208,17 @@
                     this.applyFilters();
                 });
 
-                // Filter toggle
-                document.getElementById('filterToggle').addEventListener('click', () => {
-                    this.toggleFilters();
-                });
+                // Filter toggle from search bar button
+                const filterButton = document.querySelector('.filter-button');
+                if (filterButton) {
+                    filterButton.addEventListener('click', () => {
+                        this.toggleFilters();
+                    });
+                }
 
-                // Filter selects
-                ['ratingFilter', 'platformFilter', 'responseFilter', 'dateFilter'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', (e) => {
-                        const filterType = id.replace('Filter', '');
-                        this.filters[filterType] = e.target.value;
+                // Checkbox filter event listeners
+                document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
                         this.applyFilters();
                     });
                 });
@@ -845,8 +1234,10 @@
             }
 
             toggleFilters() {
-                const panel = document.getElementById('filtersPanel');
-                panel.classList.toggle('collapsed');
+                const filterPanel = document.getElementById('filterPanel');
+                if (filterPanel) {
+                    filterPanel.classList.toggle('collapsed');
+                }
             }
 
             toggleFlaggedFilter() {
@@ -864,6 +1255,12 @@
             }
 
             applyFilters() {
+                // Get selected filter values
+                const selectedPlatforms = Array.from(document.querySelectorAll('input[id^="platform-"]:checked')).map(cb => cb.value);
+                const selectedRatings = Array.from(document.querySelectorAll('input[id^="rating-"]:checked')).map(cb => parseInt(cb.value));
+                const selectedLocations = Array.from(document.querySelectorAll('input[id^="location-"]:checked')).map(cb => cb.value);
+                const selectedResponseStatuses = Array.from(document.querySelectorAll('input[id^="response-"]:checked')).map(cb => cb.value);
+                
                 this.filteredReviews = this.reviews.filter(review => {
                     // Search filter
                     if (this.filters.search) {
@@ -874,28 +1271,30 @@
                         }
                     }
 
-                    // Rating filter
-                    if (this.filters.rating) {
-                        const minRating = parseInt(this.filters.rating);
-                        if (review.rating < minRating) return false;
-                    }
-
                     // Platform filter
-                    if (this.filters.platform && review.platform !== this.filters.platform) {
+                    if (selectedPlatforms.length > 0 && !selectedPlatforms.includes(review.platform || 'Google')) {
+                        return false;
+                    }
+                    
+                    // Rating filter
+                    if (selectedRatings.length > 0 && !selectedRatings.includes(review.rating)) {
+                        return false;
+                    }
+                    
+                    // Location filter
+                    if (selectedLocations.length > 0 && !selectedLocations.includes(review.location)) {
                         return false;
                     }
 
                     // Response filter
-                    if (this.filters.response) {
-                        if (this.filters.response === 'responded' && !review.response) return false;
-                        if (this.filters.response === 'pending' && review.response) return false;
-                    }
-
-                    // Date filter
-                    if (this.filters.date !== 'all') {
-                        const days = parseInt(this.filters.date);
-                        const cutoff = Date.now() / 1000 - (days * 24 * 60 * 60);
-                        if (review.time < cutoff) return false;
+                    if (selectedResponseStatuses.length > 0) {
+                        const hasResponse = review.has_response || review.response;
+                        const isPending = selectedResponseStatuses.includes('pending');
+                        const isResponded = selectedResponseStatuses.includes('responded');
+                        
+                        if (isPending && hasResponse) return false;
+                        if (isResponded && !hasResponse) return false;
+                        if (!isPending && !isResponded) return false;
                     }
 
                     // Flagged filter
@@ -904,7 +1303,7 @@
                     }
 
                     // No response filter
-                    if (this.filters.noResponseOnly && review.response) {
+                    if (this.filters.noResponseOnly && (review.has_response || review.response)) {
                         return false;
                     }
 
@@ -938,7 +1337,7 @@
             }
 
             createReviewCard(review) {
-                const hasResponse = review.response;
+                const hasResponse = review.has_response || review.response;
                 const avatar = review.author_name.charAt(0).toUpperCase();
                 const isFlagged = review.flagged;
                 
@@ -1071,6 +1470,26 @@
         let reviewsList;
         document.addEventListener('DOMContentLoaded', () => {
             reviewsList = new ReviewsList();
+
+            const menuToggle = document.getElementById('menu-toggle');
+            const appContainer = document.querySelector('.app-container');
+
+            if (menuToggle && appContainer) {
+                menuToggle.addEventListener('click', () => {
+                    appContainer.classList.toggle('sidebar-collapsed');
+                });
+            }
+
+            const setInitialSidebarState = () => {
+                if (window.innerWidth <= 767) {
+                    appContainer.classList.add('sidebar-collapsed');
+                } else {
+                    appContainer.classList.remove('sidebar-collapsed');
+                }
+            };
+            
+            setInitialSidebarState();
+            window.addEventListener('resize', setInitialSidebarState);
         });
     </script>
 </body>
