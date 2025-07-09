@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Reviews - Virtual Stamp</title>
+    <title>All Reviews - BIS</title>
     
     <!-- Material Design Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -173,33 +173,35 @@
             background-color: rgba(25, 118, 210, 0.04);
         }
 
-        /* Filters Panel */
-        .filters-panel {
+        /* Filter Panel */
+        .filter-panel {
             background: var(--md-surface);
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: var(--md-elevation-1);
-            margin-bottom: 24px;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
         }
 
-        .filters-panel.collapsed {
+        .filter-panel.collapsed {
             max-height: 0;
             margin-bottom: 0;
+            opacity: 0;
+            transform: translateY(-10px);
         }
 
-        .filters-content {
+        .filter-content {
             padding: 20px;
         }
 
-        .filters-grid {
+        .filter-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
         }
 
         @media (min-width: 768px) {
-            .filters-grid {
+            .filter-row {
                 grid-template-columns: repeat(4, 1fr);
             }
         }
@@ -207,7 +209,7 @@
         .filter-field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         .filter-label {
@@ -216,21 +218,67 @@
             color: var(--md-on-surface-variant);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .filter-select {
-            padding: 12px 16px;
-            border: 1px solid var(--md-outline);
-            border-radius: 8px;
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .filter-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--md-outline);
+            border-radius: 4px;
             background: var(--md-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .filter-checkbox:checked {
+            background: var(--md-primary);
+            border-color: var(--md-primary);
+        }
+
+        .filter-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
             font-size: 14px;
             color: var(--md-on-surface);
-            transition: border-color 0.2s;
+            cursor: pointer;
+            user-select: none;
         }
 
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--md-primary);
+        .star-rating {
+            color: #ff9800;
+            font-size: 16px;
+            margin-right: 4px;
         }
 
         /* Header Actions */
@@ -586,45 +634,87 @@
                 </button>
             </div>
 
-            <!-- Filters Panel -->
-            <div class="filters-panel collapsed" id="filtersPanel">
-                <div class="filters-content">
-                    <div class="filters-grid">
+            <!-- Filter Panel -->
+            <div class="filter-panel collapsed" id="filterPanel">
+                <div class="filter-content" id="filterContent">
+                    <div class="filter-row">
+                        <div class="filter-field">
+                            <label class="filter-label">Location</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
+                                    <label for="location-shop-a" class="checkbox-label">Shop A</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
+                                    <label for="location-shop-b" class="checkbox-label">Shop B</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
+                                    <label for="location-shop-c" class="checkbox-label">Shop C</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="filter-field">
                             <label class="filter-label">Rating</label>
-                            <select id="ratingFilter" class="filter-select">
-                                <option value="">All Ratings</option>
-                                <option value="5">5 Stars</option>
-                                <option value="4">4+ Stars</option>
-                                <option value="3">3+ Stars</option>
-                                <option value="2">2+ Stars</option>
-                                <option value="1">1+ Stars</option>
-                            </select>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="rating-5" class="filter-checkbox" value="5">
+                                    <label for="rating-5" class="checkbox-label">
+                                        <span class="star-rating">★★★★★</span>5 Stars
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="rating-4" class="filter-checkbox" value="4">
+                                    <label for="rating-4" class="checkbox-label">
+                                        <span class="star-rating">★★★★☆</span>4 Stars
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="rating-3" class="filter-checkbox" value="3">
+                                    <label for="rating-3" class="checkbox-label">
+                                        <span class="star-rating">★★★☆☆</span>3 Stars
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="rating-2" class="filter-checkbox" value="2">
+                                    <label for="rating-2" class="checkbox-label">
+                                        <span class="star-rating">★★☆☆☆</span>2 Stars
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="rating-1" class="filter-checkbox" value="1">
+                                    <label for="rating-1" class="checkbox-label">
+                                        <span class="star-rating">★☆☆☆☆</span>1 Star
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="filter-field">
                             <label class="filter-label">Platform</label>
-                            <select id="platformFilter" class="filter-select">
-                                <option value="">All Platforms</option>
-                                <option value="Google">Google</option>
-                                <option value="Facebook">Facebook</option>
-                            </select>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
+                                    <label for="platform-google" class="checkbox-label">Google</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
+                                    <label for="platform-facebook" class="checkbox-label">Facebook</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="filter-field">
                             <label class="filter-label">Response Status</label>
-                            <select id="responseFilter" class="filter-select">
-                                <option value="">All Reviews</option>
-                                <option value="responded">Responded</option>
-                                <option value="pending">Pending Response</option>
-                            </select>
-                        </div>
-                        <div class="filter-field">
-                            <label class="filter-label">Date Range</label>
-                            <select id="dateFilter" class="filter-select">
-                                <option value="all">All Time</option>
-                                <option value="7">Last 7 days</option>
-                                <option value="30">Last 30 days</option>
-                                <option value="90">Last 90 days</option>
-                            </select>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="response-pending" class="filter-checkbox" value="pending">
+                                    <label for="response-pending" class="checkbox-label">Pending Response</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="response-responded" class="filter-checkbox" value="responded">
+                                    <label for="response-responded" class="checkbox-label">Responded</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -672,10 +762,6 @@
                 this.itemsPerPage = 10;
                 this.filters = {
                     search: '',
-                    rating: '',
-                    platform: '',
-                    response: '',
-                    date: 'all',
                     flaggedOnly: false,
                     noResponseOnly: false
                 };
@@ -1020,10 +1106,12 @@
                 };
                 
                 // Process reviews to ensure compatibility with existing code
-                const processedReviews = data.reviews.map(review => ({
+                const processedReviews = data.reviews.map((review, index) => ({
                     ...review,
                     platform: 'Google', // Default platform since JSON doesn't have this field
-                    flagged: false // Initialize flagged status for all reviews
+                    flagged: false, // Initialize flagged status for all reviews
+                    // Add location if not present
+                    location: review.location || ['Shop A', 'Shop B', 'Shop C'][index % 3]
                 }));
                 return { reviews: processedReviews };
             }
@@ -1035,16 +1123,17 @@
                     this.applyFilters();
                 });
 
-                // Filter toggle
-                document.getElementById('filterToggle').addEventListener('click', () => {
-                    this.toggleFilters();
-                });
+                // Filter toggle from search bar button
+                const filterButton = document.querySelector('.filter-button');
+                if (filterButton) {
+                    filterButton.addEventListener('click', () => {
+                        this.toggleFilters();
+                    });
+                }
 
-                // Filter selects
-                ['ratingFilter', 'platformFilter', 'responseFilter', 'dateFilter'].forEach(id => {
-                    document.getElementById(id).addEventListener('change', (e) => {
-                        const filterType = id.replace('Filter', '');
-                        this.filters[filterType] = e.target.value;
+                // Checkbox filter event listeners
+                document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
                         this.applyFilters();
                     });
                 });
@@ -1060,8 +1149,10 @@
             }
 
             toggleFilters() {
-                const panel = document.getElementById('filtersPanel');
-                panel.classList.toggle('collapsed');
+                const filterPanel = document.getElementById('filterPanel');
+                if (filterPanel) {
+                    filterPanel.classList.toggle('collapsed');
+                }
             }
 
             toggleFlaggedFilter() {
@@ -1079,6 +1170,12 @@
             }
 
             applyFilters() {
+                // Get selected filter values
+                const selectedPlatforms = Array.from(document.querySelectorAll('input[id^="platform-"]:checked')).map(cb => cb.value);
+                const selectedRatings = Array.from(document.querySelectorAll('input[id^="rating-"]:checked')).map(cb => parseInt(cb.value));
+                const selectedLocations = Array.from(document.querySelectorAll('input[id^="location-"]:checked')).map(cb => cb.value);
+                const selectedResponseStatuses = Array.from(document.querySelectorAll('input[id^="response-"]:checked')).map(cb => cb.value);
+                
                 this.filteredReviews = this.reviews.filter(review => {
                     // Search filter
                     if (this.filters.search) {
@@ -1089,29 +1186,30 @@
                         }
                     }
 
-                    // Rating filter
-                    if (this.filters.rating) {
-                        const minRating = parseInt(this.filters.rating);
-                        if (review.rating < minRating) return false;
-                    }
-
                     // Platform filter
-                    if (this.filters.platform && review.platform !== this.filters.platform) {
+                    if (selectedPlatforms.length > 0 && !selectedPlatforms.includes(review.platform || 'Google')) {
+                        return false;
+                    }
+                    
+                    // Rating filter
+                    if (selectedRatings.length > 0 && !selectedRatings.includes(review.rating)) {
+                        return false;
+                    }
+                    
+                    // Location filter
+                    if (selectedLocations.length > 0 && !selectedLocations.includes(review.location)) {
                         return false;
                     }
 
                     // Response filter
-                    if (this.filters.response) {
+                    if (selectedResponseStatuses.length > 0) {
                         const hasResponse = review.has_response || review.response;
-                        if (this.filters.response === 'responded' && !hasResponse) return false;
-                        if (this.filters.response === 'pending' && hasResponse) return false;
-                    }
-
-                    // Date filter
-                    if (this.filters.date !== 'all') {
-                        const days = parseInt(this.filters.date);
-                        const cutoff = Date.now() / 1000 - (days * 24 * 60 * 60);
-                        if (review.time < cutoff) return false;
+                        const isPending = selectedResponseStatuses.includes('pending');
+                        const isResponded = selectedResponseStatuses.includes('responded');
+                        
+                        if (isPending && hasResponse) return false;
+                        if (isResponded && !hasResponse) return false;
+                        if (!isPending && !isResponded) return false;
                     }
 
                     // Flagged filter

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reviews Insights - Virtual Stamp</title>
+    <title>Reviews Insights - BIS</title>
     
     <!-- Material Design Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -168,17 +168,69 @@
 
         /* Filter Panel */
         .filter-panel {
-            background: var(--md-surface);
-            border-radius: 12px;
-            box-shadow: var(--md-elevation-1);
-            padding: 20px;
             margin-bottom: 24px;
+            background: var(--md-surface);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .filter-header {
+            padding: 12px 16px;
+            background: var(--md-surface);
+            border-bottom: 1px solid var(--md-outline);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.2s;
+            min-height: 48px;
+        }
+
+        .filter-header:hover {
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .filter-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--md-on-surface);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-toggle {
+            transition: transform 0.3s ease;
+        }
+
+        .filter-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .filter-content {
+            padding: 16px;
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        .filter-content.expanded {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        @media (max-width: 767px) {
+            .filter-content.expanded {
+                max-height: 800px;
+            }
         }
 
         .filter-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
         }
 
         @media (min-width: 768px) {
@@ -190,7 +242,7 @@
         .filter-field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         .filter-label {
@@ -199,21 +251,67 @@
             color: var(--md-on-surface-variant);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .filter-select {
-            padding: 12px 16px;
-            border: 1px solid var(--md-outline);
-            border-radius: 8px;
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .filter-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--md-outline);
+            border-radius: 4px;
             background: var(--md-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .filter-checkbox:checked {
+            background: var(--md-primary);
+            border-color: var(--md-primary);
+        }
+
+        .filter-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
             font-size: 14px;
             color: var(--md-on-surface);
-            transition: border-color 0.2s;
+            cursor: pointer;
+            user-select: none;
         }
 
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--md-primary);
+        .star-rating {
+            color: #ff9800;
+            font-size: 16px;
+            margin-right: 4px;
         }
 
         /* Insights Grid */
@@ -301,20 +399,6 @@
 
         .chart-container canvas {
             max-height: 300px;
-        }
-
-        /* Chart Grid */
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        @media (min-width: 1024px) {
-            .chart-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         /* Sentiment Analysis */
@@ -443,6 +527,12 @@
             font-size: 20px;
             font-weight: 600;
             color: var(--md-on-surface);
+        }
+
+        .metric-value-suffix {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--md-on-surface-variant);
         }
 
         .metric-label {
@@ -621,60 +711,66 @@
         <main class="main-content">
             <!-- Filter Panel -->
             <div class="filter-panel">
-                <div class="filter-row">
-                    <div class="filter-field">
-                        <label class="filter-label">Time Period</label>
-                        <select id="timePeriod" class="filter-select">
-                            <option value="7">Last 7 days</option>
-                            <option value="30" selected>Last 30 days</option>
-                            <option value="90">Last 90 days</option>
-                            <option value="365">Last year</option>
-                        </select>
+                <div class="filter-header" id="filterToggle">
+                    <div class="filter-title">
+                        <span class="material-icons">filter_list</span>
+                        Filters
                     </div>
-                    <div class="filter-field">
-                        <label class="filter-label">Platform</label>
-                        <select id="platformFilter" class="filter-select">
-                            <option value="">All Platforms</option>
-                            <option value="Google">Google</option>
-                            <option value="Google">Google</option>
-                            <option value="Facebook">Facebook</option>
-                        </select>
-                    </div>
-                    <div class="filter-field">
-                        <label class="filter-label">Location</label>
-                        <select id="locationFilter" class="filter-select">
-                            <option value="">All Locations</option>
-                            <option value="shop-a">Shop A</option>
-                            <option value="shop-b">Shop B</option>
-                        </select>
-                    </div>
+                    <span class="material-icons filter-toggle" id="filterIcon">expand_more</span>
                 </div>
-            </div>
-
-            <!-- Key Metrics -->
-            <div class="stats-grid">
-                <div class="md-card stat-card">
-                    <div class="stat-label">Average Rating</div>
-                    <div class="stat-value" id="averageRating">4.2</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +0.3 from last period
-                    </div>
-                </div>
-                <div class="md-card stat-card">
-                    <div class="stat-label">Total Reviews</div>
-                    <div class="stat-value" id="totalReviews">47</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +12 this month
-                    </div>
-                </div>
-                <div class="md-card stat-card">
-                    <div class="stat-label">Response Rate</div>
-                    <div class="stat-value" id="responseRate">89%</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +15% improvement
+                <div class="filter-content" id="filterContent">
+                    <div class="filter-row">
+                        <div class="filter-field">
+                            <label class="filter-label">Time Period</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="period-7" class="filter-checkbox" value="7">
+                                    <label for="period-7" class="checkbox-label">Last 7 days</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="period-30" class="filter-checkbox" value="30" checked>
+                                    <label for="period-30" class="checkbox-label">Last 30 days</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="period-90" class="filter-checkbox" value="90">
+                                    <label for="period-90" class="checkbox-label">Last 90 days</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="period-365" class="filter-checkbox" value="365">
+                                    <label for="period-365" class="checkbox-label">Last year</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Platform</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
+                                    <label for="platform-google" class="checkbox-label">Google</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
+                                    <label for="platform-facebook" class="checkbox-label">Facebook</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Location</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
+                                    <label for="location-shop-a" class="checkbox-label">Shop A</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
+                                    <label for="location-shop-b" class="checkbox-label">Shop B</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
+                                    <label for="location-shop-c" class="checkbox-label">Shop C</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -690,6 +786,24 @@
                 </div>
                 <div class="card-content">
                     <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <span class="material-icons">star</span>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="avgRatingMetric">4.2 <span class="metric-value-suffix">/ 5.0</span></div>
+                                <div class="metric-label">Average Rating</div>
+                            </div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-icon">
+                                <span class="material-icons">reviews</span>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value" id="totalReviewsMetric">47</div>
+                                <div class="metric-label">Total Reviews</div>
+                            </div>
+                        </div>
                         <div class="metric-item">
                             <div class="metric-icon">
                                 <span class="material-icons">reply</span>
@@ -708,64 +822,25 @@
                                 <div class="metric-label">Positive to Negative Ratio</div>
                             </div>
                         </div>
-                        <div class="metric-item">
-                            <div class="metric-icon">
-                                <span class="material-icons">star</span>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="avgRatingMetric">4.2</div>
-                                <div class="metric-label">Average Rating</div>
-                            </div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-icon">
-                                <span class="material-icons">visibility</span>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="reviewsThisMonth">12</div>
-                                <div class="metric-label">New Reviews This Month</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="chart-grid">
-                <!-- Rating Trends Chart -->
-                <div class="md-card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <span class="material-icons">show_chart</span>
-                            Rating Trends Over Time
-                        </h3>
-                        <p class="card-subtitle">Track how your ratings change over time</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-container">
-                            <canvas id="trendChart"></canvas>
-                        </div>
-                    </div>
+            <!-- Rating Trends Chart -->
+            <div class="md-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="material-icons">show_chart</span>
+                        Rating Trends Over Time
+                    </h3>
+                    <p class="card-subtitle">Track how your ratings change over time</p>
                 </div>
-
-                <!-- Sentiment Trends Chart -->
-                <div class="md-card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <span class="material-icons">psychology</span>
-                            Sentiment Trends Over Time
-                        </h3>
-                        <p class="card-subtitle">Track sentiment changes over time</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-container">
-                            <canvas id="sentimentTrendChart"></canvas>
-                        </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
                     </div>
                 </div>
             </div>
-
-
 
             <!-- Sentiment Analysis -->
             <div class="md-card">
@@ -793,6 +868,22 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Sentiment Trends Chart -->
+            <div class="md-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="material-icons">psychology</span>
+                        Sentiment Trends Over Time
+                    </h3>
+                    <p class="card-subtitle">Track sentiment changes over time</p>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <canvas id="sentimentTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
 
             <!-- Topic Analysis -->
             <div class="md-card">
@@ -808,55 +899,6 @@
                         <div class="topics-grid" id="topicsGrid">
                             <!-- Topics will be populated here -->
                         </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Comparison with Previous Period -->
-            <div class="md-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <span class="material-icons">compare_arrows</span>
-                        Period Comparison
-                    </h3>
-                    <p class="card-subtitle">Compare current performance with previous period</p>
-                </div>
-                <div class="card-content">
-                    <div class="comparison-grid">
-                        <div class="comparison-card">
-                            <div class="comparison-header">
-                                <div class="comparison-title">Rating Distribution</div>
-                            </div>
-                            <div class="chart-container" style="height: 200px;">
-                                <canvas id="comparisonChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="comparison-card">
-                            <div class="comparison-header">
-                                <div class="comparison-title">Platform Performance</div>
-                            </div>
-                            <div class="chart-container" style="height: 200px;">
-                                <canvas id="platformChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Rating Distribution Chart -->
-            <div class="md-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <span class="material-icons">bar_chart</span>
-                        Rating Distribution
-                    </h3>
-                    <p class="card-subtitle">How customers rate your business</p>
-                </div>
-                <div class="card-content">
-                    <div class="chart-container">
-                        <canvas id="ratingDistributionChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -916,9 +958,9 @@
 
             updateStats() {
                 const stats = this.calculateStats(this.reviews);
-                document.getElementById('averageRating').textContent = stats.averageRating.toFixed(1);
-                document.getElementById('totalReviews').textContent = stats.totalReviews;
-                document.getElementById('responseRate').textContent = `${stats.responseRate}%`;
+                document.getElementById('avgRatingMetric').innerHTML = `${stats.averageRating.toFixed(1)} <span class="metric-value-suffix">/ 5.0</span>`;
+                document.getElementById('totalReviewsMetric').textContent = stats.totalReviews;
+                document.getElementById('responseRateMetric').textContent = `${stats.responseRate}%`;
             }
 
             calculateStats(reviews) {
@@ -963,9 +1005,6 @@
             initializeCharts() {
                 this.createTrendChart();
                 this.createSentimentTrendChart();
-                this.createComparisonChart();
-                this.createPlatformChart();
-                this.createRatingDistributionChart();
             }
 
             createTrendChart() {
@@ -1043,7 +1082,11 @@
                         plugins: {
                             legend: {
                                 display: true,
-                                position: 'bottom'
+                                position: 'bottom',
+                                labels: {
+                                    usePointStyle: true,
+                                    pointStyle: 'line'
+                                }
                             }
                         },
                         scales: {
@@ -1060,119 +1103,6 @@
                         }
                     }
                 });
-            }
-
-            createComparisonChart() {
-                const ctx = document.getElementById('comparisonChart').getContext('2d');
-                this.charts.comparison = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['5★', '4★', '3★', '2★', '1★'],
-                        datasets: [
-                            {
-                                label: 'This Period',
-                                data: [25, 15, 5, 1, 1],
-                                backgroundColor: '#1976d2'
-                            },
-                            {
-                                label: 'Previous Period',
-                                data: [20, 12, 8, 3, 2],
-                                backgroundColor: '#90caf9'
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
-
-            createPlatformChart() {
-                const ctx = document.getElementById('platformChart').getContext('2d');
-                this.charts.platform = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Google', 'Google', 'Facebook'],
-                        datasets: [{
-                            data: [70, 25, 5],
-                            backgroundColor: [
-                                '#4285f4',  // Google Blue
-                                '#d32f2f',  // Google Red
-                                '#1877f2'   // Facebook Blue
-                            ]
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
-
-            createRatingDistributionChart() {
-                const ctx = document.getElementById('ratingDistributionChart').getContext('2d');
-                const ratingCounts = this.getRatingDistribution();
-
-                this.charts.ratingDistribution = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['★★★★★', '★★★★☆', '★★★☆☆', '★★☆☆☆', '★☆☆☆☆'],
-                        datasets: [{
-                            label: 'Number of Reviews',
-                            data: [ratingCounts[5], ratingCounts[4], ratingCounts[3], ratingCounts[2], ratingCounts[1]],
-                            backgroundColor: [
-                                '#4caf50',
-                                '#8bc34a',
-                                '#ffeb3b',
-                                '#ff9800',
-                                '#f44336'
-                            ],
-                            borderRadius: 8,
-                            borderSkipped: false,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            getRatingDistribution() {
-                const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-                this.reviews.forEach(review => {
-                    distribution[review.rating]++;
-                });
-                return distribution;
             }
 
             populateTopics() {
@@ -1197,11 +1127,34 @@
             }
 
             setupEventListeners() {
-                ['timePeriod', 'platformFilter', 'locationFilter'].forEach(id => {
-                    document.getElementById(id)?.addEventListener('change', () => {
+                // Filter toggle functionality
+                document.getElementById('filterToggle')?.addEventListener('click', () => {
+                    this.toggleFilters();
+                });
+
+                // Checkbox filter event listeners
+                document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
                         this.applyFilters();
                     });
                 });
+            }
+
+            toggleFilters() {
+                const filterContent = document.getElementById('filterContent');
+                const filterIcon = document.getElementById('filterIcon');
+                
+                if (filterContent && filterIcon) {
+                    const isExpanded = filterContent.classList.contains('expanded');
+                    
+                    if (isExpanded) {
+                        filterContent.classList.remove('expanded');
+                        filterIcon.classList.remove('expanded');
+                    } else {
+                        filterContent.classList.add('expanded');
+                        filterIcon.classList.add('expanded');
+                    }
+                }
             }
 
             applyFilters() {

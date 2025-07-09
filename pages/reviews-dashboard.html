@@ -418,8 +418,14 @@
         }
 
         .filter-content.expanded {
-            max-height: 300px;
+            max-height: 500px;
             opacity: 1;
+        }
+
+        @media (max-width: 767px) {
+            .filter-content.expanded {
+                max-height: 800px;
+            }
         }
 
         .filter-row {
@@ -599,15 +605,19 @@
                 <div class="filter-content" id="filterContent">
                     <div class="filter-row">
                         <div class="filter-field">
-                            <label class="filter-label">Platform</label>
+                            <label class="filter-label">Location</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
-                                    <label for="platform-google" class="checkbox-label">Google</label>
+                                    <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
+                                    <label for="location-shop-a" class="checkbox-label">Shop A</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
-                                    <label for="platform-facebook" class="checkbox-label">Facebook</label>
+                                    <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
+                                    <label for="location-shop-b" class="checkbox-label">Shop B</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
+                                    <label for="location-shop-c" class="checkbox-label">Shop C</label>
                                 </div>
                             </div>
                         </div>
@@ -647,19 +657,15 @@
                             </div>
                         </div>
                         <div class="filter-field">
-                            <label class="filter-label">Location</label>
+                            <label class="filter-label">Platform</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="location-shop-a" class="filter-checkbox" value="Shop A">
-                                    <label for="location-shop-a" class="checkbox-label">Shop A</label>
+                                    <input type="checkbox" id="platform-google" class="filter-checkbox" value="Google">
+                                    <label for="platform-google" class="checkbox-label">Google</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="location-shop-b" class="filter-checkbox" value="Shop B">
-                                    <label for="location-shop-b" class="checkbox-label">Shop B</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="location-shop-c" class="filter-checkbox" value="Shop C">
-                                    <label for="location-shop-c" class="checkbox-label">Shop C</label>
+                                    <input type="checkbox" id="platform-facebook" class="filter-checkbox" value="Facebook">
+                                    <label for="platform-facebook" class="checkbox-label">Facebook</label>
                                 </div>
                             </div>
                         </div>
