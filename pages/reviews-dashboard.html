@@ -270,7 +270,7 @@
         .review-meta {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             font-size: 12px;
             color: var(--md-on-surface-variant);
         }
@@ -415,6 +415,46 @@
             outline: none;
             border-color: var(--md-primary);
         }
+
+        /* KPI Cards */
+        .kpi-card {
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--md-elevation-3);
+        }
+
+        .kpi-card.active {
+            border: 2px solid var(--md-primary);
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .kpi-card.active .stat-value {
+            color: var(--md-primary-dark);
+        }
+
+        /* Status Tags */
+        .status-tag {
+            background: var(--md-secondary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+
+        .status-tag.new {
+            background: #4caf50;
+        }
+
+        .status-tag.pending {
+            background: #ff9800;
+        }
     </style>
 </head>
 <body>
@@ -457,14 +497,7 @@
             <!-- Filter Panel -->
             <div class="filter-panel">
                 <div class="filter-row">
-                    <div class="filter-field">
-                        <label class="filter-label">Time Period</label>
-                        <select id="timePeriod" class="filter-select">
-                            <option value="7">Last 7 days</option>
-                            <option value="30" selected>Last 30 days</option>
-                            <option value="90">Last 90 days</option>
-                        </select>
-                    </div>
+
                     <div class="filter-field">
                         <label class="filter-label">Platform</label>
                         <select id="platformFilter" class="filter-select">
@@ -482,81 +515,52 @@
                             <option value="3">3+ Stars</option>
                         </select>
                     </div>
-                </div>
-            </div>
-
-            <!-- Key Metrics -->
-            <div class="stats-grid">
-                <div class="md-card stat-card">
-                    <div class="stat-label">Average Rating</div>
-                    <div class="stat-value" id="averageRating">4.2</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +0.3 from last period
-                    </div>
-                </div>
-                <div class="md-card stat-card">
-                    <div class="stat-label">Total Reviews</div>
-                    <div class="stat-value" id="totalReviews">47</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +12 this month
-                    </div>
-                </div>
-                <div class="md-card stat-card">
-                    <div class="stat-label">Response Rate</div>
-                    <div class="stat-value" id="responseRate">89%</div>
-                    <div class="stat-change positive">
-                        <span class="material-icons" style="font-size: 16px;">trending_up</span>
-                        +15% improvement
+                    <div class="filter-field">
+                        <label class="filter-label">Location</label>
+                        <select id="locationFilter" class="filter-select">
+                            <option value="">All Locations</option>
+                            <option value="shop-a">Shop A</option>
+                            <option value="shop-b">Shop B</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="chart-grid">
-                <div class="md-card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <span class="material-icons">bar_chart</span>
-                            Rating Distribution
-                        </h3>
-                        <p class="card-subtitle">How customers rate your business</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-container">
-                            <canvas id="ratingChart"></canvas>
-                        </div>
+
+
+            <!-- New KPI Cards -->
+            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 24px;">
+                <div class="md-card stat-card kpi-card" id="newReviewsCard" style="cursor: pointer;">
+                    <div class="stat-label">Recent Reviews</div>
+                    <div class="stat-value" id="newReviewsCount">3</div>
+                    <div class="stat-change positive">
+                        <span class="material-icons" style="font-size: 16px;">fiber_new</span>
+                        Since last login
                     </div>
                 </div>
-
-                <div class="md-card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <span class="material-icons">pie_chart</span>
-                            Review Sources
-                        </h3>
-                        <p class="card-subtitle">Platform breakdown</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-container">
-                            <canvas id="sourceChart"></canvas>
-                        </div>
+                <div class="md-card stat-card kpi-card" id="noResponseCard" style="cursor: pointer;">
+                    <div class="stat-label">No Response</div>
+                    <div class="stat-value" id="noResponseCount">6</div>
+                    <div class="stat-change negative">
+                        <span class="material-icons" style="font-size: 16px;">schedule</span>
+                        Pending responses
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Reviews -->
+
+
+            <!-- New Reviews and Not Responded Reviews -->
             <div class="md-card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <span class="material-icons">history</span>
-                        Recent Reviews
+                        <span class="material-icons">notifications</span>
+                        New Reviews & Pending Responses
                     </h3>
-                    <p class="card-subtitle">Latest customer feedback</p>
+                    <p class="card-subtitle">Reviews requiring your attention</p>
                 </div>
                 <div class="card-content">
-                    <div id="recentReviews">
+                    <div id="priorityReviews">
                         <!-- Reviews will be populated here -->
                     </div>
                 </div>
@@ -585,9 +589,9 @@
                     const data = await this.loadReviews();
                     this.reviews = data.reviews;
                     this.filteredReviews = [...this.reviews];
-                    this.updateStats();
-                    this.initializeCharts();
-                    this.displayRecentReviews();
+                    this.currentFilter = 'all'; // Track current filter state
+                    this.updateKPIs();
+                    this.displayPriorityReviews();
                     this.setupEventListeners();
                 } catch (error) {
                     console.error('Failed to initialize dashboard:', error);
@@ -613,8 +617,9 @@
                         relative_time_description: "2 days ago",
                         time: Date.now() / 1000 - 172800,
                         platform: "Google",
-                        response: "Thank you so much for your kind words! We're thrilled you enjoyed your experience.",
-                        flagged: false
+                        response: null,
+                        flagged: false,
+                        isNew: true
                     },
                     {
                         author_name: "Mike Chen",
@@ -624,7 +629,8 @@
                         time: Date.now() / 1000 - 604800,
                         platform: "Google",
                         response: null,
-                        flagged: true
+                        flagged: true,
+                        isNew: false
                     },
                     {
                         author_name: "Emma Rodriguez",
@@ -633,8 +639,9 @@
                         relative_time_description: "3 days ago",
                         time: Date.now() / 1000 - 259200,
                         platform: "Yelp",
-                        response: "Thanks for the feedback! We're working on expanding our seating area.",
-                        flagged: false
+                        response: null,
+                        flagged: false,
+                        isNew: true
                     },
                     {
                         author_name: "David Thompson",
@@ -644,7 +651,8 @@
                         time: Date.now() / 1000 - 604800,
                         platform: "Google",
                         response: "Thank you David! We're passionate about serving the best coffee and pastries.",
-                        flagged: false
+                        flagged: false,
+                        isNew: false
                     },
                     {
                         author_name: "Lisa Park",
@@ -654,7 +662,8 @@
                         time: Date.now() / 1000 - 345600,
                         platform: "Google",
                         response: null,
-                        flagged: false
+                        flagged: false,
+                        isNew: false
                     },
                     {
                         author_name: "James Wilson",
@@ -664,7 +673,8 @@
                         time: Date.now() / 1000 - 432000,
                         platform: "Google",
                         response: "We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly.",
-                        flagged: true
+                        flagged: true,
+                        isNew: false
                     },
                     {
                         author_name: "Anna Martinez",
@@ -674,7 +684,8 @@
                         time: Date.now() / 1000 - 518400,
                         platform: "Google",
                         response: "Thank you Anna! We're thrilled to hear you enjoy our cookies and appreciate our team.",
-                        flagged: false
+                        flagged: false,
+                        isNew: false
                     },
                     {
                         author_name: "Robert Davis",
@@ -684,7 +695,8 @@
                         time: Date.now() / 1000 - 604800,
                         platform: "Google",
                         response: null,
-                        flagged: false
+                        flagged: false,
+                        isNew: false
                     },
                     {
                         author_name: "Michelle Lee",
@@ -693,8 +705,9 @@
                         relative_time_description: "1 week ago",
                         time: Date.now() / 1000 - 604800,
                         platform: "Facebook",
-                        response: "So happy to hear we're a great workspace for you! We work hard to maintain fast WiFi.",
-                        flagged: false
+                        response: null,
+                        flagged: false,
+                        isNew: true
                     },
                     {
                         author_name: "Kevin Brown",
@@ -704,150 +717,74 @@
                         time: Date.now() / 1000 - 1209600,
                         platform: "Yelp",
                         response: null,
-                        flagged: true
+                        flagged: true,
+                        isNew: false
                     }
                 ];
             }
 
-            updateStats() {
-                const stats = this.calculateStats(this.filteredReviews);
-                document.getElementById('averageRating').textContent = stats.averageRating.toFixed(1);
-                document.getElementById('totalReviews').textContent = stats.totalReviews;
-                document.getElementById('responseRate').textContent = `${stats.responseRate}%`;
-            }
 
-            calculateStats(reviews) {
-                if (reviews.length === 0) {
-                    return { averageRating: 0, totalReviews: 0, responseRate: 0 };
-                }
 
-                const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-                const averageRating = totalRating / reviews.length;
+            updateKPIs() {
+                const newReviewsCount = this.reviews.filter(review => review.isNew).length;
+                const noResponseCount = this.reviews.filter(review => !review.response).length;
                 
-                // Mock response rate calculation
-                const responseRate = Math.round(89 + Math.random() * 10);
-
-                return {
-                    averageRating,
-                    totalReviews: reviews.length,
-                    responseRate
-                };
+                document.getElementById('newReviewsCount').textContent = newReviewsCount;
+                document.getElementById('noResponseCount').textContent = noResponseCount;
             }
 
-            initializeCharts() {
-                this.createRatingChart();
-                this.createSourceChart();
-            }
 
-            createRatingChart() {
-                const ctx = document.getElementById('ratingChart').getContext('2d');
-                const ratingCounts = this.getRatingDistribution();
 
-                this.charts.rating = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['★★★★★', '★★★★☆', '★★★☆☆', '★★☆☆☆', '★☆☆☆☆'],
-                        datasets: [{
-                            label: 'Number of Reviews',
-                            data: [ratingCounts[5], ratingCounts[4], ratingCounts[3], ratingCounts[2], ratingCounts[1]],
-                            backgroundColor: [
-                                '#4caf50',
-                                '#8bc34a',
-                                '#ffeb3b',
-                                '#ff9800',
-                                '#f44336'
-                            ],
-                            borderRadius: 8,
-                            borderSkipped: false,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            createSourceChart() {
-                const ctx = document.getElementById('sourceChart').getContext('2d');
+            displayPriorityReviews() {
+                const container = document.getElementById('priorityReviews');
                 
-                this.charts.source = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Google', 'Yelp', 'Facebook', 'Other'],
-                        datasets: [{
-                            data: [70, 20, 7, 3],
-                            backgroundColor: [
-                                '#4285f4',  // Google Blue
-                                '#d32f2f',  // Yelp Red
-                                '#1877f2',  // Facebook Blue
-                                '#757575'   // Other Gray
-                            ],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
+                // Get new reviews and reviews without responses
+                const newReviews = this.filteredReviews.filter(review => review.isNew);
+                const noResponseReviews = this.filteredReviews.filter(review => !review.response);
+                
+                // Combine and remove duplicates
+                const priorityReviews = [...new Map([...newReviews, ...noResponseReviews].map(review => [review.author_name, review])).values()]
+                    .sort((a, b) => b.time - a.time);
 
-            getRatingDistribution() {
-                const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-                this.filteredReviews.forEach(review => {
-                    distribution[review.rating]++;
-                });
-                return distribution;
-            }
-
-            displayRecentReviews() {
-                const container = document.getElementById('recentReviews');
-                const recentReviews = this.filteredReviews
-                    .sort((a, b) => b.time - a.time)
-                    .slice(0, 5);
-
-                container.innerHTML = recentReviews.map(review => `
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="review-meta">
-                                <span class="rating-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
-                                <span class="platform-badge">${review.platform || 'Google'}</span>
-                                <span>${review.relative_time_description}</span>
+                container.innerHTML = priorityReviews.map(review => {
+                    const isNew = review.isNew;
+                    const needsResponse = !review.response;
+                    
+                    return `
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="review-meta">
+                                    <span class="rating-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                                    <span class="platform-badge">${review.platform || 'Google'}</span>
+                                    ${isNew ? '<span class="status-tag new">NEW</span>' : ''}
+                                    ${needsResponse ? '<span class="status-tag pending">PENDING RESPONSE</span>' : ''}
+                                    <span>${review.relative_time_description}</span>
+                                </div>
+                            </div>
+                            <div class="review-text">${review.text}</div>
+                            <div style="font-weight: 500; font-size: 14px; margin-top: 8px; color: var(--md-on-surface-variant);">
+                                ${review.author_name}
                             </div>
                         </div>
-                        <div class="review-text">${review.text}</div>
-                        <div style="font-weight: 500; font-size: 14px; margin-top: 8px; color: var(--md-on-surface-variant);">
-                            ${review.author_name}
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
             setupEventListeners() {
                 // Filter event listeners
-                ['timePeriod', 'platformFilter', 'ratingFilter'].forEach(id => {
+                ['platformFilter', 'ratingFilter', 'locationFilter'].forEach(id => {
                     document.getElementById(id)?.addEventListener('change', () => {
                         this.applyFilters();
                     });
+                });
+
+                // KPI card click handlers
+                document.getElementById('newReviewsCard')?.addEventListener('click', () => {
+                    this.filterByNew();
+                });
+
+                document.getElementById('noResponseCard')?.addEventListener('click', () => {
+                    this.filterByNoResponse();
                 });
 
                 // FAB click handler
@@ -856,23 +793,48 @@
                 });
             }
 
-            applyFilters() {
-                // Filter logic would go here
-                // For now, just refresh the display
-                this.updateStats();
-                this.updateCharts();
-                this.displayRecentReviews();
+            filterByNew() {
+                this.currentFilter = this.currentFilter === 'new' ? 'all' : 'new';
+                this.updateCardStates();
+                this.applyCurrentFilter();
             }
 
-            updateCharts() {
-                if (this.charts.rating) {
-                    const ratingCounts = this.getRatingDistribution();
-                    this.charts.rating.data.datasets[0].data = [
-                        ratingCounts[5], ratingCounts[4], ratingCounts[3], ratingCounts[2], ratingCounts[1]
-                    ];
-                    this.charts.rating.update();
-                }
+            filterByNoResponse() {
+                this.currentFilter = this.currentFilter === 'noResponse' ? 'all' : 'noResponse';
+                this.updateCardStates();
+                this.applyCurrentFilter();
             }
+
+            updateCardStates() {
+                const newCard = document.getElementById('newReviewsCard');
+                const noResponseCard = document.getElementById('noResponseCard');
+                
+                newCard.classList.toggle('active', this.currentFilter === 'new');
+                noResponseCard.classList.toggle('active', this.currentFilter === 'noResponse');
+            }
+
+            applyCurrentFilter() {
+                let filteredReviews = [...this.reviews];
+                
+                if (this.currentFilter === 'new') {
+                    filteredReviews = filteredReviews.filter(review => review.isNew);
+                } else if (this.currentFilter === 'noResponse') {
+                    filteredReviews = filteredReviews.filter(review => !review.response);
+                }
+                
+                this.filteredReviews = filteredReviews;
+                this.displayPriorityReviews();
+            }
+
+            applyFilters() {
+                // Reset to show all reviews when using regular filters
+                this.currentFilter = 'all';
+                this.updateCardStates();
+                this.filteredReviews = [...this.reviews];
+                this.displayPriorityReviews();
+            }
+
+
 
             showQuickActions() {
                 alert('Quick actions: Export data, Send review request, View settings');
@@ -885,4 +847,4 @@
         });
     </script>
 </body>
-</html> 
+</html> Pedro Feedback 
