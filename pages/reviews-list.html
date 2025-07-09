@@ -698,21 +698,334 @@
             }
 
             async loadReviews() {
-                try {
-                    const response = await fetch('../data/mock-reviews.json');
-                    const data = await response.json();
-                    // Process reviews to ensure compatibility with existing code
-                    const processedReviews = data.reviews.map(review => ({
-                        ...review,
-                        platform: 'Google', // Default platform since JSON doesn't have this field
-                        flagged: false // Initialize flagged status for all reviews
-                    }));
-                    return { reviews: processedReviews };
-                } catch (error) {
-                    console.error('Failed to load reviews from JSON:', error);
-                    // Return empty array as fallback instead of hardcoded data
-                    return { reviews: [] };
-                }
+                // Embedded JSON data - no need for fetch request
+                const data = {
+                    "reviews": [
+                        {
+                            "author_name": "Sarah Johnson",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "2 days ago",
+                            "text": "Amazing coffee and the most delicious croissants! The barista was super friendly and made my latte perfectly. Will definitely be back!",
+                            "time": 1720310400,
+                            "translated": false,
+                            "isNew": true,
+                            "location": "Shop A",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Mike Chen",
+                            "language": "en",
+                            "rating": 1,
+                            "relative_time_description": "1 week ago",
+                            "text": "Worst coffee I've ever had. Burnt taste and the staff was rude. Overpriced for what you get. Won't be coming back.",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Emma Rodriguez",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "3 days ago",
+                            "text": "Great atmosphere and good coffee. The pastries are fresh and tasty. Only wish they had more seating available during busy hours.",
+                            "time": 1720224000,
+                            "translated": false,
+                            "isNew": true,
+                            "location": "Shop C",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "David Thompson",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 week ago",
+                            "text": "Best coffee shop in town! The espresso is perfectly pulled and the almond croissants are to die for. Staff is knowledgeable and passionate about coffee.",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Lisa Park",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "4 days ago",
+                            "text": "Coffee is decent but nothing special. The muffins were a bit dry. Service was okay but could be faster during rush hour.",
+                            "time": 1720137600,
+                            "translated": false,
+                            "isNew": true,
+                            "location": "Shop B",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "James Wilson",
+                            "language": "en",
+                            "rating": 2,
+                            "relative_time_description": "5 days ago",
+                            "text": "Expected better based on reviews. Coffee was lukewarm and the danish was stale. Place was also quite noisy.",
+                            "time": 1720051200,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you for your feedback James. We're sorry to hear about your experience. We'd love to make it right - please reach out to us directly so we can address your concerns. We've made improvements to our service standards recently.",
+                            "response_time": 1720051200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Anna Martinez",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "6 days ago",
+                            "text": "Love this place! Great coffee, wonderful pastries, and the staff always remembers my order. The chocolate chip cookies are amazing!",
+                            "time": 1719964800,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you so much Anna! We're thrilled to hear you enjoy our cookies and appreciate our team remembering your order. Customers like you make our day!",
+                            "response_time": 1719964800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Robert Davis",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "1 week ago",
+                            "text": "Solid coffee shop with good variety. The cappuccino was excellent and the scones were fresh. Prices are reasonable for the quality.",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Michelle Lee",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 week ago",
+                            "text": "Perfect spot for remote work! Great WiFi, comfortable seating, and excellent coffee. The lemon bars are my favorite!",
+                            "time": 1719705600,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "So happy to hear we're a great workspace for you Michelle! We work hard to maintain fast WiFi and comfortable seating for our remote workers. Glad you love the lemon bars!",
+                            "response_time": 1719705600,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Kevin Brown",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "2 weeks ago",
+                            "text": "Average coffee, nothing extraordinary. The bagels were good though. Service could be more attentive during busy periods.",
+                            "time": 1719100800,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thanks for the feedback Kevin! We're glad you enjoyed the bagels. We're working on improving our service during peak hours - your input helps us grow!",
+                            "response_time": 1719100800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Jennifer Taylor",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "2 weeks ago",
+                            "text": "Nice cozy atmosphere and friendly staff. The iced coffee is refreshing and the blueberry muffins are delicious. Will visit again!",
+                            "time": 1719100800,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thank you Jennifer! We're delighted you enjoyed our cozy atmosphere and blueberry muffins. Looking forward to seeing you again soon!",
+                            "response_time": 1719100800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Mark Anderson",
+                            "language": "en",
+                            "rating": 1,
+                            "relative_time_description": "2 weeks ago",
+                            "text": "Very disappointed. Long wait times, cold coffee, and unfriendly staff. The pastries looked old and the place was dirty. Not recommended.",
+                            "time": 1719100800,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "We sincerely apologize for this experience Mark. This doesn't reflect our standards. Please contact us directly - we'd like to make this right and ensure this doesn't happen again.",
+                            "response_time": 1719100800,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Amanda White",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "3 weeks ago",
+                            "text": "Fantastic coffee and pastries! The baristas are skilled and friendly. Love the rustic decor and relaxed vibe. Highly recommend!",
+                            "time": 1718496000,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you so much Amanda! We're thrilled you love our rustic decor and appreciate our skilled baristas. Your recommendation means the world to us!",
+                            "response_time": 1718496000,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Tom Garcia",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "3 weeks ago",
+                            "text": "Good coffee and decent prices. The cinnamon rolls are amazing! Staff is helpful and the location is convenient.",
+                            "time": 1718496000,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thanks Tom! We're so glad you love our cinnamon rolls - they're made fresh daily. Appreciate you mentioning our helpful staff!",
+                            "response_time": 1718496000,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Rachel Kim",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "3 weeks ago",
+                            "text": "Coffee is okay but a bit weak for my taste. The atmosphere is nice and quiet. Good for studying but wish they had stronger espresso.",
+                            "time": 1718496000,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you for the feedback Rachel! We'd be happy to make your espresso stronger - just let us know your preference when ordering. We want to get it just right for you!",
+                            "response_time": 1718496000,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Steve Miller",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 month ago",
+                            "text": "Excellent coffee shop! The mocha is perfectly balanced and the croissants are buttery and flaky. Great place to meet friends.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you Steve! We're delighted you enjoy our mocha and croissants. It's wonderful to hear we're a great spot for meeting friends!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Nicole Johnson",
+                            "language": "en",
+                            "rating": 2,
+                            "relative_time_description": "1 month ago",
+                            "text": "Coffee was bitter and the service was slow. The danish was good but overpriced. Expected better quality for the price point.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "We're sorry to hear about your experience Nicole. We've been working on improving our coffee quality and service speed. We'd love another chance to serve you better!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Alex Turner",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "1 month ago",
+                            "text": "Really enjoy coming here! The flat white is excellent and the banana bread is moist and flavorful. Staff is always welcoming.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you Alex! We're so happy you enjoy our flat white and banana bread. Our welcoming staff loves seeing regular customers like you!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Laura Martinez",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "1 month ago",
+                            "text": "Best coffee in the neighborhood! The latte art is beautiful and the pastries are always fresh. Clean and comfortable environment.",
+                            "time": 1717891200,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you Laura! Our baristas take pride in their latte art and we work hard to maintain fresh pastries and a clean environment. Appreciate your kind words!",
+                            "response_time": 1717891200,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Chris Evans",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "5 weeks ago",
+                            "text": "Decent coffee but nothing special. The cookies were good. Place gets crowded during lunch hours which makes it hard to find seating.",
+                            "time": 1717286400,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thanks Chris! We're glad you enjoyed our cookies. We're aware of the lunch rush seating issue and are looking into solutions to improve the experience.",
+                            "response_time": 1717286400,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Samantha Clark",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "5 weeks ago",
+                            "text": "Great local coffee shop! The americano is strong and the bear claws are delicious. Love supporting local businesses like this one.",
+                            "time": 1717286400,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": null,
+                            "response_time": null,
+                            "has_response": false
+                        },
+                        {
+                            "author_name": "Danny Lopez",
+                            "language": "en",
+                            "rating": 5,
+                            "relative_time_description": "6 weeks ago",
+                            "text": "Outstanding coffee and service! The cortado is perfect and the staff remembers customers' names. Feels like a true community hub.",
+                            "time": 1716681600,
+                            "translated": false,
+                            "location": "Shop B",
+                            "response": "Thank you Danny! We strive to be a community hub and our staff loves getting to know our customers personally. So glad you love the cortado!",
+                            "response_time": 1716681600,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Maria Rodriguez",
+                            "language": "en",
+                            "rating": 3,
+                            "relative_time_description": "6 weeks ago",
+                            "text": "Coffee is fine but the prices are a bit high. The atmosphere is cozy though and the WiFi works well. Good for casual meetings.",
+                            "time": 1716681600,
+                            "translated": false,
+                            "location": "Shop A",
+                            "response": "Thank you Maria! We're glad you find our atmosphere cozy and our WiFi reliable for meetings. We appreciate your feedback about pricing.",
+                            "response_time": 1716681600,
+                            "has_response": true
+                        },
+                        {
+                            "author_name": "Brian Wilson",
+                            "language": "en",
+                            "rating": 4,
+                            "relative_time_description": "7 weeks ago",
+                            "text": "Solid coffee shop with consistent quality. The espresso drinks are well-made and the pastries are fresh. Good customer service.",
+                            "time": 1716076800,
+                            "translated": false,
+                            "location": "Shop C",
+                            "response": "Thank you Brian! Consistency is something we work hard to maintain, and we're pleased you've noticed our commitment to quality and service.",
+                            "response_time": 1716076800,
+                            "has_response": true
+                        }
+                    ]
+                };
+                
+                // Process reviews to ensure compatibility with existing code
+                const processedReviews = data.reviews.map(review => ({
+                    ...review,
+                    platform: 'Google', // Default platform since JSON doesn't have this field
+                    flagged: false // Initialize flagged status for all reviews
+                }));
+                return { reviews: processedReviews };
             }
 
             setupEventListeners() {
